@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Muzacom: telefonlar onlayn do'koni</title>
-<meta name="description" content="Muzacom telefonlar onlayn do'koni: iPhone, Samsung, Xiaomi, Redmi va Poco telefonlari. Telefonni tanlang va buyurtmani Telegram orqali yuboring.">
+<meta name="description" content="Muzacom telefonlar onlayn do'koni: iPhone, Samsung, Xiaomi, Redmi va Poco telefonlari. Telefonni tanlang va narxini so'rang.">
 <link rel="canonical" href="https://muzaffarkarshiev.github.io/muzacom/">
 <meta property="og:title" content="Muzacom: telefonlar onlayn do'koni">
 <meta property="og:description" content="iPhone, Samsung, Xiaomi, Redmi va Poco telefonlari.">
@@ -84,16 +84,15 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 14px
 </style>
 </head>
 <body>
-<div class="notice">Sinov rejimi: narx va mahsulotlar namuna uchun, hozircha sotuvda emas.</div>
 <header><div class="wrap bar">
   <div class="logo">Muza<span>com</span></div>
-  <button class="basket" id="openCart" type="button">Savat · <span id="count">0</span></button>
+  <button class="basket" id="openCart" type="button">So'rovlar · <span id="count">0</span></button>
 </div></header>
 
 <main>
   <section class="wrap intro">
     <h1>Muzacom: telefonlar onlayn do'koni</h1>
-    <p>Telefonni tanlang, savatga qo'shing va buyurtma bering.</p>
+    <p>Telefonni tanlang va narxini so'rang. Narxi va mavjudligini sizga aytamiz.</p>
   </section>
   <div class="wrap chips" id="chips"></div>
   <div class="wrap grid" id="grid"></div>
@@ -111,17 +110,17 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 14px
 const BOT = "muzacom_bot";
 const ORDER_URL = "https://muzacom-orders.muzaffarkharshiev.workers.dev/";
 const PRODUCTS = [
-  { id: 1, brand: "iPhone", name: "iPhone 15", spec: "128 GB, qora", price: 11000000, c: ["#3a3f47", "#14181d"] },
-  { id: 2, brand: "iPhone", name: "iPhone 13", spec: "128 GB, oq", price: 7500000, c: ["#f4f1ea", "#c9c4b8"] },
-  { id: 3, brand: "Samsung", name: "Samsung Galaxy A55", spec: "8/256 GB, qora", price: 4500000, c: ["#2f3a52", "#111827"] },
-  { id: 4, brand: "Samsung", name: "Samsung Galaxy S24", spec: "8/256 GB, kulrang", price: 9500000, c: ["#a9b0b8", "#5f6770"] },
-  { id: 5, brand: "Xiaomi", name: "Xiaomi 14T", spec: "12/256 GB, qora", price: 6500000, c: ["#34312d", "#121110"] },
-  { id: 6, brand: "Redmi / Poco", name: "Redmi Note 13", spec: "8/256 GB, ko'k", price: 2900000, c: ["#5da9e9", "#1f5fa8"] },
-  { id: 7, brand: "Redmi / Poco", name: "Poco X6", spec: "8/256 GB, qora", price: 3400000, c: ["#2b2b33", "#0e0e12"] },
-  { id: 8, brand: "Boshqa", name: "Honor 90", spec: "8/256 GB, yashil", price: 4200000, c: ["#5fbf9a", "#1d6b52"] },
-  { id: 9, brand: "Ishlatilgan", name: "iPhone 11", spec: "64 GB, qora, ishlatilgan", price: 3800000, c: ["#4a4d55", "#1c1e22"] }
+  { id: 1, brand: "iPhone", name: "iPhone 15", spec: "128 GB, qora", price: 0, c: ["#3a3f47", "#14181d"] },
+  { id: 2, brand: "iPhone", name: "iPhone 13", spec: "128 GB, oq", price: 0, c: ["#f4f1ea", "#c9c4b8"] },
+  { id: 3, brand: "Samsung", name: "Samsung Galaxy A55", spec: "8/256 GB, qora", price: 0, c: ["#2f3a52", "#111827"] },
+  { id: 4, brand: "Samsung", name: "Samsung Galaxy S24", spec: "8/256 GB, kulrang", price: 0, c: ["#a9b0b8", "#5f6770"] },
+  { id: 5, brand: "Xiaomi", name: "Xiaomi 14T", spec: "12/256 GB, qora", price: 0, c: ["#34312d", "#121110"] },
+  { id: 6, brand: "Redmi / Poco", name: "Redmi Note 13", spec: "8/256 GB, ko'k", price: 0, c: ["#5da9e9", "#1f5fa8"] },
+  { id: 7, brand: "Redmi / Poco", name: "Poco X6", spec: "8/256 GB, qora", price: 0, c: ["#2b2b33", "#0e0e12"] },
+  { id: 8, brand: "Boshqa", name: "Honor 90", spec: "8/256 GB, yashil", price: 0, c: ["#5fbf9a", "#1d6b52"] },
+  { id: 9, brand: "Ishlatilgan", name: "iPhone 11", spec: "64 GB, qora, ishlatilgan", price: 0, c: ["#4a4d55", "#1c1e22"] }
 ];
-const IS_TEST = true;
+const IS_TEST = false;
 
 const $ = id => document.getElementById(id);
 const money = v => v.toLocaleString("en-US").replace(/,/g, " ") + " so'm";
@@ -160,14 +159,14 @@ function renderGrid() {
     if (IS_TEST) c.appendChild(el("span", "tag", "TEST"));
     c.appendChild(el("div", "name", p.name));
     c.appendChild(el("div", "spec", p.spec));
-    c.appendChild(el("div", "price", money(p.price)));
-    const b = el("button", "add", "Savatga qo'shish");
+    c.appendChild(el("div", "price", "Narxini so'rang"));
+    const b = el("button", "add", "Narxini so'rash");
     b.type = "button";
     b.onclick = () => {
       cart[p.id] = (cart[p.id] || 0) + 1;
       saveCart(); updateCount();
       b.textContent = "Qo'shildi ✓";
-      setTimeout(() => { b.textContent = "Savatga qo'shish"; }, 1100);
+      setTimeout(() => { b.textContent = "Narxini so'rash"; }, 1100);
     };
     c.appendChild(b);
     $("grid").appendChild(c);
@@ -186,12 +185,12 @@ function closePanel() { $("panel").classList.remove("open"); }
 
 function renderCart() {
   const s = $("sheet"); s.textContent = "";
-  s.appendChild(head("Savat"));
-  if (!items().length) { s.appendChild(el("p", "muted", "Savat bo'sh. Katalogdan telefon tanlang.")); return; }
+  s.appendChild(head("So'rovlar"));
+  if (!items().length) { s.appendChild(el("p", "muted", "Ro'yxat bo'sh. Katalogdan telefon tanlang.")); return; }
   for (const { p, qty } of items()) {
     const r = el("div", "row");
     r.appendChild(el("div", "t", p.name + ", " + p.spec));
-    r.appendChild(el("div", "sum", money(p.price * qty)));
+    r.appendChild(el("div", "sum", ""));
     const q = el("div", "qty");
     const minus = el("button", "", "−"); minus.type = "button"; minus.setAttribute("aria-label", "Kamaytirish");
     minus.onclick = () => { qty > 1 ? cart[p.id]-- : delete cart[p.id]; saveCart(); updateCount(); renderCart(); };
@@ -201,8 +200,6 @@ function renderCart() {
     r.appendChild(q);
     s.appendChild(r);
   }
-  const tt = el("div", "total"); tt.append(el("span", "", "Jami"), el("span", "", money(total())));
-  s.appendChild(tt);
 
   const f = document.createElement("form");
   f.noValidate = true;
@@ -218,7 +215,7 @@ function renderCart() {
   const addr = field("custAddr", "Yetkazish manzili", "textarea");
   const trap = document.createElement("input"); trap.type = "text"; trap.tabIndex = -1; trap.autocomplete = "off"; trap.style.display = "none"; f.appendChild(trap);
   const err = el("p", "err"); f.appendChild(err);
-  const go = el("button", "primary", "Buyurtma berish"); go.type = "submit"; f.appendChild(go);
+  const go = el("button", "primary", "So'rov yuborish"); go.type = "submit"; f.appendChild(go);
   f.onsubmit = e => {
     e.preventDefault();
     if (!name.value.trim() || phone.value.replace(/\D/g, "").length < 7 || !addr.value.trim()) {
@@ -232,15 +229,14 @@ function renderCart() {
 
 function buildOrder(name, phone, addr) {
   const lines = ["SAYT BUYURTMASI", ""];
-  for (const { p, qty } of items()) lines.push(`${IS_TEST ? "[TEST] " : ""}${p.name}, ${p.spec}: ${qty} x ${money(p.price)}`);
-  lines.push("", "Jami: " + money(total()), "", "Ism: " + name, "Telefon: " + phone, "Manzil: " + addr);
+  for (const { p, qty } of items()) lines.push(`${p.name}, ${p.spec}: ${qty} ta`);
+  lines.push("", "Ism: " + name, "Telefon: " + phone, "Manzil: " + addr);
   return lines.join("\n");
 }
 
 async function submitOrder(name, phone, addr, btn, err, trap) {
   btn.disabled = true; btn.textContent = "Yuborilmoqda..."; err.textContent = "";
-  const lines = items().map(({ p, qty }) => `${IS_TEST ? "[TEST] " : ""}${p.name}, ${p.spec}: ${qty} x ${money(p.price)}`);
-  lines.push("", "Jami: " + money(total()));
+  const lines = items().map(({ p, qty }) => `${p.name}, ${p.spec}: ${qty} ta`);
   try {
     const r = await fetch(ORDER_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, phone, address: addr, order: lines.join("\n"), website: trap }) });
     if (!r.ok) throw new Error("order failed");
@@ -250,8 +246,8 @@ async function submitOrder(name, phone, addr, btn, err, trap) {
 
 function renderDone() {
   const s = $("sheet"); s.textContent = "";
-  s.appendChild(head("Qabul qilindi"));
-  s.appendChild(el("p", "", "Buyurtmangiz yuborildi. Tez orada siz bilan bog'lanamiz."));
+  s.appendChild(head("Yuborildi"));
+  s.appendChild(el("p", "", "So'rovingiz yuborildi. Narxi va mavjudligini aytish uchun tez orada siz bilan bog'lanamiz."));
 }
 
 function renderSend(text) {
