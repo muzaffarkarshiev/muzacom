@@ -4,49 +4,262 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Muzacom: telefonlar onlayn do'koni</title>
-<meta name="description" content="Muzacom telefonlar onlayn do'koni: iPhone, Samsung, Xiaomi, Redmi va Poco telefonlari. Katalog tez orada, savollar va buyurtmalar uchun Telegram botimizga yozing.">
+<meta name="description" content="Muzacom telefonlar onlayn do'koni: iPhone, Samsung, Xiaomi, Redmi va Poco telefonlari. Telefonni tanlang va buyurtmani Telegram orqali yuboring.">
 <link rel="canonical" href="https://muzaffarkarshiev.github.io/muzacom/">
 <meta property="og:title" content="Muzacom: telefonlar onlayn do'koni">
-<meta property="og:description" content="iPhone, Samsung, Xiaomi, Redmi va Poco telefonlari. Katalog tez orada.">
+<meta property="og:description" content="iPhone, Samsung, Xiaomi, Redmi va Poco telefonlari.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://muzaffarkarshiev.github.io/muzacom/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ef7d00'/%3E%3Crect x='10' y='5' width='12' height='22' rx='3' fill='%23fff'/%3E%3C/svg%3E">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Store","name":"Muzacom","url":"https://muzaffarkarshiev.github.io/muzacom/","description":"Telefonlar onlayn do'koni","sameAs":["https://t.me/muzacom_bot"]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-:root { --bg:#fff4e6; --surface:#fffdf9; --ink:#2a1a0b; --muted:#7a5a36; --accent:#ef7d00; --on:#231200; --line:#f3d9b8; }
-@media (prefers-color-scheme: dark) { :root { --bg:#1c120a; --surface:#2a1b0f; --ink:#fff1e0; --muted:#d2b28f; --accent:#ff9a2e; --on:#241300; --line:#4a3320; color-scheme:dark; } }
-* { box-sizing:border-box; }
-body { margin:0; background:var(--bg); color:var(--ink); font:400 17px/1.55 "Manrope","Segoe UI",sans-serif; }
-.wrap { max-width:860px; margin:0 auto; padding:0 16px; }
-header { background:var(--surface); border-bottom:1px solid var(--line); padding:14px 0; }
-.logo { font:700 20px "Unbounded","Segoe UI",sans-serif; }
-.logo span { color:var(--accent); }
-main { padding:40px 0; display:grid; gap:24px; }
-h1 { font:700 clamp(26px,6vw,40px)/1.2 "Unbounded","Segoe UI",sans-serif; margin:0 0 10px; text-wrap:balance; }
-h2 { font-size:20px; margin:0 0 12px; }
-p { margin:0; color:var(--muted); max-width:62ch; }
-.cta { display:inline-block; margin-top:20px; background:var(--accent); color:var(--on); font-weight:800; text-decoration:none; padding:12px 20px; border-radius:8px; }
-.cta:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
-.brands { display:flex; flex-wrap:wrap; gap:8px; padding:0; margin:0; list-style:none; }
-.brands li { background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:7px 14px; font-weight:600; }
-footer { border-top:1px solid var(--line); color:var(--muted); font-size:15px; padding:16px 0 28px; }
+/* Layout idea: a shop shelf. Brand chips on top, phones as tall product tiles, the basket always one tap away. */
+:root {
+  --bg: #fff4e6; --surface: #fffdf9; --ink: #2a1a0b; --muted: #7a5a36;
+  --accent: #ef7d00; --on-accent: #231200; --line: #f3d9b8; --warn-bg: #fff3d6; --warn-ink: #6b4a00;
+  --display: "Unbounded", "Segoe UI", sans-serif; --body: "Manrope", "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1c120a; --surface: #2a1b0f; --ink: #fff1e0; --muted: #d2b28f;
+    --accent: #ff9a2e; --on-accent: #241300; --line: #4a3320; --warn-bg: #3a2e10; --warn-ink: #ffdf9a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1c120a; --surface: #2a1b0f; --ink: #fff1e0; --muted: #d2b28f;
+  --accent: #ff9a2e; --on-accent: #241300; --line: #4a3320; --warn-bg: #3a2e10; --warn-ink: #ffdf9a; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.5 var(--body); }
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+.notice { background: var(--warn-bg); color: var(--warn-ink); font-size: 14px; padding: 8px 16px; text-align: center; }
+header { position: sticky; top: 0; z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 12px; padding-bottom: 12px; }
+.logo { font: 700 20px var(--display); letter-spacing: -.01em; }
+.logo span { color: var(--accent); }
+.basket { background: var(--accent); color: var(--on-accent); border: 0; border-radius: 8px; padding: 9px 14px; font-weight: 800; }
+.intro { padding-top: 24px; padding-bottom: 8px; }
+h1 { font: 700 clamp(22px, 5vw, 32px)/1.2 var(--display); margin: 0 0 6px; text-wrap: balance; }
+.intro p { margin: 0; color: var(--muted); }
+.chips { display: flex; gap: 8px; overflow-x: auto; padding-top: 14px; padding-bottom: 14px; }
+.chip { flex: none; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; font-weight: 600; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 12px; padding-bottom: 40px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.shot { height: 150px; display: flex; align-items: center; justify-content: center; background: var(--bg); border-radius: 6px; }
+.phone { width: 62px; height: 122px; border-radius: 12px; border: 3px solid var(--ink); background: linear-gradient(160deg, var(--c1), var(--c2)); position: relative; }
+.phone::before { content: ""; position: absolute; top: 5px; left: 50%; width: 16px; height: 4px; margin-left: -8px; border-radius: 3px; background: var(--ink); }
+.tag { align-self: flex-start; font-size: 12px; font-weight: 800; padding: 1px 7px; border-radius: 4px; background: var(--warn-bg); color: var(--warn-ink); }
+.name { font-weight: 800; line-height: 1.3; flex: 1; }
+.spec { color: var(--muted); font-size: 14px; }
+.price { font-weight: 800; font-size: 17px; font-variant-numeric: tabular-nums; }
+.add { background: transparent; border: 1.5px solid var(--accent); color: var(--ink); border-radius: 8px; padding: 8px; font-weight: 800; }
+.add:hover { background: var(--accent); color: var(--on-accent); }
+.panel { position: fixed; inset: 0; z-index: 10; background: rgba(30,16,4,.55); display: none; justify-content: flex-end; }
+.panel.open { display: flex; }
+.sheet { background: var(--surface); width: min(440px, 100%); height: 100%; overflow-y: auto; padding: 18px 16px 28px; display: flex; flex-direction: column; gap: 14px; }
+.sheet-head { display: flex; justify-content: space-between; align-items: center; }
+h2 { font: 700 19px var(--display); margin: 0; }
+.close { background: none; border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; }
+.row { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+.row .t { font-weight: 600; }
+.qty { display: flex; align-items: center; gap: 8px; }
+.qty button { width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); }
+.sum { font-weight: 800; font-variant-numeric: tabular-nums; }
+.total { display: flex; justify-content: space-between; font-weight: 800; font-size: 18px; font-variant-numeric: tabular-nums; }
+form { display: flex; flex-direction: column; gap: 10px; }
+label { font-size: 14px; font-weight: 600; display: flex; flex-direction: column; gap: 4px; }
+input, textarea { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px; width: 100%; }
+.primary { background: var(--accent); color: var(--on-accent); border: 0; border-radius: 8px; padding: 12px; font-weight: 800; text-align: center; text-decoration: none; display: block; }
+.secondary { background: none; border: 1.5px solid var(--line); border-radius: 8px; padding: 11px; font-weight: 700; }
+.muted { color: var(--muted); font-size: 14px; margin: 0; }
+.err { color: #c0352b; font-size: 14px; margin: 0; }
+footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; padding: 16px 0 26px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
 <body>
-<header><div class="wrap"><div class="logo">Muza<span>com</span></div></div></header>
-<main class="wrap">
-  <section>
+<div class="notice">Sinov rejimi: narx va mahsulotlar namuna uchun, hozircha sotuvda emas.</div>
+<header><div class="wrap bar">
+  <div class="logo">Muza<span>com</span></div>
+  <button class="basket" id="openCart" type="button">Savat · <span id="count">0</span></button>
+</div></header>
+
+<main>
+  <section class="wrap intro">
     <h1>Muzacom: telefonlar onlayn do'koni</h1>
-    <p>Katalogimiz tayyorlanmoqda va tez orada shu yerda chiqadi. Hozircha savollaringizni Telegram botimizga yozishingiz mumkin.</p>
-    <a class="cta" href="https://t.me/muzacom_bot">Telegram botni ochish</a>
+    <p>Telefonni tanlang, savatga qo'shing va buyurtmani botimizga yuboring.</p>
   </section>
-  <section>
-    <h2>Qaysi telefonlar bo'ladi</h2>
-    <ul class="brands"><li>iPhone</li><li>Samsung</li><li>Xiaomi</li><li>Redmi</li><li>Poco</li><li>Ishlatilgan telefonlar</li></ul>
-  </section>
+  <div class="wrap chips" id="chips"></div>
+  <div class="wrap grid" id="grid"></div>
 </main>
-<footer><div class="wrap">Muzacom · Telegram: @muzacom_bot</div></footer>
+
+<footer><div class="wrap">Muzacom. Savollar uchun Telegram: @muzacom_bot</div></footer>
+
+<div class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="sheet" id="sheet"></div>
+</div>
+
+<script>
+"use strict";
+/* Mahsulotlarni shu ro'yxatdan o'zgartiring. */
+const BOT = "muzacom_bot";
+const PRODUCTS = [
+  { id: 1, brand: "iPhone", name: "iPhone 15", spec: "128 GB, qora", price: 11000000, c: ["#3a3f47", "#14181d"] },
+  { id: 2, brand: "iPhone", name: "iPhone 13", spec: "128 GB, oq", price: 7500000, c: ["#f4f1ea", "#c9c4b8"] },
+  { id: 3, brand: "Samsung", name: "Samsung Galaxy A55", spec: "8/256 GB, qora", price: 4500000, c: ["#2f3a52", "#111827"] },
+  { id: 4, brand: "Samsung", name: "Samsung Galaxy S24", spec: "8/256 GB, kulrang", price: 9500000, c: ["#a9b0b8", "#5f6770"] },
+  { id: 5, brand: "Xiaomi", name: "Xiaomi 14T", spec: "12/256 GB, qora", price: 6500000, c: ["#34312d", "#121110"] },
+  { id: 6, brand: "Redmi / Poco", name: "Redmi Note 13", spec: "8/256 GB, ko'k", price: 2900000, c: ["#5da9e9", "#1f5fa8"] },
+  { id: 7, brand: "Redmi / Poco", name: "Poco X6", spec: "8/256 GB, qora", price: 3400000, c: ["#2b2b33", "#0e0e12"] },
+  { id: 8, brand: "Boshqa", name: "Honor 90", spec: "8/256 GB, yashil", price: 4200000, c: ["#5fbf9a", "#1d6b52"] },
+  { id: 9, brand: "Ishlatilgan", name: "iPhone 11", spec: "64 GB, qora, ishlatilgan", price: 3800000, c: ["#4a4d55", "#1c1e22"] }
+];
+const IS_TEST = true;
+
+const $ = id => document.getElementById(id);
+const money = v => v.toLocaleString("en-US").replace(/,/g, " ") + " so'm";
+let filter = "Hammasi";
+let cart = {};
+try { cart = JSON.parse(localStorage.getItem("muzacom_cart")) || {}; } catch { cart = {}; }
+for (const id of Object.keys(cart)) if (!PRODUCTS.some(p => p.id === +id)) delete cart[id];
+
+function saveCart() { try { localStorage.setItem("muzacom_cart", JSON.stringify(cart)); } catch {} }
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; }
+function items() { return Object.entries(cart).map(([id, qty]) => ({ p: PRODUCTS.find(x => x.id === +id), qty })); }
+function total() { return items().reduce((s, i) => s + i.p.price * i.qty, 0); }
+function updateCount() { $("count").textContent = items().reduce((s, i) => s + i.qty, 0); }
+
+function renderChips() {
+  const names = ["Hammasi", ...new Set(PRODUCTS.map(p => p.brand))];
+  $("chips").textContent = "";
+  for (const n of names) {
+    const b = el("button", "chip", n);
+    b.type = "button";
+    b.setAttribute("aria-pressed", n === filter);
+    b.onclick = () => { filter = n; renderChips(); renderGrid(); };
+    $("chips").appendChild(b);
+  }
+}
+
+function renderGrid() {
+  $("grid").textContent = "";
+  for (const p of PRODUCTS.filter(x => filter === "Hammasi" || x.brand === filter)) {
+    const c = el("article", "card");
+    const shot = el("div", "shot");
+    const ph = el("div", "phone");
+    ph.style.setProperty("--c1", p.c[0]); ph.style.setProperty("--c2", p.c[1]);
+    shot.appendChild(ph);
+    c.appendChild(shot);
+    if (IS_TEST) c.appendChild(el("span", "tag", "TEST"));
+    c.appendChild(el("div", "name", p.name));
+    c.appendChild(el("div", "spec", p.spec));
+    c.appendChild(el("div", "price", money(p.price)));
+    const b = el("button", "add", "Savatga qo'shish");
+    b.type = "button";
+    b.onclick = () => {
+      cart[p.id] = (cart[p.id] || 0) + 1;
+      saveCart(); updateCount();
+      b.textContent = "Qo'shildi ✓";
+      setTimeout(() => { b.textContent = "Savatga qo'shish"; }, 1100);
+    };
+    c.appendChild(b);
+    $("grid").appendChild(c);
+  }
+}
+
+function head(title) {
+  const h = el("div", "sheet-head");
+  const t = el("h2", "", title); t.id = "sheetTitle";
+  const x = el("button", "close", "Yopish"); x.type = "button"; x.onclick = closePanel;
+  h.append(t, x);
+  return h;
+}
+function openPanel() { $("panel").classList.add("open"); renderCart(); }
+function closePanel() { $("panel").classList.remove("open"); }
+
+function renderCart() {
+  const s = $("sheet"); s.textContent = "";
+  s.appendChild(head("Savat"));
+  if (!items().length) { s.appendChild(el("p", "muted", "Savat bo'sh. Katalogdan telefon tanlang.")); return; }
+  for (const { p, qty } of items()) {
+    const r = el("div", "row");
+    r.appendChild(el("div", "t", p.name + ", " + p.spec));
+    r.appendChild(el("div", "sum", money(p.price * qty)));
+    const q = el("div", "qty");
+    const minus = el("button", "", "−"); minus.type = "button"; minus.setAttribute("aria-label", "Kamaytirish");
+    minus.onclick = () => { qty > 1 ? cart[p.id]-- : delete cart[p.id]; saveCart(); updateCount(); renderCart(); };
+    const plus = el("button", "", "+"); plus.type = "button"; plus.setAttribute("aria-label", "Ko'paytirish");
+    plus.onclick = () => { cart[p.id]++; saveCart(); updateCount(); renderCart(); };
+    q.append(minus, el("span", "", qty), plus);
+    r.appendChild(q);
+    s.appendChild(r);
+  }
+  const tt = el("div", "total"); tt.append(el("span", "", "Jami"), el("span", "", money(total())));
+  s.appendChild(tt);
+
+  const f = document.createElement("form");
+  f.noValidate = true;
+  const field = (id, text, tag, ph) => {
+    const l = el("label", "", text);
+    const i = document.createElement(tag); i.id = id; if (ph) i.placeholder = ph;
+    if (tag === "textarea") i.rows = 2;
+    l.appendChild(i); f.appendChild(l); return i;
+  };
+  const name = field("custName", "Ismingiz", "input");
+  const phone = field("custPhone", "Telefon raqamingiz", "input", "+998 90 123 45 67");
+  phone.type = "tel";
+  const addr = field("custAddr", "Yetkazish manzili", "textarea");
+  const err = el("p", "err"); f.appendChild(err);
+  const go = el("button", "primary", "Buyurtmani tayyorlash"); go.type = "submit"; f.appendChild(go);
+  f.onsubmit = e => {
+    e.preventDefault();
+    if (!name.value.trim() || phone.value.replace(/\D/g, "").length < 7 || !addr.value.trim()) {
+      err.textContent = "Ism, telefon raqam va manzilni to'ldiring.";
+      return;
+    }
+    renderSend(buildOrder(name.value.trim(), phone.value.trim(), addr.value.trim()));
+  };
+  s.appendChild(f);
+}
+
+function buildOrder(name, phone, addr) {
+  const lines = ["SAYT BUYURTMASI", ""];
+  for (const { p, qty } of items()) lines.push(`${IS_TEST ? "[TEST] " : ""}${p.name}, ${p.spec}: ${qty} x ${money(p.price)}`);
+  lines.push("", "Jami: " + money(total()), "", "Ism: " + name, "Telefon: " + phone, "Manzil: " + addr);
+  return lines.join("\n");
+}
+
+function renderSend(text) {
+  const s = $("sheet"); s.textContent = "";
+  s.appendChild(head("Yuborish"));
+  s.appendChild(el("p", "", "Buyurtma hali yuborilmadi. Telegramni oching va botga yuboring."));
+  const box = document.createElement("textarea"); box.id = "orderText"; box.readOnly = true; box.rows = 11; box.value = text;
+  s.appendChild(box);
+  const a = el("a", "primary", "Telegramda ochish");
+  a.href = `https://t.me/${BOT}?text=${encodeURIComponent(text)}`;
+  a.target = "_blank"; a.rel = "noopener";
+  s.appendChild(a);
+  const copy = el("button", "secondary", "Matnni nusxalash"); copy.type = "button";
+  copy.onclick = async () => {
+    try { await navigator.clipboard.writeText(text); copy.textContent = "Nusxalandi ✓"; }
+    catch { box.focus(); box.select(); copy.textContent = "Matnni belgilab nusxalang"; }
+  };
+  s.appendChild(copy);
+  s.appendChild(el("p", "muted", "Telegramda matn o'zi chiqmasa, botni oching, Start ni bosing, nusxalangan matnni joylab yuboring. Bot buyurtma qabul qilinganini yozadi."));
+  const back = el("button", "secondary", "Savatga qaytish"); back.type = "button"; back.onclick = renderCart;
+  s.appendChild(back);
+}
+
+$("openCart").onclick = openPanel;
+$("panel").onclick = e => { if (e.target === $("panel")) closePanel(); };
+document.addEventListener("keydown", e => { if (e.key === "Escape") closePanel(); });
+renderChips(); renderGrid(); updateCount();
+</script>
 </body>
 </html>
