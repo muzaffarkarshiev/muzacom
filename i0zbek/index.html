@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>i0zbek montaj SMM target</title>
+<meta name="description" content="i0zbek: montajyor, SMM mutaxassisi va targetolog. Xizmatlar va onlayn do'konlar.">
+<link rel="canonical" href="https://muzaffarkarshiev.github.io/muzacom/i0zbek/">
+<meta property="og:title" content="i0zbek: montaj, SMM, target">
+<meta property="og:description" content="Montajyor, SMM mutaxassisi va targetolog.">
+<meta property="og:url" content="https://muzaffarkarshiev.github.io/muzacom/i0zbek/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=JetBrains+Mono:wght@500;700&family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a signal console. A live waveform behind the title, instrument panels with corner brackets, light that follows the pointer. */
+:root {
+  --bg: #070b14; --panel: #0e1524; --panel-2: #131c2f; --ink: #eef4ff; --muted: #93a3bd;
+  --accent: #ff8a1f; --ice: #5ad7ff; --line: #24314a; --on-accent: #1a0d00;
+  --display: "Chakra Petch", "Segoe UI", sans-serif; --mono: "JetBrains Mono", Consolas, monospace; --body: "Manrope", "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0; color: var(--ink); font: 500 16px/1.55 var(--body);
+  background:
+    radial-gradient(700px 420px at 85% -5%, rgba(255,138,31,.20), transparent 70%),
+    radial-gradient(640px 460px at 0% 30%, rgba(90,215,255,.12), transparent 70%),
+    var(--bg);
+}
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image: linear-gradient(rgba(147,163,189,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(147,163,189,.07) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to bottom, #000, transparent 85%);
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 85%);
+}
+a { color: inherit; text-decoration: none; }
+a:focus-visible { outline: 2px solid var(--ice); outline-offset: 3px; }
+.wrap { position: relative; z-index: 1; max-width: 1020px; margin: 0 auto; padding: 12px 16px 26px; }
+nav { position: sticky; top: 10px; z-index: 6; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 8px 8px 16px; background: rgba(14,21,36,.78); border: 1px solid var(--line); border-radius: 10px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.brand { font: 700 19px var(--display); letter-spacing: .02em; display: flex; align-items: center; gap: 9px; }
+.brand::before { content: ""; width: 9px; height: 9px; background: var(--accent); box-shadow: 0 0 12px var(--accent); transform: rotate(45deg); }
+.btn { display: inline-block; font: 700 15px var(--display); letter-spacing: .02em; background: var(--accent); color: var(--on-accent); padding: 10px 16px; border-radius: 7px; white-space: nowrap; transition: box-shadow .2s ease, transform .2s ease; }
+.btn:hover { box-shadow: 0 0 26px rgba(255,138,31,.6); transform: translateY(-1px); }
+.hero { position: relative; margin-top: 12px; padding: 30px 20px 26px; min-height: 430px; display: flex; flex-direction: column; justify-content: flex-end; gap: 14px; overflow: hidden; }
+#wave { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero > *:not(canvas):not(.corner) { position: relative; }
+.label { font: 700 13px var(--mono); color: var(--ice); margin: 0; letter-spacing: .04em; }
+h1 { font: 700 clamp(46px, 13vw, 118px)/.98 var(--display); letter-spacing: -.01em; margin: 0; text-shadow: 0 0 34px rgba(7,11,20,.9); }
+h1 em { font-style: normal; color: var(--accent); text-shadow: 0 0 30px rgba(255,138,31,.5); }
+.lead { max-width: 44ch; margin: 0; color: #c9d4e6; font-size: 18px; text-shadow: 0 0 14px var(--bg); }
+.panel { position: relative; background: linear-gradient(160deg, var(--panel-2), var(--panel)); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.panel::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .25s ease; background: radial-gradient(260px circle at var(--x, 50%) var(--y, 50%), rgba(90,215,255,.16), transparent 70%); }
+.panel:hover::after { opacity: 1; }
+.corner { position: absolute; width: 14px; height: 14px; border: 2px solid var(--accent); pointer-events: none; }
+.tl { top: 8px; left: 8px; border-right: 0; border-bottom: 0; } .tr { top: 8px; right: 8px; border-left: 0; border-bottom: 0; }
+.bl { bottom: 8px; left: 8px; border-right: 0; border-top: 0; } .br { bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
+.grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-top: 12px; }
+.card { padding: 20px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.svc { grid-column: span 2; min-height: 214px; }
+.svc svg { width: 100%; height: 56px; display: block; margin-bottom: 4px; }
+.card:hover { border-color: #3d5a80; }
+h2 { font: 700 28px/1.1 var(--display); margin: 0; }
+.card p { margin: 0; color: var(--muted); }
+.half { grid-column: span 3; min-height: 196px; justify-content: space-between; transition: border-color .2s ease, transform .2s ease; }
+.half:hover { transform: translateY(-3px); border-color: var(--accent); }
+.go { font: 700 14px var(--mono); color: var(--accent); }
+.cta { grid-column: span 6; padding: 24px 20px; flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.cta h2 { font-size: clamp(28px, 6vw, 46px); max-width: 15em; }
+.cta .btn { font-size: 17px; padding: 14px 22px; }
+footer { color: var(--muted); font: 500 13px var(--mono); padding: 16px 2px 0; }
+@media (max-width: 640px) {
+  .svc, .half { grid-column: span 6; min-height: 0; }
+  .hero { min-height: 400px; }
+}
+@media (prefers-reduced-motion: reduce) { .btn, .half, .panel::after { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="brand" href="https://www.instagram.com/i0zbek/" target="_blank" rel="noopener">i0zbek</a>
+    <a class="btn" href="https://ig.me/m/i0zbek" target="_blank" rel="noopener">Instagram'da yozish</a>
+  </nav>
+
+  <main>
+    <header class="panel hero">
+      <canvas id="wave" aria-hidden="true"></canvas>
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      <p class="label">MONTAJYOR / SMM / TARGETOLOG</p>
+      <h1>Montaj. SMM. <em>Target.</em></h1>
+      <p class="lead">Videongizni ham, sahifangizni ham, reklamangizni ham bitta odamga ishonib topshiring.</p>
+    </header>
+
+    <div class="grid">
+      <article class="panel card svc">
+        <svg viewBox="0 0 200 56" preserveAspectRatio="none" aria-hidden="true"><rect x="0" y="6" width="74" height="18" rx="3" fill="#ff8a1f"/><rect x="80" y="6" width="50" height="18" rx="3" fill="#24314a"/><rect x="136" y="6" width="64" height="18" rx="3" fill="#5ad7ff"/><rect x="0" y="32" width="118" height="18" rx="3" fill="#24314a"/><rect x="124" y="32" width="76" height="18" rx="3" fill="#ff8a1f" opacity=".55"/></svg>
+        <h2>Montaj</h2><p>Reels, reklama roliklari va boshqa videolarni montaj qilish.</p>
+      </article>
+      <article class="panel card svc">
+        <svg viewBox="0 0 200 56" preserveAspectRatio="none" aria-hidden="true"><g fill="#24314a"><rect x="0" y="4" width="44" height="48" rx="4"/><rect x="104" y="4" width="44" height="48" rx="4"/></g><rect x="52" y="4" width="44" height="48" rx="4" fill="#5ad7ff"/><rect x="156" y="4" width="44" height="48" rx="4" fill="#ff8a1f"/></svg>
+        <h2>SMM</h2><p>Sahifangizni yuritish, kontent rejasi va postlar tayyorlash.</p>
+      </article>
+      <article class="panel card svc">
+        <svg viewBox="0 0 200 56" aria-hidden="true"><g fill="none" stroke-width="2"><circle cx="100" cy="28" r="25" stroke="#24314a"/><circle cx="100" cy="28" r="15" stroke="#5ad7ff"/></g><circle cx="100" cy="28" r="5" fill="#ff8a1f"/><path d="M40 28h28M132 28h28" stroke="#24314a" stroke-width="2"/></svg>
+        <h2>Target</h2><p>Instagram va Facebook'da reklama sozlash va uni kuzatib borish.</p>
+      </article>
+
+      <a class="panel card half" href="https://muzaffarkarshiev.github.io/muzacom/" target="_blank" rel="noopener">
+        <p class="label">ONLAYN DO'KONIM</p>
+        <div><h2>Muzacom</h2><p>Telefonlar onlayn do'koni</p></div>
+        <span class="go">Do'konni ochish →</span>
+      </a>
+      <a class="panel card half" href="https://www.instagram.com/i0zbek/" target="_blank" rel="noopener">
+        <p class="label">SAHIFAM</p>
+        <div><h2>@i0zbek</h2><p>Ishlarim va yangiliklar Instagram'da</p></div>
+        <span class="go">Instagram'ni ochish →</span>
+      </a>
+
+      <section class="panel card cta">
+        <i class="corner tl"></i><i class="corner br"></i>
+        <h2>Loyihangiz bormi? Yozing.</h2>
+        <a class="btn" href="https://ig.me/m/i0zbek" target="_blank" rel="noopener">Instagram'da yozish →</a>
+      </section>
+    </div>
+  </main>
+  <footer>@i0zbek</footer>
+</div>
+
+<script>
+"use strict";
+const canvas = document.getElementById("wave");
+const ctx = canvas.getContext("2d");
+const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let w = 0, h = 0, px = -1, py = 0;
+
+function size() {
+  const r = canvas.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2);
+  w = r.width; h = r.height;
+  canvas.width = w * d; canvas.height = h * d;
+  ctx.setTransform(d, 0, 0, d, 0, 0);
+}
+
+function draw(t) {
+  ctx.clearRect(0, 0, w, h);
+  const mid = h * 0.2, bars = Math.floor(w / 7);
+  for (let i = 0; i < bars; i++) {
+    const x = i * 7 + 2;
+    const near = px < 0 ? 0 : Math.max(0, 1 - Math.abs(x - px) / 130);
+    const v = Math.abs(Math.sin(i * 0.19 + t * 1.5) * Math.sin(i * 0.053 - t * 0.7));
+    const a = 8 + v * h * 0.25 + near * 42;
+    const hot = i / bars;
+    ctx.fillStyle = "rgba(" + Math.round(90 + 165 * hot) + "," + Math.round(215 - 77 * hot) + "," + Math.round(255 - 224 * hot) + "," + (0.42 + near * 0.5) + ")";
+    ctx.fillRect(x, mid - a / 2, 3, a);
+  }
+}
+
+function loop(ms) { draw(ms / 1000); requestAnimationFrame(loop); }
+size();
+addEventListener("resize", () => { size(); if (still) draw(1.2); });
+if (still) draw(1.2); else requestAnimationFrame(loop);
+
+const hero = canvas.parentElement;
+hero.addEventListener("pointermove", e => { const r = canvas.getBoundingClientRect(); px = e.clientX - r.left; py = e.clientY - r.top; });
+hero.addEventListener("pointerleave", () => { px = -1; });
+document.querySelectorAll(".panel").forEach(p => p.addEventListener("pointermove", e => {
+  const r = p.getBoundingClientRect();
+  p.style.setProperty("--x", (e.clientX - r.left) + "px");
+  p.style.setProperty("--y", (e.clientY - r.top) + "px");
+}));
+</script>
+</body>
+</html>
