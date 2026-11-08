@@ -93,7 +93,7 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 14px
 <main>
   <section class="wrap intro">
     <h1>Muzacom: telefonlar onlayn do'koni</h1>
-    <p>Telefonni tanlang, savatga qo'shing va buyurtmani botimizga yuboring.</p>
+    <p>Telefonni tanlang, savatga qo'shing va buyurtma bering.</p>
   </section>
   <div class="wrap chips" id="chips"></div>
   <div class="wrap grid" id="grid"></div>
@@ -109,6 +109,7 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 14px
 "use strict";
 /* Mahsulotlarni shu ro'yxatdan o'zgartiring. */
 const BOT = "muzacom_bot";
+const ORDER_URL = "https://muzacom-orders.muzaffarkharshiev.workers.dev/";
 const PRODUCTS = [
   { id: 1, brand: "iPhone", name: "iPhone 15", spec: "128 GB, qora", price: 11000000, c: ["#3a3f47", "#14181d"] },
   { id: 2, brand: "iPhone", name: "iPhone 13", spec: "128 GB, oq", price: 7500000, c: ["#f4f1ea", "#c9c4b8"] },
@@ -215,15 +216,16 @@ function renderCart() {
   const phone = field("custPhone", "Telefon raqamingiz", "input", "+998 90 123 45 67");
   phone.type = "tel";
   const addr = field("custAddr", "Yetkazish manzili", "textarea");
+  const trap = document.createElement("input"); trap.type = "text"; trap.tabIndex = -1; trap.autocomplete = "off"; trap.style.display = "none"; f.appendChild(trap);
   const err = el("p", "err"); f.appendChild(err);
-  const go = el("button", "primary", "Buyurtmani tayyorlash"); go.type = "submit"; f.appendChild(go);
+  const go = el("button", "primary", "Buyurtma berish"); go.type = "submit"; f.appendChild(go);
   f.onsubmit = e => {
     e.preventDefault();
     if (!name.value.trim() || phone.value.replace(/\D/g, "").length < 7 || !addr.value.trim()) {
       err.textContent = "Ism, telefon raqam va manzilni to'ldiring.";
       return;
     }
-    renderSend(buildOrder(name.value.trim(), phone.value.trim(), addr.value.trim()));
+    submitOrder(name.value.trim(), phone.value.trim(), addr.value.trim(), go, err, trap.value);
   };
   s.appendChild(f);
 }
@@ -233,6 +235,23 @@ function buildOrder(name, phone, addr) {
   for (const { p, qty } of items()) lines.push(`${IS_TEST ? "[TEST] " : ""}${p.name}, ${p.spec}: ${qty} x ${money(p.price)}`);
   lines.push("", "Jami: " + money(total()), "", "Ism: " + name, "Telefon: " + phone, "Manzil: " + addr);
   return lines.join("\n");
+}
+
+async function submitOrder(name, phone, addr, btn, err, trap) {
+  btn.disabled = true; btn.textContent = "Yuborilmoqda..."; err.textContent = "";
+  const lines = items().map(({ p, qty }) => `${IS_TEST ? "[TEST] " : ""}${p.name}, ${p.spec}: ${qty} x ${money(p.price)}`);
+  lines.push("", "Jami: " + money(total()));
+  try {
+    const r = await fetch(ORDER_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, phone, address: addr, order: lines.join("\n"), website: trap }) });
+    if (!r.ok) throw new Error("order failed");
+    cart = {}; saveCart(); updateCount(); renderDone();
+  } catch { renderSend(buildOrder(name, phone, addr)); }
+}
+
+function renderDone() {
+  const s = $("sheet"); s.textContent = "";
+  s.appendChild(head("Qabul qilindi"));
+  s.appendChild(el("p", "", "Buyurtmangiz yuborildi. Tez orada siz bilan bog'lanamiz."));
 }
 
 function renderSend(text) {
