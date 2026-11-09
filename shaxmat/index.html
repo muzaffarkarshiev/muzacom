@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Shaxmat — Muzaffar</title>
+<style>
+  :root{--light:#f0d9b5;--dark:#b58863;--sel:#f6f669;--last:rgba(255,235,90,.45);--bg:#1d1b26;--panel:#2a2735;--txt:#f3efe6;--acc:#e2132a}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-user-select:none;user-select:none}
+  .app{max-width:560px;margin:0 auto;padding:12px 10px 24px;display:flex;flex-direction:column;gap:10px}
+  header{display:flex;align-items:center;justify-content:space-between}
+  h1{margin:0;font-size:22px;letter-spacing:.5px}
+  h1 b{color:var(--acc)}
+  .brand{font-weight:900;font-size:13px;letter-spacing:3px;color:#8d86a3}
+  .bar{display:flex;gap:6px;flex-wrap:wrap}
+  select,button{font:inherit;font-size:14px;border:0;border-radius:10px;padding:8px 10px;background:var(--panel);color:var(--txt)}
+  button{cursor:pointer;font-weight:700}
+  button.primary{background:var(--acc)}
+  button:active{transform:scale(.97)}
+  .status{background:var(--panel);border-radius:12px;padding:10px 12px;font-weight:700;display:flex;justify-content:space-between;align-items:center;min-height:44px}
+  .status .who{display:flex;align-items:center;gap:8px}
+  .dot{width:14px;height:14px;border-radius:50%;border:2px solid #888}
+  .dot.w{background:#fff}.dot.b{background:#111}
+  .status.check{background:#5a1a22}
+  .status.over{background:var(--acc)}
+  .caps{font-size:22px;min-height:28px;line-height:28px;letter-spacing:-2px;color:#cfc8b8}
+  .boardwrap{position:relative}
+  #board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);width:100%;aspect-ratio:1;border-radius:8px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.5);position:relative}
+  #board::before{content:"MUZAFFAR";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14vw;max-font-size:80px;color:rgba(80,40,20,.07);transform:rotate(-30deg);pointer-events:none;z-index:2;letter-spacing:4px}
+  @media(min-width:560px){#board::before{font-size:78px}}
+  .sq{position:relative;min-width:0;min-height:0;display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .sq.l{background:var(--light)}.sq.d{background:var(--dark)}
+  .sq.last::after{content:"";position:absolute;inset:0;background:var(--last)}
+  .sq.sel::after{content:"";position:absolute;inset:0;background:rgba(246,246,105,.75)}
+  .sq.chk{background:radial-gradient(circle,#ff3b3b 0%,#e01818 35%,rgba(200,0,0,.3) 70%) !important}
+  .pc{position:relative;z-index:3;font-size:min(10.5vw,58px);line-height:1;transition:transform .12s}
+  .pc.w{color:#fff;text-shadow:0 0 2px #000,0 0 2px #000,0 2px 3px rgba(0,0,0,.5)}
+  .pc.b{color:#1a1a1a;text-shadow:0 0 1px #fff8,0 2px 3px rgba(0,0,0,.4)}
+  .hint{position:absolute;z-index:4;width:30%;height:30%;border-radius:50%;background:rgba(20,20,20,.28)}
+  .hint.cap{width:92%;height:92%;background:transparent;border:5px solid rgba(20,20,20,.28)}
+  .coord{position:absolute;font-size:10px;font-weight:700;z-index:3;opacity:.75}
+  .coord.f{right:3px;bottom:1px}.coord.r{left:3px;top:1px}
+  .sq.l .coord{color:var(--dark)}.sq.d .coord{color:var(--light)}
+  .moves{background:var(--panel);border-radius:12px;padding:8px 10px;font-size:13px;max-height:90px;overflow:auto;line-height:1.7;color:#cfc8b8}
+  .moves span{margin-right:8px}.moves b{color:#8d86a3;margin-right:3px}
+  .overlay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.55);z-index:10;border-radius:8px}
+  .overlay.show{display:flex}
+  .card{background:#fffaf2;color:#222;border-radius:16px;padding:18px 20px;text-align:center;border:4px solid var(--acc);min-width:60%}
+  .card h2{margin:0 0 6px;color:var(--acc)}
+  .promo{display:flex;gap:8px;justify-content:center;margin-top:8px}
+  .promo button{font-size:40px;background:#eee;color:#111;padding:4px 12px}
+  .thinking{font-size:12px;color:#8d86a3;font-weight:600}
+</style>
+</head>
+<body>
+<div class="app">
+  <header><h1>♞ <b>Shaxmat</b></h1><span class="brand">MUZAFFAR</span></header>
+  <div class="bar">
+    <select id="mode"><option value="ai">🤖 Kompyuterga qarshi</option><option value="2p">👥 Ikki kishi</option></select>
+    <select id="level"><option value="1">Oson</option><option value="2" selected>O‘rta</option><option value="4">Qiyin</option></select>
+    <select id="side"><option value="w">Oq bilan</option><option value="b">Qora bilan</option></select>
+  </div>
+  <div class="caps" id="capB"></div>
+  <div class="boardwrap">
+    <div id="board"></div>
+    <div class="overlay" id="ov"><div class="card" id="ovc"></div></div>
+  </div>
+  <div class="caps" id="capW"></div>
+  <div class="status" id="status"><span class="who"><span class="dot w" id="dot"></span><span id="stxt">Oq yuradi</span></span><span class="thinking" id="think"></span></div>
+  <div class="bar">
+    <button class="primary" id="newg">♻ Yangi o‘yin</button>
+    <button id="undo">↶ Orqaga</button>
+    <button id="flip">⇅ Aylantirish</button>
+  </div>
+  <div class="moves" id="moves"></div>
+</div>
+<script>
+// ================= ENGINE =================
+const GLYPH={k:'♚',q:'♛',r:'♜',b:'♝',n:'♞',p:'♟'};
+const VAL={p:100,n:320,b:330,r:500,q:900,k:0};
+const PST={
+p:[0,0,0,0,0,0,0,0,50,50,50,50,50,50,50,50,10,10,20,30,30,20,10,10,5,5,10,25,25,10,5,5,0,0,0,20,20,0,0,0,5,-5,-10,0,0,-10,-5,5,5,10,10,-20,-20,10,10,5,0,0,0,0,0,0,0,0],
+n:[-50,-40,-30,-30,-30,-30,-40,-50,-40,-20,0,0,0,0,-20,-40,-30,0,10,15,15,10,0,-30,-30,5,15,20,20,15,5,-30,-30,0,15,20,20,15,0,-30,-30,5,10,15,15,10,5,-30,-40,-20,0,5,5,0,-20,-40,-50,-40,-30,-30,-30,-30,-40,-50],
+b:[-20,-10,-10,-10,-10,-10,-10,-20,-10,0,0,0,0,0,0,-10,-10,0,5,10,10,5,0,-10,-10,5,5,10,10,5,5,-10,-10,0,10,10,10,10,0,-10,-10,10,10,10,10,10,10,-10,-10,5,0,0,0,0,5,-10,-20,-10,-10,-10,-10,-10,-10,-20],
+r:[0,0,0,0,0,0,0,0,5,10,10,10,10,10,10,5,-5,0,0,0,0,0,0,-5,-5,0,0,0,0,0,0,-5,-5,0,0,0,0,0,0,-5,-5,0,0,0,0,0,0,-5,-5,0,0,0,0,0,0,-5,0,0,0,5,5,0,0,0],
+q:[-20,-10,-10,-5,-5,-10,-10,-20,-10,0,0,0,0,0,0,-10,-10,0,5,5,5,5,0,-10,-5,0,5,5,5,5,0,-5,0,0,5,5,5,5,0,-5,-10,5,5,5,5,5,0,-10,-10,0,5,0,0,0,0,-10,-20,-10,-10,-5,-5,-10,-10,-20],
+k:[-30,-40,-40,-50,-50,-40,-40,-30,-30,-40,-40,-50,-50,-40,-40,-30,-30,-40,-40,-50,-50,-40,-40,-30,-30,-40,-40,-50,-50,-40,-40,-30,-20,-30,-30,-40,-40,-30,-30,-20,-10,-20,-20,-20,-20,-20,-20,-10,20,20,0,0,0,0,20,20,20,30,10,0,0,10,30,20]};
+// board: index 0 = a8 ... 63 = h1. piece: {t:'p',c:'w'} or null
+function startPos(){
+  const b=Array(64).fill(null),back='rnbqkbnr';
+  for(let i=0;i<8;i++){b[i]={t:back[i],c:'b'};b[8+i]={t:'p',c:'b'};b[48+i]={t:'p',c:'w'};b[56+i]={t:back[i],c:'w'}}
+  return {b,turn:'w',castle:{K:1,Q:1,k:1,q:1},ep:-1,half:0};
+}
+const rc=i=>[i>>3,i&7], idx=(r,c)=>r*8+c, onB=(r,c)=>r>=0&&r<8&&c>=0&&c<8;
+const opp=c=>c==='w'?'b':'w';
+const DIRS={n:[[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]],b:[[-1,-1],[-1,1],[1,-1],[1,1]],r:[[-1,0],[1,0],[0,-1],[0,1]],k:[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]};
+DIRS.q=DIRS.b.concat(DIRS.r);
+function attacked(s,sq,by){
+  const b=s.b,[r,c]=rc(sq);
+  const pr=by==='w'?r+1:r-1;
+  for(const dc of[-1,1]){if(onB(pr,c+dc)){const p=b[idx(pr,c+dc)];if(p&&p.c===by&&p.t==='p')return true}}
+  for(const[dr,dc]of DIRS.n){const rr=r+dr,cc=c+dc;if(onB(rr,cc)){const p=b[idx(rr,cc)];if(p&&p.c===by&&p.t==='n')return true}}
+  for(const[dr,dc]of DIRS.k){const rr=r+dr,cc=c+dc;if(onB(rr,cc)){const p=b[idx(rr,cc)];if(p&&p.c===by&&p.t==='k')return true}}
+  for(const[dr,dc]of DIRS.b){let rr=r+dr,cc=c+dc;while(onB(rr,cc)){const p=b[idx(rr,cc)];if(p){if(p.c===by&&(p.t==='b'||p.t==='q'))return true;break}rr+=dr;cc+=dc}}
+  for(const[dr,dc]of DIRS.r){let rr=r+dr,cc=c+dc;while(onB(rr,cc)){const p=b[idx(rr,cc)];if(p){if(p.c===by&&(p.t==='r'||p.t==='q'))return true;break}rr+=dr;cc+=dc}}
+  return false;
+}
+function kingSq(s,c){for(let i=0;i<64;i++){const p=s.b[i];if(p&&p.t==='k'&&p.c===c)return i}return -1}
+function inCheck(s,c){return attacked(s,kingSq(s,c),opp(c))}
+function pseudo(s){
+  const mv=[],b=s.b,me=s.turn;
+  for(let i=0;i<64;i++){
+    const p=b[i];if(!p||p.c!==me)continue;const[r,c]=rc(i);
+    if(p.t==='p'){
+      const d=me==='w'?-1:1,start=me==='w'?6:1,last=me==='w'?0:7;
+      const add=(to,cap)=>{const[tr]=rc(to);if(tr===last){for(const pr of['q','r','b','n'])mv.push({f:i,t:to,pr,cap})}else mv.push({f:i,t:to,cap})};
+      if(onB(r+d,c)&&!b[idx(r+d,c)]){add(idx(r+d,c),null);if(r===start&&!b[idx(r+2*d,c)])mv.push({f:i,t:idx(r+2*d,c),dbl:1})}
+      for(const dc of[-1,1]){const rr=r+d,cc=c+dc;if(!onB(rr,cc))continue;const to=idx(rr,cc);
+        if(b[to]&&b[to].c!==me)add(to,b[to]);else if(to===s.ep)mv.push({f:i,t:to,ep:1,cap:{t:'p',c:opp(me)}})}
+    }else if(p.t==='n'||p.t==='k'){
+      for(const[dr,dc]of DIRS[p.t]){const rr=r+dr,cc=c+dc;if(!onB(rr,cc))continue;const to=idx(rr,cc);if(!b[to]||b[to].c!==me)mv.push({f:i,t:to,cap:b[to]})}
+      if(p.t==='k'){
+        const row=me==='w'?7:0,K=me==='w'?'K':'k',Q=me==='w'?'Q':'q';
+        if(i===idx(row,4)&&!attacked(s,i,opp(me))){
+          if(s.castle[K]&&!b[idx(row,5)]&&!b[idx(row,6)]&&b[idx(row,7)]&&b[idx(row,7)].t==='r'&&!attacked(s,idx(row,5),opp(me))&&!attacked(s,idx(row,6),opp(me)))mv.push({f:i,t:idx(row,6),cs:'K'});
+          if(s.castle[Q]&&!b[idx(row,3)]&&!b[idx(row,2)]&&!b[idx(row,1)]&&b[idx(row,0)]&&b[idx(row,0)].t==='r'&&!attacked(s,idx(row,3),opp(me))&&!attacked(s,idx(row,2),opp(me)))mv.push({f:i,t:idx(row,2),cs:'Q'});
+        }
+      }
+    }else{
+      for(const[dr,dc]of DIRS[p.t]){let rr=r+dr,cc=c+dc;while(onB(rr,cc)){const to=idx(rr,cc);if(b[to]){if(b[to].c!==me)mv.push({f:i,t:to,cap:b[to]});break}mv.push({f:i,t:to});rr+=dr;cc+=dc}}
+    }
+  }
+  return mv;
+}
+function make(s,m){
+  const b=s.b.slice(),p=b[m.f],me=s.turn;
+  const n={b,turn:opp(me),castle:{...s.castle},ep:-1,half:s.half+1};
+  b[m.t]=m.pr?{t:m.pr,c:me}:p;b[m.f]=null;
+  if(m.ep){const[tr,tc]=rc(m.t);b[idx(me==='w'?tr+1:tr-1,tc)]=null}
+  if(m.dbl)n.ep=(m.f+m.t)/2;
+  if(m.cs){const row=me==='w'?7:0;if(m.cs==='K'){b[idx(row,5)]=b[idx(row,7)];b[idx(row,7)]=null}else{b[idx(row,3)]=b[idx(row,0)];b[idx(row,0)]=null}}
+  if(p.t==='k'){if(me==='w'){n.castle.K=0;n.castle.Q=0}else{n.castle.k=0;n.castle.q=0}}
+  for(const sq of[m.f,m.t]){if(sq===63)n.castle.K=0;if(sq===56)n.castle.Q=0;if(sq===7)n.castle.k=0;if(sq===0)n.castle.q=0}
+  if(p.t==='p'||m.cap)n.half=0;
+  return n;
+}
+function legal(s){return pseudo(s).filter(m=>!inCheck(make(s,m),s.turn))}
+function evaluate(s){
+  let sc=0,bishops={w:0,b:0};
+  for(let i=0;i<64;i++){const p=s.b[i];if(!p)continue;
+    const pi=p.c==='w'?i:(7-(i>>3))*8+(i&7);
+    const v=VAL[p.t]+PST[p.t][pi];sc+=p.c==='w'?v:-v;if(p.t==='b')bishops[p.c]++}
+  if(bishops.w>=2)sc+=30;if(bishops.b>=2)sc-=30;
+  return s.turn==='w'?sc:-sc;
+}
+let nodes=0;
+function order(ms){return ms.sort((a,b)=>((b.cap?10*VAL[b.cap.t]-VAL['p']:0)+(b.pr?800:0))-((a.cap?10*VAL[a.cap.t]-VAL['p']:0)+(a.pr?800:0)))}
+function quiesce(s,a,bta,d){
+  nodes++;const st=evaluate(s);if(st>=bta)return bta;if(a<st)a=st;if(d<=0)return a;
+  const ms=order(legal(s).filter(m=>m.cap||m.pr));
+  for(const m of ms){const v=-quiesce(make(s,m),-bta,-a,d-1);if(v>=bta)return bta;if(v>a)a=v}
+  return a;
+}
+function negamax(s,depth,a,bta,ply){
+  nodes++;
+  const ms=legal(s);
+  if(!ms.length)return inCheck(s,s.turn)?-100000+ply:0;
+  if(s.half>=100)return 0;
+  if(depth===0)return quiesce(s,a,bta,4);
+  order(ms);
+  for(const m of ms){const v=-negamax(make(s,m),depth-1,-bta,-a,ply+1);if(v>=bta)return bta;if(v>a)a=v}
+  return a;
+}
+function bestMove(s,depth){
+  nodes=0;let ms=order(legal(s)),best=null,bv=-Infinity;
+  // small randomness for variety on easy level
+  if(depth===1)ms.sort(()=>Math.random()-.5),order(ms);
+  for(const m of ms){let v=-negamax(make(s,m),depth-1,-Infinity,-bv,1);if(depth===1)v+=Math.random()*30;if(v>bv){bv=v;best=m}}
+  return best;
+}
+
+// ================= UI =================
+const boardEl=document.getElementById('board');
+let S=startPos(),hist=[],sel=-1,legalNow=[],flipped=false,lastMv=null,over=false,thinking=false,sanList=[],capW=[],capB=[];
+const files='abcdefgh';
+let ac=null;function snd(f,d=.07,v=.12){try{if(!ac)ac=new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.value=f;g.gain.value=v;g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+d);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}}
+function sqName(i){const[r,c]=rc(i);return files[c]+(8-r)}
+function san(s,m){
+  const p=s.b[m.f];if(m.cs)return m.cs==='K'?'O-O':'O-O-O';
+  let t=(p.t==='p'?(m.cap?files[m.f&7]:''):p.t.toUpperCase())+(m.cap?'x':'')+sqName(m.t)+(m.pr?'='+m.pr.toUpperCase():'');
+  const n=make(s,m);if(inCheck(n,n.turn))t+=legal(n).length?'+':'#';return t;
+}
+function render(){
+  boardEl.innerHTML='';
+  const chkSq=inCheck(S,S.turn)?kingSq(S,S.turn):-1;
+  const targets=new Map(legalNow.filter(m=>m.f===sel).map(m=>[m.t,m]));
+  for(let k=0;k<64;k++){
+    const i=flipped?63-k:k,[r,c]=rc(i);
+    const d=document.createElement('div');d.className='sq '+((r+c)%2?'d':'l');
+    if(lastMv&&(i===lastMv.f||i===lastMv.t))d.classList.add('last');
+    if(i===sel)d.classList.add('sel');
+    if(i===chkSq)d.classList.add('chk');
+    const p=S.b[i];
+    if(p){const s=document.createElement('span');s.className='pc '+p.c;s.textContent=GLYPH[p.t]+'︎';d.appendChild(s)}
+    if(targets.has(i)){const h=document.createElement('div');h.className='hint'+(p||targets.get(i).ep?' cap':'');d.appendChild(h)}
+    if((flipped?r===0:r===7)){const e=document.createElement('span');e.className='coord f';e.textContent=files[c];d.appendChild(e)}
+    if((flipped?c===7:c===0)){const e=document.createElement('span');e.className='coord r';e.textContent=8-r;d.appendChild(e)}
+    d.onclick=()=>clickSq(i);
+    boardEl.appendChild(d);
+  }
+  const st=document.getElementById('status'),tx=document.getElementById('stxt');
+  document.getElementById('dot').className='dot '+S.turn;
+  st.className='status';
+  const ms=legal(S);
+  if(!ms.length){over=true;if(inCheck(S,S.turn)){tx.textContent='Mat! '+(S.turn==='w'?'Qora':'Oq')+' yutdi 🏆';st.classList.add('over');showEnd('Mat!',(S.turn==='w'?'Qora':'Oq')+' g‘alaba qozondi')}else{tx.textContent='Pat — durang';st.classList.add('over');showEnd('Pat','Durang')}}
+  else if(S.half>=100||insufficient()){over=true;tx.textContent='Durang';st.classList.add('over');showEnd('Durang','Yurish qolmadi')}
+  else{tx.textContent=(S.turn==='w'?'Oq':'Qora')+' yuradi'+(chkSq>=0?' — SHAX!':'');if(chkSq>=0)st.classList.add('check')}
+  const ordered=a=>a.slice().sort((x,y)=>VAL[y]-VAL[x]).map(t=>GLYPH[t]).join('');
+  document.getElementById(flipped?'capB':'capW').textContent=ordered(capB);
+  document.getElementById(flipped?'capW':'capB').textContent=ordered(capW);
+  const mv=document.getElementById('moves');mv.innerHTML=sanList.length?'':'<span style="opacity:.6">Yurishlar shu yerda chiqadi</span>';
+  for(let i=0;i<sanList.length;i+=2){mv.innerHTML+=`<span><b>${i/2+1}.</b>${sanList[i]} ${sanList[i+1]||''}</span>`}
+  mv.scrollTop=mv.scrollHeight;
+}
+function insufficient(){const ps=S.b.filter(p=>p&&p.t!=='k');return ps.length===0||(ps.length===1&&(ps[0].t==='n'||ps[0].t==='b'))}
+function showEnd(h,t){const ov=document.getElementById('ov');document.getElementById('ovc').innerHTML=`<h2>${h}</h2><div>${t}</div><div class="promo"><button onclick="newGame()" style="font-size:16px;background:#e2132a;color:#fff">Yangi o‘yin</button></div>`;setTimeout(()=>ov.classList.add('show'),400)}
+function aiTurn(){return document.getElementById('mode').value==='ai'&&S.turn!==document.getElementById('side').value}
+function clickSq(i){
+  if(over||thinking||aiTurn())return;
+  const p=S.b[i];
+  if(sel>=0){
+    const cand=legalNow.filter(m=>m.f===sel&&m.t===i);
+    if(cand.length){if(cand.length>1)askPromo(cand);else doMove(cand[0]);return}
+  }
+  if(p&&p.c===S.turn){sel=i;legalNow=legal(S);snd(500,.04,.05)}else sel=-1;
+  render();
+}
+function askPromo(cands){
+  const ov=document.getElementById('ov'),c=document.getElementById('ovc');
+  c.innerHTML='<h2>Qaysi donaga aylansin?</h2><div class="promo"></div>';
+  for(const m of cands){const b=document.createElement('button');b.textContent=GLYPH[m.pr]+'︎';b.onclick=()=>{ov.classList.remove('show');doMove(m)};c.querySelector('.promo').appendChild(b)}
+  ov.classList.add('show');
+}
+function doMove(m){
+  hist.push({S,lastMv,sanList:sanList.slice(),capW:capW.slice(),capB:capB.slice()});
+  sanList.push(san(S,m));
+  if(m.cap)(S.turn==='w'?capW:capB).push(m.cap.t);
+  S=make(S,m);lastMv=m;sel=-1;legalNow=[];
+  snd(m.cap?260:380,m.cap?.12:.07,.14);if(inCheck(S,S.turn))setTimeout(()=>snd(760,.15,.1),90);
+  render();
+  if(!over&&aiTurn())runAI();
+}
+function runAI(){
+  thinking=true;document.getElementById('think').textContent='🤖 o‘ylayapti…';
+  setTimeout(()=>{
+    const lvl=+document.getElementById('level').value;
+    const m=bestMove(S,lvl);
+    thinking=false;document.getElementById('think').textContent='';
+    if(m){if(m.pr)m.pr='q';doMove(m)}
+  },250);
+}
+function newGame(){
+  document.getElementById('ov').classList.remove('show');
+  S=startPos();hist=[];sel=-1;legalNow=[];lastMv=null;over=false;sanList=[];capW=[];capB=[];
+  flipped=document.getElementById('mode').value==='ai'&&document.getElementById('side').value==='b';
+  render();if(aiTurn())runAI();
+}
+document.getElementById('newg').onclick=newGame;
+document.getElementById('flip').onclick=()=>{flipped=!flipped;render()};
+document.getElementById('undo').onclick=()=>{
+  if(thinking||!hist.length)return;
+  let steps=document.getElementById('mode').value==='ai'?2:1;
+  if(document.getElementById('mode').value==='ai'&&!aiTurn()&&hist.length%2===1&&document.getElementById('side').value==='b')steps=2;
+  while(steps--&&hist.length){const h=hist.pop();S=h.S;lastMv=h.lastMv;sanList=h.sanList;capW=h.capW;capB=h.capB}
+  over=false;sel=-1;legalNow=[];document.getElementById('ov').classList.remove('show');render();
+  if(aiTurn())runAI();
+};
+for(const id of['mode','side'])document.getElementById(id).onchange=newGame;
+newGame();
+</script>
+</body>
+</html>
