@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Videolarim · Muzaffar @i0zbek</title>
+<meta name="description" content="Muzaffar (@i0zbek) tayyorlagan reels, reklama va montaj ishlari.">
+<meta property="og:title" content="Videolarim · Muzaffar @i0zbek">
+<meta property="og:description" content="Reels, reklama va montaj ishlari.">
+<meta property="og:url" content="https://muzaffarkarshiev.github.io/muzacom/video/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070b14;--panel:#0f1727;--panel2:#142036;--ink:#eef4ff;--muted:#93a3bd;--acc:#ff8a1f;--ice:#5ad7ff;--line:#24314a;
+  --display:"Chakra Petch","Segoe UI",sans-serif;--body:"Manrope","Segoe UI",sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;color:var(--ink);font:500 16px/1.5 var(--body);min-height:100vh;
+  background:radial-gradient(520px 380px at 90% -5%,rgba(255,138,31,.22),transparent 70%),radial-gradient(520px 420px at -10% 40%,rgba(90,215,255,.14),transparent 70%),var(--bg)}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:980px;margin:0 auto;padding:22px 14px 34px}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.back{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:10px;background:var(--panel);border:1px solid var(--line);font:700 14px var(--display);color:var(--muted)}
+.back:hover{color:var(--ink);border-color:var(--acc)}
+h1{font:700 30px/1.1 var(--display);margin:14px 0 4px}
+h1 b{color:var(--acc)}
+.sub{color:var(--muted);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.card{position:relative;border-radius:16px;overflow:hidden;background:var(--panel);border:1px solid var(--line);cursor:pointer;transition:transform .15s,border-color .15s;text-align:left;padding:0;color:inherit;font:inherit}
+.card:hover{transform:translateY(-3px);border-color:var(--acc)}
+.card video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;background:#000;pointer-events:none}
+.card .shade{position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(0,0,0,.85))}
+.card .pl{position:absolute;left:50%;top:42%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;background:rgba(255,138,31,.92);display:grid;place-items:center;box-shadow:0 6px 24px rgba(0,0,0,.4)}
+.card .pl:after{content:"";border-left:16px solid #1a0d00;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+.card .t{position:absolute;left:10px;right:10px;bottom:10px}
+.card b{display:block;font:700 15px/1.2 var(--display)}
+.card small{color:#c9d4e6;font-size:12px}
+.tag{position:absolute;top:8px;left:8px;font:700 11px var(--display);letter-spacing:.06em;padding:3px 7px;border-radius:6px;background:rgba(7,11,20,.75);color:var(--ice)}
+.cta{display:flex;align-items:center;gap:14px;margin-top:22px;padding:16px;border-radius:16px;background:linear-gradient(135deg,#ff8a1f,#ff5a3c);color:#1a0d00}
+.cta b{display:block;font:700 18px var(--display)}
+.cta small{color:#3a1a00}
+.cta .arr{margin-left:auto;font-weight:800;font-size:20px}
+footer{text-align:center;color:var(--muted);font-size:13px;margin-top:20px}
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;z-index:9;padding:14px}
+#modal.on{display:flex}
+#modal video{max-height:92vh;max-width:100%;aspect-ratio:9/16;border-radius:14px;background:#000}
+#close{position:absolute;top:12px;right:14px;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:24px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.card{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a class="back" href="../bio/">← Muzaffar</a></div>
+  <h1>Video<b>larim</b></h1>
+  <p class="sub">Reels, reklama va montaj ishlarim. Ko‘rish uchun videoni bosing.</p>
+  <div class="grid" id="grid"></div>
+
+  <a class="cta" href="https://ig.me/m/i0zbek" target="_blank" rel="noopener">
+    <span style="font-size:26px">💬</span><span><b>Sizga ham shunday video kerakmi?</b><small>Instagram'da yozing — narx va muddatni kelishamiz</small></span><span class="arr">→</span></a>
+  <footer>© Muzaffar · @i0zbek</footer>
+</div>
+<div id="modal"><button id="close" aria-label="Yopish">×</button><video id="mv" controls playsinline></video></div>
+<script>
+const V=[
+  ['montaj-v3','Professional montaj','Montaj'],
+  ['montaj','Montaj reels','Montaj'],
+  ['reklama-kollaj','Reklama qilishni bilmaysizmi?','Reklama'],
+  ['shaffof-yuvish','Şeffaf Yıkama reklamasi','Reklama'],
+  ['calisma-izni-3d','Çalışma izni — 3D yangilik','Yangilik'],
+  ['hayot-qimmatligi','Turkiyada hayot qimmatligi','Yangilik'],
+  ['darknet','Darknet nima?','Illyustratsiya']
+];
+const grid=document.getElementById('grid'),modal=document.getElementById('modal'),mv=document.getElementById('mv');
+for(const[f,t,tag]of V){
+  const b=document.createElement('button');b.className='card';b.setAttribute('aria-label',t);
+  b.innerHTML=`<video src="${f}.mp4#t=1.5" muted playsinline preload="metadata"></video><span class="shade"></span><span class="tag">${tag}</span><span class="pl"></span><span class="t"><b>${t}</b><small>@i0zbek</small></span>`;
+  b.onclick=()=>{mv.src=f+'.mp4';modal.classList.add('on');mv.play().catch(()=>{})};
+  grid.appendChild(b);
+}
+function shut(){mv.pause();mv.removeAttribute('src');mv.load();modal.classList.remove('on')}
+document.getElementById('close').onclick=shut;
+modal.onclick=e=>{if(e.target===modal)shut()};
+addEventListener('keydown',e=>{if(e.key==='Escape')shut()});
+</script>
+</body>
+</html>
