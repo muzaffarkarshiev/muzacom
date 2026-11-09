@@ -7,8 +7,8 @@
 <title>Muzaffar Futbol</title>
 <style>
 html,body{margin:0;height:100%;background:#0b1a10;overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none;font-family:system-ui,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}
-canvas{display:block;width:100vw;height:100vh;height:100dvh}
-#ov{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(5,12,8,.74);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+canvas{display:block;position:fixed;left:0;top:0;width:100vw;height:100vh;transform-origin:0 0}
+#ov{position:fixed;left:0;top:0;width:100vw;height:100vh;transform-origin:0 0;display:flex;align-items:center;justify-content:center;background:rgba(5,12,8,.74);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
 #ov.hide{display:none}
 .card{background:linear-gradient(170deg,#13281b,#0d1a12);border:1px solid #2c4a36;border-radius:18px;padding:22px 20px 18px;max-width:360px;width:88%;color:#eaf5ec;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5);max-height:92vh;overflow:auto}
 h1{margin:0 0 4px;font-size:27px;letter-spacing:.04em}
@@ -201,12 +201,12 @@ function hitBtn(x,y,k){const[bx,by]=btnPos(k);return hyp(x-bx,y-by)<BR*1.25}
 cv.addEventListener('pointerdown',e=>{
   audioInit();if(e.pointerType==='mouse'&&!touchUI)return;touchUI=true;
   try{cv.setPointerCapture(e.pointerId)}catch(_){}
-  const x=e.clientX,y=e.clientY;
+  const[x,y]=pt(e);
   if(hitBtn(x,y,'shoot'))btn.shoot=e.pointerId;
   else if(hitBtn(x,y,'pass'))btn.pass=e.pointerId;
   else if(x<vw*.6&&joy.id===null){joy.id=e.pointerId;joy.sx=joy.x=x;joy.sy=joy.y=y}
 });
-cv.addEventListener('pointermove',e=>{if(e.pointerId===joy.id){joy.x=e.clientX;joy.y=e.clientY}});
+cv.addEventListener('pointermove',e=>{if(e.pointerId===joy.id){[joy.x,joy.y]=pt(e)}});
 function up(e){if(e.pointerId===joy.id)joy.id=null;if(e.pointerId===btn.shoot)btn.shoot=null;if(e.pointerId===btn.pass)btn.pass=null}
 cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
 addEventListener('touchstart',()=>{touchUI=true},{passive:true});
@@ -334,7 +334,13 @@ function step(){
 const PART=[],CONF=[];
 const CAM={L:650,ca:.8,sa:.6,f:1,x:W/2,y:GY,z:0,yoff:0,zoom:1};
 let tgx=W/2,tgy=GY;
-function resize(){dpr=Math.min(2,devicePixelRatio||1);vw=innerWidth;vh=innerHeight;cv.width=Math.round(vw*dpr);cv.height=Math.round(vh*dpr);layout()}
+let ROT=false;const TOUCHDEV=(window.matchMedia&&matchMedia('(pointer:coarse)').matches)||('ontouchstart' in window);
+function pt(e){return ROT?[e.clientY,vh-e.clientX]:[e.clientX,e.clientY]}
+function resize(){dpr=Math.min(2,devicePixelRatio||1);const iw=innerWidth,ih=innerHeight;ROT=TOUCHDEV&&ih>iw;vw=ROT?ih:iw;vh=ROT?iw:ih;cv.width=Math.round(vw*dpr);cv.height=Math.round(vh*dpr);
+  for(const el of [cv,ov]){el.style.width=vw+'px';el.style.height=vh+'px';el.style.transform=ROT?'rotate(90deg) translateY(-100%)':'none'}
+  if(ROT)touchUI=true;layout()}
+addEventListener('orientationchange',()=>setTimeout(resize,250));
+function goLand(){try{const d=document.documentElement,r=d.requestFullscreen||d.webkitRequestFullscreen;if(r&&!document.fullscreenElement){const p=r.call(d);if(p&&p.then)p.then(()=>{try{screen.orientation.lock('landscape').catch(()=>{})}catch(_){}}).catch(()=>{})}else{try{screen.orientation.lock('landscape').catch(()=>{})}catch(_){}}}catch(_){}}
 function layout(){BR=clamp(Math.min(vw,vh)*.085,32,58);JR=clamp(Math.min(vw,vh)*.09,40,70)}
 addEventListener('resize',resize);resize();
 function setupCam(){
@@ -613,7 +619,7 @@ function menu(){
   <div class="help"><b>Telefon:</b> chap tomonda barmoq bilan yuring · <b>PAS</b> — uzatish · <b>ZARBA</b> — bosib turing, qo‘yib yuboring.<br>To‘p raqibda bo‘lsa: <b>OLISH</b> — to‘pni tortib olish, <b>ALMASH</b> — o‘yinchini almashtirish.<br><b>Kompyuter:</b> strelkalar/WASD · J yoki X — pas · K, Z yoki Probel — zarba.</div>
   <a class="back" href="../bio/">← Muzaffar sahifasi</a></div>`;
   ov.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{diff=+b.dataset.d;ov.querySelectorAll('[data-d]').forEach(x=>x.classList.toggle('on',x===b))});
-  ov.querySelector('#go').onclick=()=>{audioInit();ov.className='hide';newMatch()};
+  ov.querySelector('#go').onclick=()=>{audioInit();if(TOUCHDEV)goLand();ov.className='hide';newMatch()};
 }
 function endMatch(){
   S.mode='end';sfx('whistle');setTimeout(()=>sfx('whistle'),450);
