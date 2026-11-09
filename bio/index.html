@@ -43,6 +43,7 @@ h1{font:700 30px/1.1 var(--display);margin:6px 0 0;letter-spacing:.01em}
 .link.main{background:linear-gradient(135deg,#ff8a1f,#ff5a3c);border:0;color:#1a0d00}
 .link.main small{color:#3a1a00}.link.main .em{background:rgba(255,255,255,.25)}.link.main .arr{color:#1a0d00}
 .games{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.game.wide{grid-column:1/-1}.game.wide svg{aspect-ratio:2}
 .game{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column;transition:transform .15s,border-color .15s}
 .game:hover{transform:translateY(-3px);border-color:var(--acc)}
 .game svg{display:block;width:100%;height:auto;aspect-ratio:1}
@@ -80,8 +81,26 @@ footer{text-align:center;color:var(--muted);font-size:13px;margin-top:10px}
   <a class="link" href="../">
     <span class="em">📱</span><span><b>Muzacom do‘koni</b><small>Telefonlar onlayn do‘koni</small></span><span class="arr">→</span></a>
 
+  <div class="label">VIDEOLARIM</div>
+  <a class="link" href="../video/">
+    <span class="em">🎞️</span><span><b>Montaj ishlarim</b><small>Reels, reklama va yangilik videolari</small></span><span class="arr">→</span></a>
+
   <div class="label">O‘YINLAR</div>
   <div class="games">
+    <a class="game wide" href="../futbol/">
+      <svg viewBox="0 0 400 200" aria-hidden="true">
+        <defs><linearGradient id="nt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05080f"/><stop offset="1" stop-color="#16243a"/></linearGradient></defs>
+        <rect width="400" height="200" fill="url(#nt)"/>
+        <g fill="#ffb21f" opacity=".5"><circle cx="30" cy="18" r="5"/><circle cx="370" cy="18" r="5"/></g>
+        <path d="M0 52h400v148H0z" fill="#2b8337"/>
+        <g fill="#33933f"><path d="M40 52h40L50 200H0V120z"/><path d="M120 52h40l-20 148h-60z"/><path d="M200 52h40l10 148h-60z"/><path d="M280 52h40l40 148h-60z"/></g>
+        <g fill="none" stroke="#f4f8f4" stroke-width="2.4" opacity=".9"><path d="M30 62h340l28 132H2z"/><path d="M200 62v132"/><ellipse cx="200" cy="122" rx="52" ry="20"/><path d="M370 92h-40l6 60h44"/></g>
+        <g><circle cx="150" cy="120" r="5" fill="#f4f6fb"/><rect x="146" y="124" width="8" height="12" rx="3" fill="#f4f6fb"/><circle cx="244" cy="104" r="5" fill="#d8202a"/><rect x="240" y="108" width="8" height="12" rx="3" fill="#d8202a"/><circle cx="300" cy="140" r="5" fill="#d8202a"/><rect x="296" y="144" width="8" height="12" rx="3" fill="#d8202a"/><circle cx="96" cy="150" r="5" fill="#f4f6fb"/><rect x="92" y="154" width="8" height="12" rx="3" fill="#f4f6fb"/></g>
+        <circle cx="168" cy="134" r="4" fill="#fff" stroke="#222"/>
+        <text x="200" y="40" text-anchor="middle" font-family="Chakra Petch,sans-serif" font-weight="700" font-size="22" fill="#fff">MUZAFFAR <tspan fill="#ffb21f">FUTBOL</tspan></text>
+      </svg>
+      <div class="t"><b>Futbol</b><small>O‘zbekiston — Turkiya · 3D stadion</small><br><span class="play">▶ O‘ynash</span></div>
+    </a>
     <a class="game" href="../chayka/">
       <svg viewBox="0 0 200 200" aria-hidden="true">
         <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b1240"/><stop offset=".55" stop-color="#7a3a6e"/><stop offset=".85" stop-color="#f08a5d"/><stop offset="1" stop-color="#ffc26b"/></linearGradient></defs>
