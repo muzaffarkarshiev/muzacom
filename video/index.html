@@ -73,7 +73,7 @@ const V=[
 const grid=document.getElementById('grid'),modal=document.getElementById('modal'),mv=document.getElementById('mv');
 for(const[f,t,tag]of V){
   const b=document.createElement('button');b.className='card';b.setAttribute('aria-label',t);
-  b.innerHTML=`<video src="${f}.mp4#t=1.5" muted playsinline preload="metadata"></video><span class="shade"></span><span class="tag">${tag}</span><span class="pl"></span><span class="t"><b>${t}</b><small>@i0zbek</small></span>`;
+  b.innerHTML=`<video src="${f}.mp4#t=1.5" poster="${f}.jpg" muted playsinline preload="metadata"></video><span class="shade"></span><span class="tag">${tag}</span><span class="pl"></span><span class="t"><b>${t}</b><small>@i0zbek</small></span>`;
   b.onclick=()=>{mv.src=f+'.mp4';modal.classList.add('on');mv.play().catch(()=>{})};
   grid.appendChild(b);
 }
