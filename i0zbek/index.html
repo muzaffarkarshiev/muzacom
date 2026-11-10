@@ -3,172 +3,223 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>i0zbek montaj SMM target</title>
-<meta name="description" content="i0zbek: montajyor, SMM mutaxassisi va targetolog. Xizmatlar va onlayn do'konlar.">
+<title>Muzaffar · @i0zbek — Montaj, SMM, Target</title>
+<meta name="description" content="Muzaffar (@i0zbek): video montaj, SMM va target reklama. Ishlarim, ish jarayoni, foydali maslahatlar va savollarga javoblar.">
 <link rel="canonical" href="https://muzaffarkarshiev.github.io/muzacom/i0zbek/">
-<meta property="og:title" content="i0zbek: montaj, SMM, target">
-<meta property="og:description" content="Montajyor, SMM mutaxassisi va targetolog.">
+<meta property="og:title" content="Muzaffar · @i0zbek — Montaj, SMM, Target">
+<meta property="og:description" content="Reels montaj, sahifa yuritish va reklama sozlash. Ishlarim va foydali maslahatlar.">
 <meta property="og:url" content="https://muzaffarkarshiev.github.io/muzacom/i0zbek/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=JetBrains+Mono:wght@500;700&family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-/* Layout idea: a signal console. A live waveform behind the title, instrument panels with corner brackets, light that follows the pointer. */
-:root {
-  --bg: #070b14; --panel: #0e1524; --panel-2: #131c2f; --ink: #eef4ff; --muted: #93a3bd;
-  --accent: #ff8a1f; --ice: #5ad7ff; --line: #24314a; --on-accent: #1a0d00;
-  --display: "Chakra Petch", "Segoe UI", sans-serif; --mono: "JetBrains Mono", Consolas, monospace; --body: "Manrope", "Segoe UI", sans-serif;
-  color-scheme: dark;
-}
-* { box-sizing: border-box; }
-html { background: var(--bg); }
-body {
-  margin: 0; color: var(--ink); font: 500 16px/1.55 var(--body);
-  background:
-    radial-gradient(700px 420px at 85% -5%, rgba(255,138,31,.20), transparent 70%),
-    radial-gradient(640px 460px at 0% 30%, rgba(90,215,255,.12), transparent 70%),
-    var(--bg);
-}
-body::before {
-  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
-  background-image: linear-gradient(rgba(147,163,189,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(147,163,189,.07) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: linear-gradient(to bottom, #000, transparent 85%);
-  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 85%);
-}
-a { color: inherit; text-decoration: none; }
-a:focus-visible { outline: 2px solid var(--ice); outline-offset: 3px; }
-.wrap { position: relative; z-index: 1; max-width: 1020px; margin: 0 auto; padding: 12px 16px 26px; }
-nav { position: sticky; top: 10px; z-index: 6; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 8px 8px 16px; background: rgba(14,21,36,.78); border: 1px solid var(--line); border-radius: 10px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
-.brand { font: 700 19px var(--display); letter-spacing: .02em; display: flex; align-items: center; gap: 9px; }
-.brand::before { content: ""; width: 9px; height: 9px; background: var(--accent); box-shadow: 0 0 12px var(--accent); transform: rotate(45deg); }
-.btn { display: inline-block; font: 700 15px var(--display); letter-spacing: .02em; background: var(--accent); color: var(--on-accent); padding: 10px 16px; border-radius: 7px; white-space: nowrap; transition: box-shadow .2s ease, transform .2s ease; }
-.btn:hover { box-shadow: 0 0 26px rgba(255,138,31,.6); transform: translateY(-1px); }
-.hero { position: relative; margin-top: 12px; padding: 30px 20px 26px; min-height: 430px; display: flex; flex-direction: column; justify-content: flex-end; gap: 14px; overflow: hidden; }
-#wave { position: absolute; inset: 0; width: 100%; height: 100%; }
-.hero > *:not(canvas):not(.corner) { position: relative; }
-.label { font: 700 13px var(--mono); color: var(--ice); margin: 0; letter-spacing: .04em; }
-h1 { font: 700 clamp(46px, 13vw, 118px)/.98 var(--display); letter-spacing: -.01em; margin: 0; text-shadow: 0 0 34px rgba(7,11,20,.9); }
-h1 em { font-style: normal; color: var(--accent); text-shadow: 0 0 30px rgba(255,138,31,.5); }
-.lead { max-width: 44ch; margin: 0; color: #c9d4e6; font-size: 18px; text-shadow: 0 0 14px var(--bg); }
-.panel { position: relative; background: linear-gradient(160deg, var(--panel-2), var(--panel)); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-.panel::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .25s ease; background: radial-gradient(260px circle at var(--x, 50%) var(--y, 50%), rgba(90,215,255,.16), transparent 70%); }
-.panel:hover::after { opacity: 1; }
-.corner { position: absolute; width: 14px; height: 14px; border: 2px solid var(--accent); pointer-events: none; }
-.tl { top: 8px; left: 8px; border-right: 0; border-bottom: 0; } .tr { top: 8px; right: 8px; border-left: 0; border-bottom: 0; }
-.bl { bottom: 8px; left: 8px; border-right: 0; border-top: 0; } .br { bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
-.grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-top: 12px; }
-.card { padding: 20px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-.svc { grid-column: span 2; min-height: 214px; }
-.svc svg { width: 100%; height: 56px; display: block; margin-bottom: 4px; }
-.card:hover { border-color: #3d5a80; }
-h2 { font: 700 28px/1.1 var(--display); margin: 0; }
-.card p { margin: 0; color: var(--muted); }
-.half { grid-column: span 3; min-height: 196px; justify-content: space-between; transition: border-color .2s ease, transform .2s ease; }
-.half:hover { transform: translateY(-3px); border-color: var(--accent); }
-.go { font: 700 14px var(--mono); color: var(--accent); }
-.cta { grid-column: span 6; padding: 24px 20px; flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-.cta h2 { font-size: clamp(28px, 6vw, 46px); max-width: 15em; }
-.cta .btn { font-size: 17px; padding: 14px 22px; }
-footer { color: var(--muted); font: 500 13px var(--mono); padding: 16px 2px 0; }
-@media (max-width: 640px) {
-  .svc, .half { grid-column: span 6; min-height: 0; }
-  .hero { min-height: 400px; }
-}
-@media (prefers-reduced-motion: reduce) { .btn, .half, .panel::after { transition: none; } }
+:root{--bg:#070b14;--panel:#0f1727;--panel2:#142036;--ink:#eef4ff;--muted:#93a3bd;--acc:#ff8a1f;--ice:#5ad7ff;--line:#24314a;
+  --display:"Chakra Petch","Segoe UI",sans-serif;--body:"Manrope","Segoe UI",sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font:500 16px/1.6 var(--body);
+  background:radial-gradient(700px 420px at 85% -5%,rgba(255,138,31,.2),transparent 70%),radial-gradient(640px 460px at 0% 30%,rgba(90,215,255,.12),transparent 70%),var(--bg)}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:860px;margin:0 auto;padding:18px 16px 40px}
+nav{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:5;padding:10px 0;background:linear-gradient(var(--bg) 70%,transparent)}
+.back{padding:8px 12px;border-radius:10px;background:var(--panel);border:1px solid var(--line);font:700 14px var(--display);color:var(--muted)}
+.back:hover{color:var(--ink);border-color:var(--acc)}
+nav .sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;background:linear-gradient(135deg,#ff8a1f,#ff5a3c);color:#1a0d00;font:800 15px var(--body);box-shadow:0 6px 20px rgba(255,138,31,.25)}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:var(--panel);color:var(--ink);border:1px solid var(--line);box-shadow:none}
+/* hero */
+.hero{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;margin:14px 0 26px}
+.av{width:118px;height:118px;border-radius:50%;padding:4px;background:conic-gradient(from 200deg,var(--acc),#ffcf6b,var(--ice),var(--acc))}
+.av img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid var(--bg);display:block}
+.kick{font:700 12px var(--display);letter-spacing:.16em;color:var(--ice)}
+h1{font:700 clamp(30px,6vw,46px)/1.05 var(--display);margin:4px 0 8px}
+h1 b{color:var(--acc)}
+.lead{color:#c9d4e6;margin:0 0 14px;max-width:560px}
+.cta-row{display:flex;flex-wrap:wrap;gap:10px}
+@media(max-width:560px){.hero{grid-template-columns:1fr;text-align:center}.av{margin:0 auto}.cta-row{justify-content:center}.lead{margin-inline:auto}}
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px}
+.chip{padding:7px 12px;border-radius:999px;background:var(--panel);border:1px solid var(--line);font:700 13px var(--body);color:#d7e2f3}
+.chip i{font-style:normal;margin-right:6px}
+h2{font:700 24px/1.2 var(--display);margin:34px 0 6px}
+h2 small{display:block;font:700 12px var(--display);letter-spacing:.16em;color:var(--ice);margin-bottom:4px}
+.sec-sub{color:var(--muted);margin:0 0 14px}
+/* services */
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.card{background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:16px;padding:16px;position:relative;overflow:hidden}
+.card .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:rgba(255,138,31,.13);margin-bottom:10px}
+.card h3{font:700 19px var(--display);margin:0 0 4px}
+.card p{color:var(--muted);margin:0 0 10px;font-size:14.5px}
+.card ul{margin:0;padding:0;list-style:none;font-size:14px}
+.card li{padding:5px 0 5px 22px;position:relative;border-top:1px dashed rgba(147,163,189,.18)}
+.card li:before{content:"✓";position:absolute;left:0;color:var(--acc);font-weight:800}
+/* portfolio */
+.reel{display:grid;grid-auto-flow:column;grid-auto-columns:min(42%,180px);gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}
+.reel::-webkit-scrollbar{height:6px}.reel::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.vid{scroll-snap-align:start;position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#000;aspect-ratio:9/16;display:block}
+.vid img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.vid:hover img{transform:scale(1.04)}
+.vid:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(0,0,0,.85))}
+.vid span{position:absolute;left:10px;right:10px;bottom:10px;z-index:1;font:700 14px/1.2 var(--display)}
+.vid .pl{position:absolute;left:50%;top:44%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:rgba(255,138,31,.92);z-index:1}
+.vid .pl:after{content:"";position:absolute;left:18px;top:14px;border-left:14px solid #1a0d00;border-top:9px solid transparent;border-bottom:9px solid transparent}
+.more{display:inline-block;margin-top:10px;color:var(--acc);font-weight:800}
+/* steps */
+.steps{counter-reset:s;display:grid;gap:10px}
+.step{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+.step:before{counter-increment:s;content:counter(s);width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font:700 20px var(--display);color:#1a0d00;background:linear-gradient(135deg,#ffcf6b,#ff8a1f)}
+.step b{font:700 17px var(--display)}.step p{margin:2px 0 0;color:var(--muted);font-size:14.5px}
+/* tips */
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.tip{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--ice);border-radius:12px;padding:14px}
+.tip .t{font:700 16px var(--display);margin-bottom:4px}
+.tip p{margin:0;color:#c3cee0;font-size:14.5px}
+.tip.o{border-left-color:var(--acc)}
+/* tool */
+.tool{background:linear-gradient(160deg,#1b1530,#121a2c);border:1px solid #3a2f5c;border-radius:16px;padding:16px}
+.tool label{display:block;font-weight:800;margin-bottom:8px}
+.tool .row{display:flex;gap:8px;flex-wrap:wrap}
+.tool select,.tool input{flex:1;min-width:140px;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:#0b1220;color:var(--ink);font:600 15px var(--body)}
+.idea{margin-top:12px;padding:14px;border-radius:12px;background:rgba(255,138,31,.1);border:1px dashed rgba(255,138,31,.5);font-size:15.5px;min-height:52px}
+.idea b{color:var(--acc)}
+/* faq */
+details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0 14px;margin-bottom:8px}
+summary{cursor:pointer;list-style:none;padding:14px 0;font:700 16px var(--display);display:flex;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";color:var(--acc);font-size:22px;line-height:1}
+details[open] summary:after{content:"–"}
+details p{margin:0 0 14px;color:#c3cee0}
+/* accounts */
+.accs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.acc{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:var(--panel);border:1px solid var(--line);transition:border-color .15s,transform .15s}
+.acc:hover{border-color:var(--acc);transform:translateY(-2px)}
+.acc .em{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;flex:none}
+.acc b{display:block;font:700 15px var(--display)}.acc small{color:var(--muted)}
+.games{display:flex;gap:8px;flex-wrap:wrap}
+.final{margin-top:36px;padding:22px;border-radius:20px;text-align:center;background:linear-gradient(135deg,#ff8a1f,#ff5a3c);color:#1a0d00}
+.final h2{margin:0 0 6px;color:#1a0d00}.final p{margin:0 0 14px;color:#3a1a00}
+.final .btn{background:#1a0d00;color:#fff;box-shadow:none}
+footer{text-align:center;color:var(--muted);font-size:13px;margin-top:22px}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .5s,transform .5s}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.vid img{transition:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <nav>
-    <a class="brand" href="https://www.instagram.com/i0zbek/" target="_blank" rel="noopener">i0zbek</a>
-    <a class="btn" href="https://ig.me/m/i0zbek" target="_blank" rel="noopener">Instagram'da yozish</a>
-  </nav>
+<nav><a class="back" href="../bio/">← Muzaffar</a><span class="sp"></span><a class="btn" href="https://ig.me/m/i0zbek" target="_blank" rel="noopener">💬 Yozish</a></nav>
 
-  <main>
-    <header class="panel hero">
-      <canvas id="wave" aria-hidden="true"></canvas>
-      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-      <p class="label">MONTAJYOR / SMM / TARGETOLOG</p>
-      <h1>Montaj. SMM. <em>Target.</em></h1>
-      <p class="lead">Videongizni ham, sahifangizni ham, reklamangizni ham bitta odamga ishonib topshiring.</p>
-    </header>
+<header class="hero reveal">
+  <div class="av"><img src="data:image/jpeg;base64,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" alt="Muzaffar"></div>
+  <div>
+    <div class="kick">MONTAJYOR · SMM · TARGETOLOG</div>
+    <h1>Video, sahifa va reklama — <b>bitta odamda</b></h1>
+    <p class="lead">Salom, men Muzaffar (@i0zbek). Reels va reklama roliklarini montaj qilaman, Instagram sahifalarini yuritaman va target reklama sozlayman. O‘zbek va turk auditoriyasi uchun ishlayman.</p>
+    <div class="cta-row"><a class="btn" href="https://ig.me/m/i0zbek" target="_blank" rel="noopener">💬 Instagram'da yozish</a><a class="btn ghost" href="#ishlar">🎞️ Ishlarimni ko‘rish</a></div>
+  </div>
+</header>
 
-    <div class="grid">
-      <article class="panel card svc">
-        <svg viewBox="0 0 200 56" preserveAspectRatio="none" aria-hidden="true"><rect x="0" y="6" width="74" height="18" rx="3" fill="#ff8a1f"/><rect x="80" y="6" width="50" height="18" rx="3" fill="#24314a"/><rect x="136" y="6" width="64" height="18" rx="3" fill="#5ad7ff"/><rect x="0" y="32" width="118" height="18" rx="3" fill="#24314a"/><rect x="124" y="32" width="76" height="18" rx="3" fill="#ff8a1f" opacity=".55"/></svg>
-        <h2>Montaj</h2><p>Reels, reklama roliklari va boshqa videolarni montaj qilish.</p>
-      </article>
-      <article class="panel card svc">
-        <svg viewBox="0 0 200 56" preserveAspectRatio="none" aria-hidden="true"><g fill="#24314a"><rect x="0" y="4" width="44" height="48" rx="4"/><rect x="104" y="4" width="44" height="48" rx="4"/></g><rect x="52" y="4" width="44" height="48" rx="4" fill="#5ad7ff"/><rect x="156" y="4" width="44" height="48" rx="4" fill="#ff8a1f"/></svg>
-        <h2>SMM</h2><p>Sahifangizni yuritish, kontent rejasi va postlar tayyorlash.</p>
-      </article>
-      <article class="panel card svc">
-        <svg viewBox="0 0 200 56" aria-hidden="true"><g fill="none" stroke-width="2"><circle cx="100" cy="28" r="25" stroke="#24314a"/><circle cx="100" cy="28" r="15" stroke="#5ad7ff"/></g><circle cx="100" cy="28" r="5" fill="#ff8a1f"/><path d="M40 28h28M132 28h28" stroke="#24314a" stroke-width="2"/></svg>
-        <h2>Target</h2><p>Instagram va Facebook'da reklama sozlash va uni kuzatib borish.</p>
-      </article>
-
-      <a class="panel card half" href="https://muzaffarkarshiev.github.io/muzacom/" target="_blank" rel="noopener">
-        <p class="label">ONLAYN DO'KONIM</p>
-        <div><h2>Muzacom</h2><p>Telefonlar onlayn do'koni</p></div>
-        <span class="go">Do'konni ochish →</span>
-      </a>
-      <a class="panel card half" href="https://www.instagram.com/i0zbek/" target="_blank" rel="noopener">
-        <p class="label">SAHIFAM</p>
-        <div><h2>@i0zbek</h2><p>Ishlarim va yangiliklar Instagram'da</p></div>
-        <span class="go">Instagram'ni ochish →</span>
-      </a>
-
-      <section class="panel card cta">
-        <i class="corner tl"></i><i class="corner br"></i>
-        <h2>Loyihangiz bormi? Yozing.</h2>
-        <a class="btn" href="https://ig.me/m/i0zbek" target="_blank" rel="noopener">Instagram'da yozish →</a>
-      </section>
-    </div>
-  </main>
-  <footer>@i0zbek</footer>
+<div class="chips reveal">
+  <span class="chip"><i>🎬</i>Reels montaj</span><span class="chip"><i>✨</i>3D va motion grafika</span><span class="chip"><i>💬</i>Subtitr</span>
+  <span class="chip"><i>🎙️</i>Ovoz va musiqa</span><span class="chip"><i>📅</i>Kontent reja</span><span class="chip"><i>🎯</i>Target reklama</span><span class="chip"><i>🇺🇿🇹🇷</i>O‘zbek · Turk</span>
 </div>
 
+<h2 class="reveal"><small>XIZMATLAR</small>Nima qilib beraman</h2>
+<p class="sec-sub reveal">Har bir xizmatni alohida yoki birga buyurtma qilsa bo‘ladi.</p>
+<div class="grid3">
+  <div class="card reveal"><div class="ic">🎬</div><h3>Montaj</h3><p>Reels, reklama roliklari, yangilik va tushuntiruvchi videolar.</p>
+    <ul><li>Diqqatni tortadigan boshlanish</li><li>Dinamik kesishlar va o‘tishlar</li><li>Subtitr — ovozsiz ko‘rganlar uchun</li><li>Grafika, 3D va animatsiya</li><li>Musiqa va ovoz effektlari</li><li>9:16 vertikal, yuqori sifat</li></ul></div>
+  <div class="card reveal"><div class="ic">📱</div><h3>SMM</h3><p>Sahifangizni tartibli va jonli qilib yuritish.</p>
+    <ul><li>Kontent reja (haftalik/oylik)</li><li>Post va Reels uchun g‘oyalar</li><li>Matn va sarlavhalar</li><li>Stories uchun dizayn</li><li>Profil va bio’ni tartiblash</li><li>Natijalarni kuzatish</li></ul></div>
+  <div class="card reveal"><div class="ic">🎯</div><h3>Target</h3><p>Instagram va Facebook’da reklama sozlash.</p>
+    <ul><li>Auditoriyani aniqlash</li><li>Reklama uchun video/banner</li><li>Bir nechta variantni sinash</li><li>Byudjetni nazorat qilish</li><li>Natija bo‘yicha hisobot</li><li>Kerak bo‘lsa sozlamalarni o‘zgartirish</li></ul></div>
+</div>
+
+<h2 id="ishlar" class="reveal"><small>PORTFOLIO</small>Ishlarimdan namunalar</h2>
+<p class="sec-sub reveal">Videoni bosing — to‘liq ko‘rinishda ochiladi.</p>
+<div class="reel reveal">
+  <a class="vid" href="../video/"><img src="../video/montaj-v3.jpg" alt="" loading="lazy"><i class="pl"></i><span>Professional montaj</span></a>
+  <a class="vid" href="../video/"><img src="../video/reklama-kollaj.jpg" alt="" loading="lazy"><i class="pl"></i><span>Reklama kollaj</span></a>
+  <a class="vid" href="../video/"><img src="../video/shaffof-yuvish.jpg" alt="" loading="lazy"><i class="pl"></i><span>Şeffaf Yıkama reklamasi</span></a>
+  <a class="vid" href="../video/"><img src="../video/calisma-izni-3d.jpg" alt="" loading="lazy"><i class="pl"></i><span>Çalışma izni — 3D</span></a>
+  <a class="vid" href="../video/"><img src="../video/hayot-qimmatligi.jpg" alt="" loading="lazy"><i class="pl"></i><span>Turkiyada hayot qimmatligi</span></a>
+  <a class="vid" href="../video/"><img src="../video/darknet.jpg" alt="" loading="lazy"><i class="pl"></i><span>Darknet nima?</span></a>
+  <a class="vid" href="../video/"><img src="../video/montaj.jpg" alt="" loading="lazy"><i class="pl"></i><span>Montaj reels</span></a>
+</div>
+<a class="more" href="../video/">Barcha videolar →</a>
+
+<h2 class="reveal"><small>JARAYON</small>Qanday ishlaymiz</h2>
+<div class="steps">
+  <div class="step reveal"><div><b>Yozasiz</b><p>Instagram’da nima kerakligini qisqa yozasiz: video, sahifa yoki reklama.</p></div></div>
+  <div class="step reveal"><div><b>Kelishamiz</b><p>Maqsad, uslub, muddat va narxni aniqlaymiz. Namuna videolar bo‘lsa, yuboring.</p></div></div>
+  <div class="step reveal"><div><b>Tayyorlayman</b><p>Montaj qilaman yoki reja tuzaman, reklamani sozlayman.</p></div></div>
+  <div class="step reveal"><div><b>Tekshirasiz</b><p>Birinchi variantni ko‘rasiz, istaklaringiz bo‘yicha tuzatamiz.</p></div></div>
+  <div class="step reveal"><div><b>Natija</b><p>Tayyor faylni olasiz yoki sahifangizda e’lon qilinadi.</p></div></div>
+</div>
+
+<h2 class="reveal"><small>FOYDALI</small>Reels uchun 8 ta maslahat</h2>
+<p class="sec-sub reveal">O‘zim ishlatadigan oddiy, lekin samarali qoidalar.</p>
+<div class="tips">
+  <div class="tip reveal"><div class="t">⏱️ Birinchi 2–3 soniya</div><p>Odam videoni davom ettirish-ettirmasligini shu vaqtda hal qiladi. Eng qiziq gapni boshida ayting.</p></div>
+  <div class="tip o reveal"><div class="t">💬 Subtitr qo‘ying</div><p>Ko‘pchilik videoni ovozsiz ko‘radi. Yirik, o‘qilishi oson subtitr tomoshani uzaytiradi.</p></div>
+  <div class="tip reveal"><div class="t">📐 9:16 formati</div><p>Reels uchun 1080×1920 vertikal format. Muhim narsalarni ekran markaziga joylang.</p></div>
+  <div class="tip o reveal"><div class="t">✂️ Qisqa kesishlar</div><p>Har 2–3 soniyada kadr yoki burchak o‘zgarsa, video jonli ko‘rinadi.</p></div>
+  <div class="tip reveal"><div class="t">🎵 Musiqa va ritm</div><p>Kesishlarni musiqa zarbiga moslang — video “oqib” ketadi.</p></div>
+  <div class="tip o reveal"><div class="t">📣 Chaqiriq bilan tugating</div><p>Oxirida aniq ayting: “obuna bo‘ling”, “izohda yozing” yoki “do‘stingizga yuboring”.</p></div>
+  <div class="tip reveal"><div class="t">📅 Muntazamlik</div><p>Kam-kam lekin doimiy joylash bitta “zo‘r” videodan foydaliroq.</p></div>
+  <div class="tip o reveal"><div class="t">🎯 Reklamadan oldin sinang</div><p>Oddiy postlarda yaxshi ishlagan videoni reklamaga qo‘ysangiz, natija yaxshiroq bo‘ladi.</p></div>
+</div>
+
+<h2 class="reveal"><small>G‘OYA GENERATORI</small>Reels uchun g‘oya kerakmi?</h2>
+<div class="tool reveal">
+  <label for="niche">Sohangizni tanlang — g‘oya tayyor:</label>
+  <div class="row"><select id="niche">
+    <option value="dokon">Do‘kon / savdo</option><option value="xizmat">Xizmat ko‘rsatish</option><option value="kafe">Kafe / oshxona</option>
+    <option value="yangilik">Yangiliklar sahifasi</option><option value="shaxsiy">Shaxsiy blog</option><option value="talim">Ta’lim / kurslar</option>
+  </select><button class="btn" id="gen" type="button">✨ G‘oya ber</button></div>
+  <div class="idea" id="idea">Tugmani bosing 👆</div>
+</div>
+
+<h2 class="reveal"><small>SAVOLLAR</small>Ko‘p so‘raladigan savollar</h2>
+<details class="reveal"><summary>Narxi qancha?</summary><p>Narx ish hajmiga bog‘liq: videoning uzunligi, grafika miqdori, SMM uchun postlar soni yoki reklama muddati. Yozing — aniq narxni aytaman.</p></details>
+<details class="reveal"><summary>Bitta video qancha vaqtda tayyor bo‘ladi?</summary><p>Oddiy Reels odatda tez tayyor bo‘ladi. 3D grafika va murakkab animatsiyali videolarga ko‘proq vaqt kerak. Muddatni oldindan kelishamiz.</p></details>
+<details class="reveal"><summary>Masofadan ishlaysizmi?</summary><p>Ha, hammasi onlayn: materiallarni yuborasiz, tayyor videoni olasiz. Qaysi shaharda yoki davlatda bo‘lishingizning farqi yo‘q.</p></details>
+<details class="reveal"><summary>Qaysi tillarda?</summary><p>O‘zbek va turk tilidagi videolar va sahifalar bilan ishlayman.</p></details>
+<details class="reveal"><summary>Tuzatish kiritsa bo‘ladimi?</summary><p>Albatta. Birinchi variantni ko‘rib, fikringizni aytasiz — kelishilgan doirada tuzatib beraman.</p></details>
+<details class="reveal"><summary>Videoga nimalar yuborishim kerak?</summary><p>Videolar, rasmlar, logotip va matn yoki ovoz. Yoqqan namuna video bo‘lsa, havolasini ham yuboring.</p></details>
+
+<h2 class="reveal"><small>AKKAUNTLARIM</small>Kuzatib boring</h2>
+<div class="accs">
+  <a class="acc reveal" href="https://www.instagram.com/i0zbek/" target="_blank" rel="noopener"><span class="em" style="background:linear-gradient(135deg,#ff8a1f,#d62976)">📸</span><span><b>@i0zbek</b><small>Instagram · ishlarim</small></span></a>
+  <a class="acc reveal" href="https://www.instagram.com/0ffuz/" target="_blank" rel="noopener"><span class="em" style="background:linear-gradient(135deg,#d8202a,#7a1018)">📰</span><span><b>OFFUZ</b><small>Instagram · Turkiyadagi yangiliklar</small></span></a>
+  <a class="acc reveal" href="https://www.instagram.com/seffaf_yikama.tr/" target="_blank" rel="noopener"><span class="em" style="background:linear-gradient(135deg,#1e9bd8,#0d4f8a)">🧼</span><span><b>Şeffaf Yıkama</b><small>Instagram · yuvish xizmati</small></span></a>
+  <a class="acc reveal" href="https://www.youtube.com/@muzacom" target="_blank" rel="noopener"><span class="em" style="background:linear-gradient(135deg,#ff2a2a,#a30d0d)">▶️</span><span><b>Muzacom</b><small>YouTube kanal</small></span></a>
+  <a class="acc reveal" href="../" ><span class="em" style="background:linear-gradient(135deg,#5ad7ff,#1e5bd8)">📱</span><span><b>Muzacom do‘koni</b><small>Telefonlar onlayn do‘koni</small></span></a>
+</div>
+
+<h2 class="reveal"><small>DAM OLISH</small>Men yasagan o‘yinlar</h2>
+<div class="games reveal"><a class="chip" href="../run/">🏃 Muzaffar Run</a><a class="chip" href="../futbol/">⚽ Futbol</a><a class="chip" href="../chayka/">🕊️ Chayka</a><a class="chip" href="../shaxmat/">♟️ Shaxmat</a></div>
+
+<section class="final reveal">
+  <h2>Loyihangiz bormi?</h2>
+  <p>Video, sahifa yoki reklama — qisqa yozing, birga o‘ylab ko‘ramiz.</p>
+  <a class="btn" href="https://ig.me/m/i0zbek" target="_blank" rel="noopener">💬 Instagram'da yozish →</a>
+</section>
+<footer>© Muzaffar · @i0zbek</footer>
+</div>
 <script>
-"use strict";
-const canvas = document.getElementById("wave");
-const ctx = canvas.getContext("2d");
-const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-let w = 0, h = 0, px = -1, py = 0;
-
-function size() {
-  const r = canvas.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2);
-  w = r.width; h = r.height;
-  canvas.width = w * d; canvas.height = h * d;
-  ctx.setTransform(d, 0, 0, d, 0, 0);
-}
-
-function draw(t) {
-  ctx.clearRect(0, 0, w, h);
-  const mid = h * 0.2, bars = Math.floor(w / 7);
-  for (let i = 0; i < bars; i++) {
-    const x = i * 7 + 2;
-    const near = px < 0 ? 0 : Math.max(0, 1 - Math.abs(x - px) / 130);
-    const v = Math.abs(Math.sin(i * 0.19 + t * 1.5) * Math.sin(i * 0.053 - t * 0.7));
-    const a = 8 + v * h * 0.25 + near * 42;
-    const hot = i / bars;
-    ctx.fillStyle = "rgba(" + Math.round(90 + 165 * hot) + "," + Math.round(215 - 77 * hot) + "," + Math.round(255 - 224 * hot) + "," + (0.42 + near * 0.5) + ")";
-    ctx.fillRect(x, mid - a / 2, 3, a);
-  }
-}
-
-function loop(ms) { draw(ms / 1000); requestAnimationFrame(loop); }
-size();
-addEventListener("resize", () => { size(); if (still) draw(1.2); });
-if (still) draw(1.2); else requestAnimationFrame(loop);
-
-const hero = canvas.parentElement;
-hero.addEventListener("pointermove", e => { const r = canvas.getBoundingClientRect(); px = e.clientX - r.left; py = e.clientY - r.top; });
-hero.addEventListener("pointerleave", () => { px = -1; });
-document.querySelectorAll(".panel").forEach(p => p.addEventListener("pointermove", e => {
-  const r = p.getBoundingClientRect();
-  p.style.setProperty("--x", (e.clientX - r.left) + "px");
-  p.style.setProperty("--y", (e.clientY - r.top) + "px");
-}));
+const IDEAS={
+ dokon:["Mahsulotni 5 soniyada “oldin/keyin” ko‘rinishida ko‘rsating.","“Eng ko‘p sotilgan 3 ta mahsulot” — tez kesishlar bilan.","Buyurtma qanday qadoqlanishini orqa sahnadan ko‘rsating.","Mijoz savoliga Reels bilan javob bering: “Bu qancha turadi?”","Yangi kelgan tovarni qutidan ochish (unboxing)."],
+ xizmat:["Ish jarayonini 15 soniyada tezlashtirib ko‘rsating.","“Ko‘p qilinadigan 3 ta xato” — har biriga bittadan kadr.","Natijani “oldin/keyin” bilan solishtiring.","Bir kunlik ish — ertalabdan kechgacha.","Mijozlar ko‘p beradigan savolga qisqa javob."],
+ kafe:["Taom tayyorlanishini yaqin plandan, musiqa ritmida ko‘rsating.","“Menyudagi eng mazali 3 ta taom” reytingi.","Oshpazning bir kunini ko‘rsating.","Taomni mehmon stoliga yetib kelguncha kuzating.","“Buni sinab ko‘rganmisiz?” — yangi taom taqdimoti."],
+ yangilik:["Bitta muhim yangilikni 3 ta faktda tushuntiring.","“Bilasizmi?” formatida qiziq fakt + grafika.","Qonun yoki qoidadagi o‘zgarishni oddiy tilda, subtitr bilan.","Haftaning 5 ta asosiy yangiligi — tez kesishlar.","Tomoshabin savoliga javob — izohdan olingan savol."],
+ shaxsiy:["Bir kunim 30 soniyada.","“Men bilgan 3 ta foydali narsa” — shaxsiy tajriba.","Oldingi va hozirgi men — kichik hikoya.","Ish joyim / jihozlarim bilan tanishtiruv.","Obunachilar savoliga javob."],
+ talim:["Bitta mavzuni 30 soniyada tushuntiring.","Ko‘p uchraydigan xatoni ko‘rsatib, to‘g‘risini ayting.","“3 ta usul” — har birini qisqa misol bilan.","Viktorina: savol bering, javobni oxirida ko‘rsating.","O‘quvchining natijasi — oldin va keyin."]
+};
+const idea=document.getElementById('idea');let last=-1;
+document.getElementById('gen').onclick=()=>{const a=IDEAS[document.getElementById('niche').value];let i;do{i=Math.floor(Math.random()*a.length)}while(i===last&&a.length>1);last=i;idea.innerHTML='<b>G‘oya:</b> '+a[i]+'<br><small style="color:#93a3bd">Shunday video kerak bo‘lsa — yozing, montaj qilib beraman.</small>'};
+const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1}):null;
+document.querySelectorAll('.reveal').forEach(el=>io?io.observe(el):el.classList.add('in'));
 </script>
 </body>
 </html>
