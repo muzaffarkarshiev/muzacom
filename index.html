@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Muzacom: telefonlar onlayn do'koni</title>
+<meta property="og:site_name" content="Muzacom">
+<meta property="og:locale" content="uz_UZ">
+<meta property="og:image" content="https://muzaffarkarshiev.github.io/muzacom/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ef7d00">
 <meta name="description" content="Muzacom telefonlar onlayn do'koni: iPhone, Samsung, Xiaomi, Redmi va Poco telefonlari. Telefonni tanlang va narxini so'rang.">
 <link rel="canonical" href="https://muzaffarkarshiev.github.io/muzacom/">
 <meta property="og:title" content="Muzacom: telefonlar onlayn do'koni">
@@ -13,6 +20,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ef7d00'/%3E%3Crect x='10' y='5' width='12' height='22' rx='3' fill='%23fff'/%3E%3C/svg%3E">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Store","name":"Muzacom","url":"https://muzaffarkarshiev.github.io/muzacom/","description":"Telefonlar onlayn do'koni","sameAs":["https://t.me/muzacom_bot"]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 /* Layout idea: a shop shelf. Brand chips on top, phones as tall product tiles, the basket always one tap away. */
@@ -38,19 +46,29 @@ button { cursor: pointer; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
 .notice { background: var(--warn-bg); color: var(--warn-ink); font-size: 14px; padding: 8px 16px; text-align: center; }
-header { position: sticky; top: 0; z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+header { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--surface) 88%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 12px; padding-bottom: 12px; }
-.logo { font: 700 20px var(--display); letter-spacing: -.01em; }
+.logo { font: 700 20px var(--display); letter-spacing: -.01em; color: inherit; text-decoration: none; }
 .logo span { color: var(--accent); }
-.basket { background: var(--accent); color: var(--on-accent); border: 0; border-radius: 8px; padding: 9px 14px; font-weight: 800; }
+.basket { background: var(--accent); color: var(--on-accent); border: 0; border-radius: 8px; padding: 9px 14px; font-weight: 800; transition: transform .15s; }
+.basket.bump { transform: scale(1.08); }
 .intro { padding-top: 24px; padding-bottom: 8px; }
 h1 { font: 700 clamp(22px, 5vw, 32px)/1.2 var(--display); margin: 0 0 6px; text-wrap: balance; }
 .intro p { margin: 0; color: var(--muted); }
-.chips { display: flex; gap: 8px; overflow-x: auto; padding-top: 14px; padding-bottom: 14px; }
+.how { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; counter-reset: h; }
+.how li { counter-increment: h; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font-size: 14px; line-height: 1.35; }
+.how li::before { content: counter(h); display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--on-accent); font-weight: 800; font-size: 13px; margin-bottom: 6px; }
+.how b { display: block; }
+.how span { color: var(--muted); }
+@media (max-width: 520px) { .how { grid-template-columns: 1fr; } .how li { display: grid; grid-template-columns: 24px 1fr; gap: 0 10px; align-items: center; } .how li::before { margin: 0; grid-row: span 2; } }
+.chips { display: flex; gap: 8px; overflow-x: auto; padding-top: 14px; padding-bottom: 14px; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
 .chip { flex: none; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; font-weight: 600; }
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 12px; padding-bottom: 40px; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+@media (max-width: 400px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 8px; transition: transform .15s, box-shadow .15s, border-color .15s; }
+.card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 10px 24px rgba(239,125,0,.14); }
 .shot { height: 150px; display: flex; align-items: center; justify-content: center; background: var(--bg); border-radius: 6px; }
 .phone { width: 62px; height: 122px; border-radius: 12px; border: 3px solid var(--ink); background: linear-gradient(160deg, var(--c1), var(--c2)); position: relative; }
 .phone::before { content: ""; position: absolute; top: 5px; left: 50%; width: 16px; height: 4px; margin-left: -8px; border-radius: 3px; background: var(--ink); }
@@ -59,7 +77,8 @@ h1 { font: 700 clamp(22px, 5vw, 32px)/1.2 var(--display); margin: 0 0 6px; text-
 .spec { color: var(--muted); font-size: 14px; }
 .price { font-weight: 800; font-size: 17px; font-variant-numeric: tabular-nums; }
 .add { background: transparent; border: 1.5px solid var(--accent); color: var(--ink); border-radius: 8px; padding: 8px; font-weight: 800; }
-.add:hover { background: var(--accent); color: var(--on-accent); }
+.add { transition: background .15s, color .15s; }
+.add:hover, .add.ok { background: var(--accent); color: var(--on-accent); }
 .panel { position: fixed; inset: 0; z-index: 10; background: rgba(30,16,4,.55); display: none; justify-content: flex-end; }
 .panel.open { display: flex; }
 .sheet { background: var(--surface); width: min(440px, 100%); height: 100%; overflow-y: auto; padding: 18px 16px 28px; display: flex; flex-direction: column; gap: 14px; }
@@ -80,25 +99,39 @@ input, textarea { background: var(--bg); border: 1px solid var(--line); border-r
 .muted { color: var(--muted); font-size: 14px; margin: 0; }
 .err { color: #c0352b; font-size: 14px; margin: 0; }
 footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; padding: 16px 0 26px; }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: space-between; }
+footer a { color: var(--ink); font-weight: 600; text-decoration: none; }
+footer a:hover { color: var(--accent); }
+footer nav { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+body.lock { overflow: hidden; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } .card:hover { transform: none; } }
 </style>
 </head>
 <body>
 <header><div class="wrap bar">
-  <div class="logo">Muza<span>com</span></div>
-  <button class="basket" id="openCart" type="button">So'rovlar · <span id="count">0</span></button>
+  <a class="logo" href="./" aria-label="Muzacom bosh sahifa">Muza<span>com</span></a>
+  <button class="basket" id="openCart" type="button" aria-haspopup="dialog">So'rovlar · <span id="count">0</span></button>
 </div></header>
 
 <main>
   <section class="wrap intro">
     <h1>Muzacom: telefonlar onlayn do'koni</h1>
     <p>Telefonni tanlang va narxini so'rang. Narxi va mavjudligini sizga aytamiz.</p>
+    <ol class="how">
+      <li><b>Tanlang</b><span>Yoqqan telefonni ro'yxatga qo'shing</span></li>
+      <li><b>So'rov yuboring</b><span>Ism va telefon raqamingizni qoldiring</span></li>
+      <li><b>Javob oling</b><span>Narxi va mavjudligini aytamiz</span></li>
+    </ol>
   </section>
-  <div class="wrap chips" id="chips"></div>
-  <div class="wrap grid" id="grid"></div>
+  <div class="wrap chips" id="chips" role="group" aria-label="Brend bo'yicha saralash"></div>
+  <div class="wrap grid" id="grid" aria-live="polite"></div>
+  <noscript><p class="wrap">Katalogni ko'rish uchun brauzerda JavaScript yoqilgan bo'lishi kerak. Savollar uchun Telegram: <a href="https://t.me/muzacom_bot">@muzacom_bot</a></p></noscript>
 </main>
 
-<footer><div class="wrap">Muzacom. Savollar uchun Telegram: @muzacom_bot</div></footer>
+<footer><div class="wrap">
+  <span>Muzacom. Savollar uchun Telegram: <a href="https://t.me/muzacom_bot" target="_blank" rel="noopener">@muzacom_bot</a></span>
+  <nav aria-label="Sayt bo'limlari"><a href="bio/">Muzaffar haqida</a><a href="i0zbek/">Montaj · SMM · Target</a><a href="video/">Videolar</a></nav>
+</div></footer>
 
 <div class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
   <div class="sheet" id="sheet"></div>
@@ -142,7 +175,11 @@ function renderChips() {
     const b = el("button", "chip", n);
     b.type = "button";
     b.setAttribute("aria-pressed", n === filter);
-    b.onclick = () => { filter = n; renderChips(); renderGrid(); };
+    b.onclick = () => {
+      filter = n;
+      for (const c of $("chips").children) c.setAttribute("aria-pressed", c === b);
+      renderGrid();
+    };
     $("chips").appendChild(b);
   }
 }
@@ -165,8 +202,9 @@ function renderGrid() {
     b.onclick = () => {
       cart[p.id] = (cart[p.id] || 0) + 1;
       saveCart(); updateCount();
-      b.textContent = "Qo'shildi ✓";
-      setTimeout(() => { b.textContent = "Narxini so'rash"; }, 1100);
+      b.textContent = "Qo'shildi ✓"; b.classList.add("ok");
+      $("openCart").classList.add("bump");
+      setTimeout(() => { b.textContent = "Narxini so'rash"; b.classList.remove("ok"); $("openCart").classList.remove("bump"); }, 1100);
     };
     c.appendChild(b);
     $("grid").appendChild(c);
@@ -180,8 +218,19 @@ function head(title) {
   h.append(t, x);
   return h;
 }
-function openPanel() { $("panel").classList.add("open"); renderCart(); }
-function closePanel() { $("panel").classList.remove("open"); }
+let lastFocus = null;
+function isOpen() { return $("panel").classList.contains("open"); }
+function openPanel() {
+  lastFocus = document.activeElement;
+  $("panel").classList.add("open"); document.body.classList.add("lock");
+  renderCart();
+  const x = $("sheet").querySelector(".close"); if (x) x.focus();
+}
+function closePanel() {
+  if (!isOpen()) return;
+  $("panel").classList.remove("open"); document.body.classList.remove("lock");
+  if (lastFocus && lastFocus.focus) lastFocus.focus();
+}
 
 function renderCart() {
   const s = $("sheet"); s.textContent = "";
@@ -205,21 +254,23 @@ function renderCart() {
   f.noValidate = true;
   const field = (id, text, tag, ph) => {
     const l = el("label", "", text);
-    const i = document.createElement(tag); i.id = id; if (ph) i.placeholder = ph;
+    const i = document.createElement(tag); i.id = id; i.name = id; i.required = true; if (ph) i.placeholder = ph;
     if (tag === "textarea") i.rows = 2;
     l.appendChild(i); f.appendChild(l); return i;
   };
-  const name = field("custName", "Ismingiz", "input");
+  const name = field("custName", "Ismingiz", "input"); name.autocomplete = "name";
   const phone = field("custPhone", "Telefon raqamingiz", "input", "+998 90 123 45 67");
-  phone.type = "tel";
-  const addr = field("custAddr", "Yetkazish manzili", "textarea");
-  const trap = document.createElement("input"); trap.type = "text"; trap.tabIndex = -1; trap.autocomplete = "off"; trap.style.display = "none"; f.appendChild(trap);
-  const err = el("p", "err"); f.appendChild(err);
+  phone.type = "tel"; phone.autocomplete = "tel"; phone.inputMode = "tel";
+  const addr = field("custAddr", "Yetkazish manzili", "textarea"); addr.autocomplete = "street-address";
+  const trap = document.createElement("input"); trap.type = "text"; trap.tabIndex = -1; trap.autocomplete = "off"; trap.style.display = "none"; trap.setAttribute("aria-hidden", "true"); f.appendChild(trap);
+  const err = el("p", "err"); err.setAttribute("role", "alert"); f.appendChild(err);
   const go = el("button", "primary", "So'rov yuborish"); go.type = "submit"; f.appendChild(go);
+  f.oninput = () => { err.textContent = ""; };
   f.onsubmit = e => {
     e.preventDefault();
     if (!name.value.trim() || phone.value.replace(/\D/g, "").length < 7 || !addr.value.trim()) {
       err.textContent = "Ism, telefon raqam va manzilni to'ldiring.";
+      (!name.value.trim() ? name : phone.value.replace(/\D/g, "").length < 7 ? phone : addr).focus();
       return;
     }
     submitOrder(name.value.trim(), phone.value.trim(), addr.value.trim(), go, err, trap.value);
@@ -273,7 +324,16 @@ function renderSend(text) {
 
 $("openCart").onclick = openPanel;
 $("panel").onclick = e => { if (e.target === $("panel")) closePanel(); };
-document.addEventListener("keydown", e => { if (e.key === "Escape") closePanel(); });
+document.addEventListener("keydown", e => {
+  if (!isOpen()) return;
+  if (e.key === "Escape") { closePanel(); return; }
+  if (e.key !== "Tab") return;
+  const f = [...$("sheet").querySelectorAll("button, a[href], input:not([tabindex='-1']), textarea")].filter(x => !x.disabled && x.offsetParent);
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+});
 renderChips(); renderGrid(); updateCount();
 </script>
 </body>
