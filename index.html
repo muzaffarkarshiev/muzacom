@@ -75,7 +75,8 @@ h1 { font: 700 clamp(22px, 5vw, 32px)/1.2 var(--display); margin: 0 0 6px; text-
 .tag { align-self: flex-start; font-size: 12px; font-weight: 800; padding: 1px 7px; border-radius: 4px; background: var(--warn-bg); color: var(--warn-ink); }
 .name { font-weight: 800; line-height: 1.3; flex: 1; }
 .spec { color: var(--muted); font-size: 14px; }
-.price { font-weight: 800; font-size: 17px; font-variant-numeric: tabular-nums; }
+.price { font-weight: 800; font-size: 17px; font-variant-numeric: tabular-nums; line-height: 1.25; }
+.price small { display: block; font-weight: 600; font-size: 12px; color: var(--muted); }
 .add { background: transparent; border: 1.5px solid var(--accent); color: var(--ink); border-radius: 8px; padding: 8px; font-weight: 800; }
 .add { transition: background .15s, color .15s; }
 .add:hover, .add.ok { background: var(--accent); color: var(--on-accent); }
@@ -116,11 +117,11 @@ body.lock { overflow: hidden; }
 <main>
   <section class="wrap intro">
     <h1>Muzacom: telefonlar onlayn do'koni</h1>
-    <p>Telefonni tanlang va narxini so'rang. Narxi va mavjudligini sizga aytamiz.</p>
+    <p>Telefonni tanlang va so'rov yuboring. Ko'rsatilgan narxlar taxminiy: aniq narxi va mavjudligini sizga aytamiz.</p>
     <ol class="how">
       <li><b>Tanlang</b><span>Yoqqan telefonni ro'yxatga qo'shing</span></li>
       <li><b>So'rov yuboring</b><span>Ism va telefon raqamingizni qoldiring</span></li>
-      <li><b>Javob oling</b><span>Narxi va mavjudligini aytamiz</span></li>
+      <li><b>Javob oling</b><span>Aniq narxi va mavjudligini aytamiz</span></li>
     </ol>
   </section>
   <div class="wrap chips" id="chips" role="group" aria-label="Brend bo'yicha saralash"></div>
@@ -139,19 +140,19 @@ body.lock { overflow: hidden; }
 
 <script>
 "use strict";
-/* Mahsulotlarni shu ro'yxatdan o'zgartiring. */
+/* Mahsulotlarni shu ro'yxatdan o'zgartiring. price: taxminiy narx so'mda (0 bo'lsa "Narxini so'rang" chiqadi). */
 const BOT = "muzacom_bot";
 const ORDER_URL = "https://muzacom-orders.muzaffarkharshiev.workers.dev/";
 const PRODUCTS = [
-  { id: 1, brand: "iPhone", name: "iPhone 15", spec: "128 GB, qora", price: 0, c: ["#3a3f47", "#14181d"] },
-  { id: 2, brand: "iPhone", name: "iPhone 13", spec: "128 GB, oq", price: 0, c: ["#f4f1ea", "#c9c4b8"] },
-  { id: 3, brand: "Samsung", name: "Samsung Galaxy A55", spec: "8/256 GB, qora", price: 0, c: ["#2f3a52", "#111827"] },
-  { id: 4, brand: "Samsung", name: "Samsung Galaxy S24", spec: "8/256 GB, kulrang", price: 0, c: ["#a9b0b8", "#5f6770"] },
-  { id: 5, brand: "Xiaomi", name: "Xiaomi 14T", spec: "12/256 GB, qora", price: 0, c: ["#34312d", "#121110"] },
-  { id: 6, brand: "Redmi / Poco", name: "Redmi Note 13", spec: "8/256 GB, ko'k", price: 0, c: ["#5da9e9", "#1f5fa8"] },
-  { id: 7, brand: "Redmi / Poco", name: "Poco X6", spec: "8/256 GB, qora", price: 0, c: ["#2b2b33", "#0e0e12"] },
-  { id: 8, brand: "Boshqa", name: "Honor 90", spec: "8/256 GB, yashil", price: 0, c: ["#5fbf9a", "#1d6b52"] },
-  { id: 9, brand: "Ishlatilgan", name: "iPhone 11", spec: "64 GB, qora, ishlatilgan", price: 0, c: ["#4a4d55", "#1c1e22"] }
+  { id: 1, brand: "iPhone", name: "iPhone 15", spec: "128 GB, qora", price: 10300000, c: ["#3a3f47", "#14181d"] },
+  { id: 2, brand: "iPhone", name: "iPhone 13", spec: "128 GB, oq", price: 7300000, c: ["#f4f1ea", "#c9c4b8"] },
+  { id: 3, brand: "Samsung", name: "Samsung Galaxy A55", spec: "8/256 GB, qora", price: 4800000, c: ["#2f3a52", "#111827"] },
+  { id: 4, brand: "Samsung", name: "Samsung Galaxy S24", spec: "8/256 GB, kulrang", price: 10000000, c: ["#a9b0b8", "#5f6770"] },
+  { id: 5, brand: "Xiaomi", name: "Xiaomi 14T", spec: "12/256 GB, qora", price: 6900000, c: ["#34312d", "#121110"] },
+  { id: 6, brand: "Redmi / Poco", name: "Redmi Note 13", spec: "8/256 GB, ko'k", price: 2600000, c: ["#5da9e9", "#1f5fa8"] },
+  { id: 7, brand: "Redmi / Poco", name: "Poco X6", spec: "8/256 GB, qora", price: 3300000, c: ["#2b2b33", "#0e0e12"] },
+  { id: 8, brand: "Boshqa", name: "Honor 90", spec: "8/256 GB, yashil", price: 5000000, c: ["#5fbf9a", "#1d6b52"] },
+  { id: 9, brand: "Ishlatilgan", name: "iPhone 11", spec: "64 GB, qora, ishlatilgan", price: 2000000, c: ["#4a4d55", "#1c1e22"] }
 ];
 const IS_TEST = false;
 
@@ -196,7 +197,9 @@ function renderGrid() {
     if (IS_TEST) c.appendChild(el("span", "tag", "TEST"));
     c.appendChild(el("div", "name", p.name));
     c.appendChild(el("div", "spec", p.spec));
-    c.appendChild(el("div", "price", "Narxini so'rang"));
+    const pr = el("div", "price", p.price ? "≈ " + money(p.price) : "Narxini so'rang");
+    if (p.price) pr.appendChild(el("small", "", "taxminiy narx"));
+    c.appendChild(pr);
     const b = el("button", "add", "Narxini so'rash");
     b.type = "button";
     b.onclick = () => {
@@ -239,7 +242,7 @@ function renderCart() {
   for (const { p, qty } of items()) {
     const r = el("div", "row");
     r.appendChild(el("div", "t", p.name + ", " + p.spec));
-    r.appendChild(el("div", "sum", ""));
+    r.appendChild(el("div", "sum", p.price ? "≈ " + money(p.price * qty) : ""));
     const q = el("div", "qty");
     const minus = el("button", "", "−"); minus.type = "button"; minus.setAttribute("aria-label", "Kamaytirish");
     minus.onclick = () => { qty > 1 ? cart[p.id]-- : delete cart[p.id]; saveCart(); updateCount(); renderCart(); };
@@ -250,6 +253,12 @@ function renderCart() {
     s.appendChild(r);
   }
 
+  if (total() > 0) {
+    const tot = el("div", "total");
+    tot.append(el("span", "", "Taxminan jami"), el("span", "", "≈ " + money(total())));
+    s.appendChild(tot);
+    s.appendChild(el("p", "muted", "Narxlar taxminiy. Aniq narxni so'rovingizga javobda aytamiz."));
+  }
   const f = document.createElement("form");
   f.noValidate = true;
   const field = (id, text, tag, ph) => {
