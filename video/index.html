@@ -4,11 +4,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Videolarim · Muzaffar @i0zbek</title>
+<link rel="canonical" href="https://muzaffarkarshiev.github.io/muzacom/video/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Muzacom">
+<meta property="og:locale" content="uz_UZ">
+<meta property="og:image" content="https://muzaffarkarshiev.github.io/muzacom/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#070b14">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070b14'/%3E%3Cpath d='M7 23V9h4l5 8 5-8h4v14h-4v-8l-5 7-5-7v8z' fill='%23ff8a1f'/%3E%3C/svg%3E">
 <meta name="description" content="Muzaffar (@i0zbek) tayyorlagan reels, reklama va montaj ishlari.">
 <meta property="og:title" content="Videolarim · Muzaffar @i0zbek">
 <meta property="og:description" content="Reels, reklama va montaj ishlari.">
 <meta property="og:url" content="https://muzaffarkarshiev.github.io/muzacom/video/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#070b14;--panel:#0f1727;--panel2:#142036;--ink:#eef4ff;--muted:#93a3bd;--acc:#ff8a1f;--ice:#5ad7ff;--line:#24314a;
@@ -28,7 +39,9 @@ h1 b{color:var(--acc)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
 .card{position:relative;border-radius:16px;overflow:hidden;background:var(--panel);border:1px solid var(--line);cursor:pointer;transition:transform .15s,border-color .15s;text-align:left;padding:0;color:inherit;font:inherit}
 .card:hover{transform:translateY(-3px);border-color:var(--acc)}
-.card video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;background:#000;pointer-events:none}
+.card img{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;background:#000}
+.card:focus-visible,.back:focus-visible,.cta:focus-visible,#close:focus-visible{outline:2px solid var(--ice);outline-offset:3px}
+body.lock{overflow:hidden}
 .card .shade{position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(0,0,0,.85))}
 .card .pl{position:absolute;left:50%;top:42%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;background:rgba(255,138,31,.92);display:grid;place-items:center;box-shadow:0 6px 24px rgba(0,0,0,.4)}
 .card .pl:after{content:"";border-left:16px solid #1a0d00;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
@@ -59,7 +72,8 @@ footer{text-align:center;color:var(--muted);font-size:13px;margin-top:20px}
     <span style="font-size:26px">💬</span><span><b>Sizga ham shunday video kerakmi?</b><small>Instagram'da yozing — narx va muddatni kelishamiz</small></span><span class="arr">→</span></a>
   <footer>© Muzaffar · @i0zbek</footer>
 </div>
-<div id="modal"><button id="close" aria-label="Yopish">×</button><video id="mv" controls playsinline></video></div>
+<noscript><p class="sub">Videolarni ko‘rish uchun brauzerda JavaScript yoqilgan bo‘lishi kerak.</p></noscript>
+<div id="modal" role="dialog" aria-modal="true" aria-label="Video"><button id="close" type="button" aria-label="Yopish">×</button><video id="mv" controls playsinline preload="none"></video></div>
 <script>
 const V=[
   ['montaj-v3','Professional montaj','Montaj'],
@@ -71,16 +85,36 @@ const V=[
   ['darknet','Darknet nima?','Illyustratsiya']
 ];
 const grid=document.getElementById('grid'),modal=document.getElementById('modal'),mv=document.getElementById('mv');
+let opener=null;
+function show(f,t,push){
+  opener=document.activeElement;
+  mv.poster=f+'.jpg';mv.src=f+'.mp4';modal.setAttribute('aria-label',t);
+  modal.classList.add('on');document.body.classList.add('lock');
+  document.getElementById('close').focus();
+  mv.play().catch(()=>{});
+  if(push)try{history.replaceState(null,'','#'+f)}catch(e){}
+}
 for(const[f,t,tag]of V){
-  const b=document.createElement('button');b.className='card';b.setAttribute('aria-label',t);
-  b.innerHTML=`<video src="${f}.mp4#t=1.5" poster="${f}.jpg" muted playsinline preload="metadata"></video><span class="shade"></span><span class="tag">${tag}</span><span class="pl"></span><span class="t"><b>${t}</b><small>@i0zbek</small></span>`;
-  b.onclick=()=>{mv.src=f+'.mp4';modal.classList.add('on');mv.play().catch(()=>{})};
+  const b=document.createElement('button');b.className='card';b.type='button';b.id='v-'+f;b.setAttribute('aria-label',t+' — videoni ochish');
+  const img=document.createElement('img');img.src=f+'.jpg';img.alt='';img.loading='lazy';img.decoding='async';img.width=360;img.height=640;
+  b.appendChild(img);
+  b.insertAdjacentHTML('beforeend','<span class="shade"></span><span class="tag"></span><span class="pl"></span><span class="t"><b></b><small>@i0zbek</small></span>');
+  b.querySelector('.tag').textContent=tag;b.querySelector('b').textContent=t;
+  b.onclick=()=>show(f,t,true);
   grid.appendChild(b);
 }
-function shut(){mv.pause();mv.removeAttribute('src');mv.load();modal.classList.remove('on')}
+function shut(){
+  if(!modal.classList.contains('on'))return;
+  mv.pause();mv.removeAttribute('src');mv.load();modal.classList.remove('on');document.body.classList.remove('lock');
+  try{history.replaceState(null,'',location.pathname)}catch(e){}
+  if(opener&&opener.focus)opener.focus();
+}
 document.getElementById('close').onclick=shut;
 modal.onclick=e=>{if(e.target===modal)shut()};
 addEventListener('keydown',e=>{if(e.key==='Escape')shut()});
+/* Havola orqali kelganda (masalan .../video/#darknet) o'sha videoni ochish */
+const h=decodeURIComponent(location.hash.slice(1)),hit=V.find(v=>v[0]===h);
+if(hit){const c=document.getElementById('v-'+hit[0]);c.scrollIntoView({block:'center'});c.focus({preventScroll:true});show(hit[0],hit[1],false)}
 </script>
 </body>
 </html>
