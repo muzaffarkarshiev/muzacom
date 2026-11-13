@@ -199,6 +199,48 @@ button{color:var(--txt)}
 .ayah .ap:hover{background:var(--gold);color:#fff}
 .ayah.playing .ap{background:var(--g1);color:var(--gold2);border-color:var(--g1)}
 .ayah .a{padding-left:44px}
+
+/* namoz vaqtlari */
+.nz-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;padding:16px;border-radius:20px;color:#fff;margin-bottom:14px;
+ background:radial-gradient(circle at 85% 0%,rgba(243,220,149,.35),transparent 55%),linear-gradient(160deg,#13684f,#062b21)}
+.nz-clock{font-family:"Reem Kufi",sans-serif;font-size:40px;font-weight:700;letter-spacing:1px;line-height:1;color:var(--gold2);font-variant-numeric:tabular-nums}
+.nz-place{font-weight:800;margin-top:6px}.nz-hij{font-size:13px;opacity:.85;margin-top:2px}
+.nz-next{text-align:right;font-size:13px;display:flex;flex-direction:column;gap:4px}
+[dir=rtl] .nz-next{text-align:left}
+.nz-next b{font-family:"Reem Kufi",sans-serif;font-size:24px;color:#fff;font-variant-numeric:tabular-nums}
+.nz-ctl{margin-bottom:12px}
+.seg{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+.seg button{flex:1;font:inherit;font-weight:800;font-size:14px;padding:10px 8px;border-radius:14px;border:1.5px solid #e2d4a8;background:#fff;color:var(--g1);cursor:pointer;min-width:100px}
+.seg button.on{background:var(--g1);color:var(--gold2);border-color:var(--g1)}
+.nz-row{display:flex;gap:8px}
+.nz-row select{flex:1;min-width:0;font:inherit;font-weight:700;padding:10px 12px;border-radius:14px;border:1.5px solid var(--gold);background:#fff;color:var(--g1)}
+.tg2{font:inherit;font-weight:800;font-size:13px;padding:10px 12px;border-radius:14px;border:1.5px solid var(--gold);background:#fbf3dc;color:var(--g1);cursor:pointer;white-space:nowrap}
+.nz-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media(max-width:380px){.nz-grid{grid-template-columns:repeat(2,1fr)}}
+.nzc{position:relative;border:1.5px solid #e2d4a8;border-radius:16px;background:#fff;padding:12px 8px;text-align:center;display:flex;flex-direction:column;gap:2px}
+.nzc .ic{font-size:20px}.nzc .nm{font-weight:800;color:var(--muted);font-size:13px}.nzc b{font-family:"Reem Kufi",sans-serif;font-size:22px;color:var(--g1);font-variant-numeric:tabular-nums}
+.nzc.sun{opacity:.75}
+.nzc.cur{background:linear-gradient(160deg,#17845f,#0b4a38);border-color:var(--gold);box-shadow:0 6px 18px rgba(11,74,56,.35)}
+.nzc.cur .nm,.nzc.cur b{color:var(--gold2)}
+.nzc em{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-style:normal;font-size:11px;font-weight:800;background:var(--gold);color:var(--g0);border-radius:99px;padding:2px 8px}
+.nzc.nxt{border-color:var(--gold);border-style:dashed}
+.nz-src{font-size:12px;color:var(--muted);margin:8px 2px 16px}
+.qibla{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:16px;border-radius:20px;background:#fbf3dc;border:1.5px solid #ecdcae;margin-bottom:18px}
+.qibla.aligned{background:#e6f6ec;border-color:var(--ok)}
+.qdial-wrap{width:170px;height:170px;flex:none;margin:0 auto}
+.qdial{width:100%;height:100%;transition:transform .2s linear}
+.qdial svg{width:100%;height:100%}
+#qNeedle{transition:transform .4s}
+.qinfo{flex:1;min-width:180px}.qinfo h3{margin:0 0 4px;color:var(--g1)}
+.qdeg{font-family:"Reem Kufi",sans-serif;font-size:36px;font-weight:700;color:var(--g1)}
+.qsm{font-size:13px;color:var(--muted);margin:2px 0}
+.nz-h{color:var(--g1);margin:6px 0 10px;font-size:18px}
+.nz-rakat{overflow-x:auto;margin-bottom:16px}
+.nz-rakat table{width:100%;border-collapse:separate;border-spacing:0;font-size:14px;border:1.5px solid #e2d4a8;border-radius:14px;overflow:hidden;background:#fff}
+.nz-rakat th{background:var(--g1);color:var(--gold2);padding:9px 6px;font-size:12.5px}
+.nz-rakat td{padding:9px 6px;text-align:center;border-top:1px solid #f0e6c8;font-weight:700}
+.nz-rakat td:first-child{text-align:start;color:var(--g1)}
+.nz-rakat td.fz{color:#fff;background:#17845f}
 </style>
 </head>
 <body>
@@ -223,11 +265,38 @@ button{color:var(--txt)}
 </div>
 
 <div class="lbar"><button data-lang="uz">🇺🇿 O'zbek</button><button data-lang="tr">🇹🇷 Türkçe</button><button data-lang="ar">🇸🇦 العربية</button><button data-lang="ru">🇷🇺 Русский</button></div>
-<nav class="tabs"><button data-t="quiz" class="on">۞ Viktorina</button><button data-t="quran">📖 Qur'on</button><button data-t="qa">🤲 Savol bering</button><button data-t="hadis">✦ Hadislar</button></nav>
+<nav class="tabs"><button data-t="namoz" class="on">🕌 Namoz</button><button data-t="quiz">۞ Viktorina</button><button data-t="quran">📖 Qur'on</button><button data-t="qa">🤲 Savol bering</button><button data-t="hadis">✦ Hadislar</button></nav>
 <div class="wrap">
 
+<section class="sec" id="s-namoz">
+<div class="sec-h"><span class="sec-n">١</span><span class="sec-t" data-sec="namoz"></span><span class="sec-ar">مواقيت الصلاة</span></div>
+<div class="card" id="namoz">
+  <div class="frame"></div>
+  <p class="sub" id="nzS" style="margin:0 0 12px"></p>
+  <div class="nz-top">
+    <div><div class="nz-clock" id="nzClock">--:--:--</div><div class="nz-place" id="nzPlace"></div><div class="nz-hij" id="nzHij"></div></div>
+    <div class="nz-next"><span id="nzNext"></span><b id="nzLeft"></b></div>
+  </div>
+  <div class="nz-ctl"><div class="seg" id="nzCountry"></div>
+    <div class="nz-row"><select id="nzCity"></select><button class="tg2" id="nzLoc"></button></div></div>
+  <div class="nz-grid" id="nzGrid"></div>
+  <p class="nz-src" id="nzSrc"></p>
+  <div class="qibla" id="qibla">
+    <div class="qdial-wrap"><div class="qdial" id="qDial">
+      <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="94" fill="#fffcf3" stroke="#c9a13b" stroke-width="3"/><circle cx="100" cy="100" r="80" fill="none" stroke="#e2d4a8" stroke-dasharray="2 6"/>
+      <g font-family="Reem Kufi,sans-serif" font-weight="700" font-size="15" text-anchor="middle" fill="#0b4a38"><text x="100" y="26" fill="#c8463a">N</text><text x="178" y="105">E</text><text x="100" y="186">S</text><text x="22" y="105">W</text></g>
+      <g id="qNeedle" style="transform-origin:100px 100px"><path d="M100 30 L108 100 L100 112 L92 100 Z" fill="#13684f"/><rect x="91" y="12" width="18" height="18" rx="2" fill="#111"/><rect x="91" y="16" width="18" height="3" fill="#c9a13b"/></g>
+      <circle cx="100" cy="100" r="6" fill="#c9a13b"/></svg></div></div>
+    <div class="qinfo"><h3 id="qT"></h3><div class="qdeg" id="qDeg"></div><div class="qsm" id="qTxt"></div><div class="qsm" id="qKm"></div>
+      <button class="btn" id="qComp" style="margin-top:10px"></button><p class="qsm" id="qHelp"></p></div>
+  </div>
+  <h3 class="nz-h" id="nzRk"></h3><div class="nz-rakat" id="nzRakat"></div>
+  <h3 class="nz-h" id="nzHd"></h3><div id="nzHadis"></div>
+  <div class="note" id="nzNote"></div>
+</div>
+</section>
 <section class="sec" id="s-quiz">
-<div class="sec-h"><span class="sec-n">١</span><span class="sec-t" data-sec="quiz"></span><span class="sec-ar">مسابقة</span></div>
+<div class="sec-h"><span class="sec-n">٢</span><span class="sec-t" data-sec="quiz"></span><span class="sec-ar">مسابقة</span></div>
 <div class="card" id="home">
   <div class="frame"></div>
   <p class="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
@@ -269,7 +338,7 @@ button{color:var(--txt)}
 </div>
 </section>
 <section class="sec" id="s-quran">
-<div class="sec-h"><span class="sec-n">٢</span><span class="sec-t" data-sec="quran"></span><span class="sec-ar">القرآن الكريم</span></div>
+<div class="sec-h"><span class="sec-n">٣</span><span class="sec-t" data-sec="quran"></span><span class="sec-ar">القرآن الكريم</span></div>
 <div class="card" id="quran">
   <div class="frame"></div>
   <p class="ar">ٱلْقُرْآنُ ٱلْكَرِيمُ</p>
@@ -302,7 +371,7 @@ button{color:var(--txt)}
 </div>
 </section>
 <section class="sec" id="s-qa">
-<div class="sec-h"><span class="sec-n">٣</span><span class="sec-t" data-sec="qa"></span><span class="sec-ar">اسأل</span></div>
+<div class="sec-h"><span class="sec-n">٤</span><span class="sec-t" data-sec="qa"></span><span class="sec-ar">اسأل</span></div>
 <div class="card" id="qa">
   <div class="frame"></div>
   <p class="ar">وَقُل رَّبِّ زِدْنِي عِلْمًا</p>
@@ -318,7 +387,7 @@ button{color:var(--txt)}
 </div>
 </section>
 <section class="sec" id="s-hadis">
-<div class="sec-h"><span class="sec-n">٤</span><span class="sec-t" data-sec="hadis"></span><span class="sec-ar">الأحاديث</span></div>
+<div class="sec-h"><span class="sec-n">٥</span><span class="sec-t" data-sec="hadis"></span><span class="sec-ar">الأحاديث</span></div>
 <div class="card" id="hadis">
   <div class="frame"></div>
   <p class="ar">قَالَ رَسُولُ اللَّهِ ﷺ</p>
@@ -750,10 +819,10 @@ const TP=[
  h:"بني الإسلام على خمس: شهادة أن لا إله إلا الله وأن محمدا رسول الله، وإقام الصلاة، وإيتاء الزكاة، والحج، وصوم رمضان",hm:["Islom besh narsa ustiga qurilgan: Allohdan o'zga iloh yo'q va Muhammad Allohning Rasuli ekaniga guvohlik berish, namozni qoim qilish, zakot berish, haj va Ramazon ro'zasi.","Ислам построен на пяти: свидетельстве, что нет божества, кроме Аллаха, и что Мухаммад — Посланник Аллаха, совершении намаза, выплате закята, хадже и посте в Рамадан.","İslam beş temel üzerine kurulmuştur: Allah'tan başka ilah olmadığına ve Muhammed'in Allah'ın Resulü olduğuna şahitlik etmek, namaz kılmak, zekât vermek, hac ve Ramazan orucu."],src:[["b",8],["m",16]]}
 ];
 const UI={
-uz:{tabs:["۞ Viktorina","📖 Qur'on","✦ Hadislar","🤲 Savol bering"],qh:"Savol bering",qs:"Savolingizni yozing — Qur'on oyatlari va sahih hadislardan javob topib beraman",ph:"Masalan: Ota-onaga qanday munosabatda bo'lish kerak?",ask:"So'rash",ay:"Qur'ondan",hd:"Hadisdan",src:"Manba",ex:["Namoz haqida nima deyilgan?","Qiyin paytda nima qilay?","Gunohlarim kechiriladimi?","Ota-onaga yaxshilik","Rizq haqida","G'azabni qanday yengish mumkin?"],nf:"Kechirasiz, bu savolga mos oyat yoki hadis topa olmadim. Savolni boshqacha so'z bilan yozib ko'ring yoki quyidagi mavzulardan tanlang:",also:"Boshqa mavzular:",dis:"Bu yordamchi sun'iy intellekt emas: savolingizdagi so'zlarga qarab saytdagi oyat va hadislardan eng mosini tanlab beradi. Fiqhiy masalalar (fatvo) uchun imom yoki muftiyga murojaat qiling.",topics:"Mavzular"},
-ru:{tabs:["۞ Викторина","📖 Коран","✦ Хадисы","🤲 Задать вопрос"],qh:"Задайте вопрос",qs:"Напишите вопрос — я найду ответ в аятах Корана и достоверных хадисах",ph:"Например: Как относиться к родителям?",ask:"Спросить",ay:"Из Корана",hd:"Из хадиса",src:"Источник",ex:["Что сказано о намазе?","Что делать в трудное время?","Простятся ли мои грехи?","Почитание родителей","Об уделе и деньгах","Как справиться с гневом?"],nf:"К сожалению, по этому вопросу не найден подходящий аят или хадис. Попробуйте другие слова или выберите тему:",also:"Другие темы:",dis:"Этот помощник — не искусственный интеллект: он подбирает наиболее подходящие аяты и хадисы из сайта по словам вашего вопроса. По вопросам фикха (фетвы) обращайтесь к имаму или муфтию.",topics:"Темы"},
-tr:{tabs:["۞ Yarışma","📖 Kur'an","✦ Hadisler","🤲 Soru sor"],qh:"Soru sorun",qs:"Sorunuzu yazın — Kur'an ayetleri ve sahih hadislerden cevap bulayım",ph:"Örneğin: Anne-babaya nasıl davranmalı?",ask:"Sor",ay:"Kur'an'dan",hd:"Hadisten",src:"Kaynak",ex:["Namaz hakkında ne denmiş?","Zor zamanda ne yapmalıyım?","Günahlarım affedilir mi?","Anne-babaya iyilik","Rızık hakkında","Öfkeyi nasıl yenerim?"],nf:"Üzgünüm, bu soruya uygun ayet veya hadis bulamadım. Farklı kelimelerle yazın ya da bir konu seçin:",also:"Diğer konular:",dis:"Bu yardımcı yapay zekâ değildir: sorunuzdaki kelimelere göre sitedeki ayet ve hadislerden en uygununu seçer. Fıkhi meseleler (fetva) için imama veya müftüye başvurun.",topics:"Konular"},
-ar:{tabs:["۞ مسابقة","📖 القرآن","✦ الأحاديث","🤲 اسأل"],qh:"اسأل سؤالك",qs:"اكتب سؤالك وسأجد لك الجواب من آيات القرآن والأحاديث الصحيحة",ph:"مثال: كيف أبر والديّ؟",ask:"اسأل",ay:"من القرآن",hd:"من الحديث",src:"المصدر",ex:["ماذا قيل عن الصلاة؟","ماذا أفعل في الشدة؟","هل تغفر ذنوبي؟","بر الوالدين","عن الرزق","كيف أتغلب على الغضب؟"],nf:"عذرًا، لم أجد آية أو حديثًا مناسبًا لهذا السؤال. جرّب كلمات أخرى أو اختر موضوعًا:",also:"مواضيع أخرى:",dis:"هذا المساعد ليس ذكاءً اصطناعيًا: يختار أنسب الآيات والأحاديث الموجودة في الموقع بحسب كلمات سؤالك. وفي المسائل الفقهية (الفتوى) يُرجى الرجوع إلى إمام أو مفتٍ.",topics:"المواضيع"}};
+uz:{tabs:["۞ Viktorina","📖 Qur'on","✦ Hadislar","🤲 Savol bering","🕌 Namoz vaqti"],qh:"Savol bering",qs:"Savolingizni yozing — Qur'on oyatlari va sahih hadislardan javob topib beraman",ph:"Masalan: Ota-onaga qanday munosabatda bo'lish kerak?",ask:"So'rash",ay:"Qur'ondan",hd:"Hadisdan",src:"Manba",ex:["Namoz haqida nima deyilgan?","Qiyin paytda nima qilay?","Gunohlarim kechiriladimi?","Ota-onaga yaxshilik","Rizq haqida","G'azabni qanday yengish mumkin?"],nf:"Kechirasiz, bu savolga mos oyat yoki hadis topa olmadim. Savolni boshqacha so'z bilan yozib ko'ring yoki quyidagi mavzulardan tanlang:",also:"Boshqa mavzular:",dis:"Bu yordamchi sun'iy intellekt emas: savolingizdagi so'zlarga qarab saytdagi oyat va hadislardan eng mosini tanlab beradi. Fiqhiy masalalar (fatvo) uchun imom yoki muftiyga murojaat qiling.",topics:"Mavzular"},
+ru:{tabs:["۞ Викторина","📖 Коран","✦ Хадисы","🤲 Задать вопрос","🕌 Время намаза"],qh:"Задайте вопрос",qs:"Напишите вопрос — я найду ответ в аятах Корана и достоверных хадисах",ph:"Например: Как относиться к родителям?",ask:"Спросить",ay:"Из Корана",hd:"Из хадиса",src:"Источник",ex:["Что сказано о намазе?","Что делать в трудное время?","Простятся ли мои грехи?","Почитание родителей","Об уделе и деньгах","Как справиться с гневом?"],nf:"К сожалению, по этому вопросу не найден подходящий аят или хадис. Попробуйте другие слова или выберите тему:",also:"Другие темы:",dis:"Этот помощник — не искусственный интеллект: он подбирает наиболее подходящие аяты и хадисы из сайта по словам вашего вопроса. По вопросам фикха (фетвы) обращайтесь к имаму или муфтию.",topics:"Темы"},
+tr:{tabs:["۞ Yarışma","📖 Kur'an","✦ Hadisler","🤲 Soru sor","🕌 Namaz vakti"],qh:"Soru sorun",qs:"Sorunuzu yazın — Kur'an ayetleri ve sahih hadislerden cevap bulayım",ph:"Örneğin: Anne-babaya nasıl davranmalı?",ask:"Sor",ay:"Kur'an'dan",hd:"Hadisten",src:"Kaynak",ex:["Namaz hakkında ne denmiş?","Zor zamanda ne yapmalıyım?","Günahlarım affedilir mi?","Anne-babaya iyilik","Rızık hakkında","Öfkeyi nasıl yenerim?"],nf:"Üzgünüm, bu soruya uygun ayet veya hadis bulamadım. Farklı kelimelerle yazın ya da bir konu seçin:",also:"Diğer konular:",dis:"Bu yardımcı yapay zekâ değildir: sorunuzdaki kelimelere göre sitedeki ayet ve hadislerden en uygununu seçer. Fıkhi meseleler (fetva) için imama veya müftüye başvurun.",topics:"Konular"},
+ar:{tabs:["۞ مسابقة","📖 القرآن","✦ الأحاديث","🤲 اسأل","🕌 مواقيت الصلاة"],qh:"اسأل سؤالك",qs:"اكتب سؤالك وسأجد لك الجواب من آيات القرآن والأحاديث الصحيحة",ph:"مثال: كيف أبر والديّ؟",ask:"اسأل",ay:"من القرآن",hd:"من الحديث",src:"المصدر",ex:["ماذا قيل عن الصلاة؟","ماذا أفعل في الشدة؟","هل تغفر ذنوبي؟","بر الوالدين","عن الرزق","كيف أتغلب على الغضب؟"],nf:"عذرًا، لم أجد آية أو حديثًا مناسبًا لهذا السؤال. جرّب كلمات أخرى أو اختر موضوعًا:",also:"مواضيع أخرى:",dis:"هذا المساعد ليس ذكاءً اصطناعيًا: يختار أنسب الآيات والأحاديث الموجودة في الموقع بحسب كلمات سؤالك. وفي المسائل الفقهية (الفتوى) يُرجى الرجوع إلى إمام أو مفتٍ.",topics:"المواضيع"}};
 let LANG="uz";try{LANG=localStorage.getItem("qv_lang")||"uz"}catch(e){}
 const norm=s=>s.toLowerCase().replace(/[ʻʼ'’‘`´]/g,"").normalize("NFD").replace(/[̀-ًͯ-ْٰ]/g,"").replace(/[إأآٱ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه");
 TP.forEach(t=>t.nk=t.k.map(norm));
@@ -777,7 +846,7 @@ function ask(q){q=q.trim();if(!q)return;const u=UI[LANG],box=$("qaLog");
  box.appendChild(wrap);$("qaIn").value="";me.scrollIntoView({behavior:"smooth",block:"start"})}
 function topicChips(){const c=document.createElement("div");c.className="chips";TP.forEach(t=>{const b=document.createElement("button");b.textContent=t.t[LI[LANG]];b.onclick=()=>{const box=$("qaLog");const me=document.createElement("div");me.className="me";me.textContent=t.t[LI[LANG]];box.appendChild(me);const w=document.createElement("div");w.className="bot";w.appendChild(answerCard(t));box.appendChild(w);me.scrollIntoView({behavior:"smooth",block:"start"})};c.appendChild(b)});return c}
 function applyLang(){const u=UI[LANG];document.querySelectorAll(".lbar button").forEach(b=>b.classList.toggle("on",b.dataset.lang===LANG));
- const TI={quiz:0,quran:1,hadis:2,qa:3};document.querySelectorAll(".tabs button").forEach(b=>b.textContent=u.tabs[TI[b.dataset.t]]);document.querySelectorAll(".sec-t").forEach(b=>b.textContent=u.tabs[TI[b.dataset.sec]].replace(/^\S+\s/,""));
+ const TI={quiz:0,quran:1,hadis:2,qa:3,namoz:4};document.querySelectorAll(".tabs button").forEach(b=>b.textContent=u.tabs[TI[b.dataset.t]]);document.querySelectorAll(".sec-t").forEach(b=>b.textContent=u.tabs[TI[b.dataset.sec]].replace(/^\S+\s/,""));
  $("qaH").textContent=u.qh;$("qaS").textContent=u.qs;$("qaIn").placeholder=u.ph;$("qaGo").textContent=u.ask;$("qaDis").textContent=u.dis;$("qaT").textContent=u.topics;
  $("qa").dir=LANG==="ar"?"rtl":"ltr";
  const ex=$("qaEx");ex.innerHTML="";u.ex.forEach(s=>{const b=document.createElement("button");b.textContent=s;b.onclick=()=>ask(s);ex.appendChild(b)});
@@ -786,6 +855,89 @@ function applyLang(){const u=UI[LANG];document.querySelectorAll(".lbar button").
 document.querySelectorAll(".lbar button").forEach(b=>b.onclick=()=>{LANG=b.dataset.lang;applyLang()});
 $("qaForm").onsubmit=e=>{e.preventDefault();ask($("qaIn").value)};
 applyLang();
+</script>
+<script>
+// ================= NAMOZ VAQTLARI + QIBLA =================
+const NZ={
+uz:{t:"Namoz vaqtlari",sub:"Uch davlatning rasmiy usuli bo'yicha, real vaqtda",c:["O'zbekiston","Turkiya","Rossiya"],p:["Bomdod","Quyosh","Peshin","Asr","Shom","Xufton"],now:"Hozir",next:"Keyingi namoz",left:"qoldi",loc:"📍 Mening joylashuvim",src:"Manba",calc:"hisoblangan",load:"Yuklanmoqda…",q:"Qibla yo'nalishi",qd:"Shimoldan soat yo'nalishida",km:"Makkagacha",comp:"🧭 Kompasni yoqish",compH:"Telefonni tekis ushlang: Ka'ba belgisi tepaga kelganda siz qiblaga qaragan bo'lasiz.",noComp:"Bu qurilmada kompas yo'q — darajaga qarab yo'nalishni toping.",hij:"Hijriy sana",rk:"Namoz rakatlari (Hanafiy mazhabi)",rh:["Namoz","Sunnat (oldin)","Farz","Sunnat (keyin)","Vitr"],juma:"Juma",note:"Vaqtlar tanlangan davlat diniy idorasining hisob usuli bo'yicha olinadi. Masjidingiz jadvali bilan 1–3 daqiqa farq qilishi mumkin — ehtiyot uchun mahalliy masjid taqvimiga ham qarang.",hd:"Namoz haqida oyat va hadislar"},
+ru:{t:"Время намаза",sub:"По официальной методике трёх стран, в реальном времени",c:["Узбекистан","Турция","Россия"],p:["Фаджр","Восход","Зухр","Аср","Магриб","Иша"],now:"Сейчас",next:"Следующий намаз",left:"осталось",loc:"📍 Моё местоположение",src:"Источник",calc:"расчёт",load:"Загрузка…",q:"Направление киблы",qd:"По часовой стрелке от севера",km:"До Мекки",comp:"🧭 Включить компас",compH:"Держите телефон горизонтально: когда знак Каабы окажется вверху, вы смотрите на киблу.",noComp:"На этом устройстве нет компаса — ориентируйтесь по градусам.",hij:"Дата по хиджре",rk:"Ракааты намаза (ханафитский мазхаб)",rh:["Намаз","Сунна (до)","Фард","Сунна (после)","Витр"],juma:"Джума",note:"Время рассчитывается по методике духовного управления выбранной страны. Возможна разница 1–3 минуты с расписанием вашей мечети — сверяйтесь с местным календарём.",hd:"Аяты и хадисы о намазе"},
+tr:{t:"Namaz vakitleri",sub:"Üç ülkenin resmî hesaplama yöntemine göre, canlı",c:["Özbekistan","Türkiye","Rusya"],p:["İmsak","Güneş","Öğle","İkindi","Akşam","Yatsı"],now:"Şimdi",next:"Sonraki vakit",left:"kaldı",loc:"📍 Konumum",src:"Kaynak",calc:"hesaplandı",load:"Yükleniyor…",q:"Kıble yönü",qd:"Kuzeyden saat yönünde",km:"Mekke'ye",comp:"🧭 Pusulayı aç",compH:"Telefonu düz tutun: Kâbe işareti yukarı geldiğinde kıbleye dönmüş olursunuz.",noComp:"Bu cihazda pusula yok — dereceye göre yönü bulun.",hij:"Hicrî tarih",rk:"Namazların rekâtları (Hanefî mezhebi)",rh:["Namaz","Sünnet (önce)","Farz","Sünnet (sonra)","Vitir"],juma:"Cuma",note:"Vakitler seçilen ülkenin dinî kurumunun hesaplama yöntemiyle alınır. Caminizin takvimiyle 1–3 dakika fark olabilir — yerel takvimi de kontrol edin.",hd:"Namaz hakkında ayet ve hadisler"},
+ar:{t:"مواقيت الصلاة",sub:"وفق الطريقة الرسمية لثلاث دول، مباشرة",c:["أوزبكستان","تركيا","روسيا"],p:["الفجر","الشروق","الظهر","العصر","المغرب","العشاء"],now:"الآن",next:"الصلاة القادمة",left:"متبقٍ",loc:"📍 موقعي",src:"المصدر",calc:"محسوب",load:"جارٍ التحميل…",q:"اتجاه القبلة",qd:"باتجاه عقارب الساعة من الشمال",km:"المسافة إلى مكة",comp:"🧭 تشغيل البوصلة",compH:"أمسك الهاتف أفقيًا: عندما تصبح علامة الكعبة في الأعلى فأنت متجه إلى القبلة.",noComp:"لا توجد بوصلة في هذا الجهاز — استعن بالدرجات.",hij:"التاريخ الهجري",rk:"ركعات الصلوات (المذهب الحنفي)",rh:["الصلاة","سنة قبلية","فرض","سنة بعدية","وتر"],juma:"الجمعة",note:"تُحسب المواقيت وفق طريقة الهيئة الدينية في الدولة المختارة، وقد تختلف دقيقة إلى ثلاث دقائق عن تقويم مسجدك.",hd:"آيات وأحاديث عن الصلاة"}};
+// [nom(uz,ru,tr,ar), lat, lng, timezone, islomapi region]
+const CITIES=[
+ [["Toshkent","Ташкент","Taşkent","طشقند"],41.2995,69.2401,"Asia/Tashkent","Toshkent"],[["Samarqand","Самарканд","Semerkant","سمرقند"],39.6542,66.9597,"Asia/Samarkand","Samarqand"],[["Buxoro","Бухара","Buhara","بخارى"],39.7747,64.4286,"Asia/Samarkand","Buxoro"],[["Andijon","Андижан","Andican","أنديجان"],40.7821,72.3442,"Asia/Tashkent","Andijon"],[["Namangan","Наманган","Namangan","نامانغان"],40.9983,71.6726,"Asia/Tashkent","Namangan"],[["Farg'ona","Фергана","Fergana","فرغانة"],40.3842,71.7843,"Asia/Tashkent","Farg'ona"],[["Qarshi","Карши","Karşı","قرشي"],38.8606,65.7891,"Asia/Samarkand","Qarshi"],[["Termiz","Термез","Termez","ترمذ"],37.2242,67.2783,"Asia/Samarkand","Termiz"],[["Nukus","Нукус","Nukus","نوكوس"],42.4531,59.6103,"Asia/Samarkand","Nukus"],[["Urganch","Ургенч","Ürgenç","أورغنج"],41.5534,60.6206,"Asia/Samarkand","Urganch"],[["Jizzax","Джизак","Cizzah","جيزاخ"],40.1158,67.8422,"Asia/Samarkand","Jizzax"],[["Navoiy","Навои","Nevai","نوائي"],40.0844,65.3792,"Asia/Samarkand","Navoiy"],[["Guliston","Гулистан","Gülistan","كولستان"],40.4897,68.7842,"Asia/Tashkent","Guliston"]];
+const CITIES_TR=[[["Istanbul","Стамбул","İstanbul","إسطنبول"],41.0082,28.9784],[["Anqara","Анкара","Ankara","أنقرة"],39.9334,32.8597],[["Izmir","Измир","İzmir","إزمير"],38.4237,27.1428],[["Bursa","Бурса","Bursa","بورصة"],40.1885,29.061],[["Antalya","Анталья","Antalya","أنطاليا"],36.8969,30.7133],[["Konya","Конья","Konya","قونية"],37.8746,32.4932],[["Kayseri","Кайсери","Kayseri","قيصري"],38.7205,35.4826],[["Gaziantep","Газиантеп","Gaziantep","غازي عنتاب"],37.0662,37.3833],[["Trabzon","Трабзон","Trabzon","طرابزون"],41.0027,39.7168],[["Erzurum","Эрзурум","Erzurum","أرضروم"],39.9043,41.2679],[["Diyarbakir","Диярбакыр","Diyarbakır","ديار بكر"],37.9144,40.2306]].map(c=>[c[0],c[1],c[2],"Europe/Istanbul"]);
+const CITIES_RU=[[["Moskva","Москва","Moskova","موسكو"],55.7558,37.6173,"Europe/Moscow"],[["Sankt-Peterburg","Санкт-Петербург","St. Petersburg","سانت بطرسبرغ"],59.9343,30.3351,"Europe/Moscow"],[["Qozon","Казань","Kazan","قازان"],55.7961,49.1064,"Europe/Moscow"],[["Ufa","Уфа","Ufa","أوفا"],54.7388,55.9721,"Asia/Yekaterinburg"],[["Yekaterinburg","Екатеринбург","Yekaterinburg","يكاترينبورغ"],56.8389,60.6057,"Asia/Yekaterinburg"],[["Novosibirsk","Новосибирск","Novosibirsk","نوفوسيبيرسك"],55.0084,82.9357,"Asia/Novosibirsk"],[["Krasnodar","Краснодар","Krasnodar","كراسنودار"],45.0355,38.9753,"Europe/Moscow"],[["Mahachqal'a","Махачкала","Mahaçkale","محج قلعة"],42.9849,47.5047,"Europe/Moscow"],[["Grozniy","Грозный","Grozni","غروزني"],43.3178,45.6949,"Europe/Moscow"],[["Samara","Самара","Samara","سامارا"],53.1959,50.1002,"Europe/Samara"],[["Nijniy Novgorod","Нижний Новгород","Nijni Novgorod","نيجني نوفغورود"],56.2965,43.936,"Europe/Moscow"]];
+// usullar: [aladhan method, school(0 standart,1 hanafiy), fajr°, isha°, tune(daqiqa: fajr,sunrise,dhuhr,asr,maghrib,isha), manba nomi]
+const MTH=[{m:"99&methodSettings=15.5,null,16",s:1,fa:15.5,ia:16,tune:[-3,0,1,0,3,3],src:["O'zbekiston musulmonlari idorasi (muslim.uz)","Управление мусульман Узбекистана","Özbekistan Müslümanları İdaresi","إدارة مسلمي أوزبكستان"]},
+ {m:"13",s:0,fa:18,ia:17,tune:[0,-7,5,4,7,0],src:["Diyanet İşleri Başkanlığı","Диянет (Управление по делам религии Турции)","Diyanet İşleri Başkanlığı","رئاسة الشؤون الدينية التركية"]},
+ {m:"14",s:1,fa:16,ia:15,tune:[0,0,0,0,0,0],src:["Rossiya musulmonlari diniy boshqarmasi (DUM RF)","Духовное управление мусульман РФ","Rusya Müslümanları Dini İdaresi","الإدارة الدينية لمسلمي روسيا"]}];
+let NC=0,NCi=0,NPos=null,NTimes=null,NSrc="",NDay="",heading=null;
+try{const v=JSON.parse(localStorage.getItem("qv_nz")||"null");if(v){NC=v[0];NCi=v[1]}}catch(e){}
+function cityList(){return NC===0?CITIES:NC===1?CITIES_TR:CITIES_RU}
+function curPlace(){if(NPos)return NPos;const c=cityList()[NCi]||cityList()[0];return{lat:c[1],lng:c[2],tz:c[3],name:c[0][LI[LANG]],reg:c[4]}}
+function tzNowParts(tz){const f=new Intl.DateTimeFormat("en-GB",{timeZone:tz,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).formatToParts(new Date());const o={};f.forEach(p=>o[p.type]=p.value);return{y:+o.year,m:+o.month,d:+o.day,h:+o.hour%24,mi:+o.minute,s:+o.second}}
+function tzOffset(tz,y,m,d){const dt=new Date(Date.UTC(y,m-1,d,12));const p=new Intl.DateTimeFormat("en-GB",{timeZone:tz,hour:"2-digit",minute:"2-digit",hour12:false,day:"2-digit"}).formatToParts(dt);const o={};p.forEach(x=>o[x.type]=x.value);let h=(+o.hour%24)+(+o.minute)/60+((+o.day)-d)*24;return h-12}
+// mahalliy hisob (zaxira)
+function calcTimes(y,m,d,lat,lng,tz,M){const R=Math.PI/180;let Y=y,Mo=m;if(Mo<=2){Y--;Mo+=12}const A=Math.floor(Y/100),B=2-A+Math.floor(A/4);
+ const jd=Math.floor(365.25*(Y+4716))+Math.floor(30.6001*(Mo+1))+d+B-1524.5-lng/360+0.5,D=jd-2451545;
+ const g=((357.529+0.98560028*D)%360)*R,q=(280.459+0.98564736*D)%360,L=((q+1.915*Math.sin(g)+0.02*Math.sin(2*g))%360)*R,e=(23.439-0.00000036*D)*R;
+ let RA=(Math.atan2(Math.cos(e)*Math.sin(L),Math.cos(L))/R/15+24)%24;const dec=Math.asin(Math.sin(e)*Math.sin(L));let eq=q/15-RA;if(eq>12)eq-=24;if(eq<-12)eq+=24;
+ const off=tzOffset(tz,y,m,d),noon=12+off-lng/15-eq,la=lat*R;
+ const T=(a,ccw)=>{let v=(-Math.sin(a*R)-Math.sin(la)*Math.sin(dec))/(Math.cos(la)*Math.cos(dec));v=Math.max(-1,Math.min(1,v));const t=Math.acos(v)/R/15;return ccw?noon-t:noon+t};
+ const asrA=-Math.atan(1/((M.s?2:1)+Math.tan(Math.abs(la-dec))))/R;
+ const r=[T(M.fa,1),T(.833,1),noon,T(asrA,0),T(.833,0),T(M.ia,0)].map((h,i)=>h*60+M.tune[i]);return r.map(x=>Math.round(x))}
+const hm=s=>{const [h,m]=s.split(":").map(Number);return h*60+m};
+const fm=x=>{x=((Math.round(x)%1440)+1440)%1440;return String(Math.floor(x/60)).padStart(2,"0")+":"+String(x%60).padStart(2,"0")};
+async function getJSON(u,ms){const c=new AbortController();const t=setTimeout(()=>c.abort(),ms||6000);try{const r=await fetch(u,{signal:c.signal});if(!r.ok)throw 0;return await r.json()}finally{clearTimeout(t)}}
+async function loadTimes(){const P=curPlace(),M=MTH[NC],n=tzNowParts(P.tz),key=[NC,P.lat,P.lng,n.y,n.m,n.d].join();if(key===NDay&&NTimes)return;NDay=key;
+ $("nzSrc").textContent=NZ[LANG].load;NTimes=null;let got=null,src="";
+ const dd=String(n.d).padStart(2,"0")+"-"+String(n.m).padStart(2,"0")+"-"+n.y;
+ if(NC===0&&P.reg){try{const j=await getJSON("https://islomapi.uz/api/present/day?region="+encodeURIComponent(P.reg),5000);const t=j.times||j.data&&j.data.times;
+  if(t&&t.tong_saharlik){got=[t.tong_saharlik,t.quyosh,t.peshin,t.asr,t.shom_iftor,t.hufton].map(hm);src="islomapi.uz · "+M.src[LI[LANG]]}}catch(e){}}
+ if(!got){try{const tune="0,"+M.tune[0]+","+M.tune[1]+","+M.tune[2]+","+M.tune[3]+","+M.tune[4]+",0,"+M.tune[5]+",0";
+  const j=await getJSON("https://api.aladhan.com/v1/timings/"+dd+"?latitude="+P.lat+"&longitude="+P.lng+"&method="+M.m+"&school="+M.s+"&timezonestring="+encodeURIComponent(P.tz)+(NC===1?"":"&tune="+tune),7000);
+  const t=j.data.timings;got=[t.Fajr,t.Sunrise,t.Dhuhr,t.Asr,t.Maghrib,t.Isha].map(s=>hm(s.slice(0,5)));src=M.src[LI[LANG]]+" · aladhan.com"}catch(e){}}
+ if(!got){got=calcTimes(n.y,n.m,n.d,P.lat,P.lng,P.tz,M);src=M.src[LI[LANG]]+" ("+NZ[LANG].calc+")"}
+ NTimes=got;NSrc=src;renderNz()}
+function renderNz(){const L=NZ[LANG],P=curPlace();$("nzSrc").textContent=NTimes?L.src+": "+NSrc:L.load;
+ const box=$("nzGrid");box.innerHTML="";if(!NTimes)return;const n=tzNowParts(P.tz),now=n.h*60+n.mi+n.s/60;
+ let cur=-1;[0,2,3,4,5].forEach(i=>{if(now>=NTimes[i])cur=i});if(cur===-1)cur=5;
+ let nxt=[0,2,3,4,5].find(i=>NTimes[i]>now);let diff=nxt==null?(1440-now+NTimes[0]):(NTimes[nxt]-now);if(nxt==null)nxt=0;
+ const ic=["🌙","🌅","☀️","🌤️","🌇","🌌"];
+ NTimes.forEach((t,i)=>{const d=document.createElement("div");d.className="nzc"+(i===cur?" cur":"")+(i===nxt?" nxt":"")+(i===1?" sun":"");
+  d.innerHTML='<span class="ic">'+ic[i]+'</span><span class="nm"></span><b>'+fm(t)+'</b>'+(i===cur?'<em>'+L.now+'</em>':'');d.querySelector(".nm").textContent=L.p[i];box.appendChild(d)});
+ const h=Math.floor(diff/60),m=Math.floor(diff%60),s=Math.floor((diff*60)%60);
+ $("nzNext").textContent=L.next+": "+L.p[nxt]+" — "+fm(NTimes[nxt]);$("nzLeft").textContent=(h?h+":":"")+String(m).padStart(h?2:1,"0")+":"+String(s).padStart(2,"0")+" "+L.left;
+ $("nzClock").textContent=String(n.h).padStart(2,"0")+":"+String(n.mi).padStart(2,"0")+":"+String(n.s).padStart(2,"0");$("nzPlace").textContent="📍 "+P.name;
+ try{$("nzHij").textContent=L.hij+": "+new Intl.DateTimeFormat((LANG==="ar"?"ar-SA":LANG==="ru"?"ru-RU":LANG==="tr"?"tr-TR":"uz-UZ")+"-u-ca-islamic-umalqura",{day:"numeric",month:"long",year:"numeric",timeZone:P.tz}).format(new Date())}catch(e){$("nzHij").textContent=""}
+ renderQibla()}
+function renderQibla(){const P=curPlace(),R=Math.PI/180,kl=21.4225*R,kg=39.8262*R,la=P.lat*R,lg=P.lng*R;
+ let b=Math.atan2(Math.sin(kg-lg),Math.cos(la)*Math.tan(kl)-Math.sin(la)*Math.cos(kg-lg))/R;b=(b+360)%360;
+ const dist=6371*Math.acos(Math.min(1,Math.sin(la)*Math.sin(kl)+Math.cos(la)*Math.cos(kl)*Math.cos(kg-lg)));
+ const L=NZ[LANG];$("qDeg").textContent=b.toFixed(1)+"°";$("qTxt").textContent=L.qd;$("qKm").textContent=L.km+": "+Math.round(dist).toLocaleString()+" km";
+ $("qNeedle").style.transform="rotate("+b+"deg)";$("qDial").style.transform="rotate("+(heading==null?0:-heading)+"deg)";
+ if(heading!=null){const delta=Math.abs(((b-heading)+540)%360-180);$("qibla").classList.toggle("aligned",delta<5)}}
+function nzSelects(){const L=NZ[LANG];const cs=$("nzCountry");cs.innerHTML="";L.c.forEach((c,i)=>{const o=document.createElement("button");o.textContent=["🇺🇿","🇹🇷","🇷🇺"][i]+" "+c;o.className=i===NC&&!NPos?"on":"";o.onclick=()=>{NC=i;NCi=0;NPos=null;save();nzSelects();loadTimes()};cs.appendChild(o)});
+ const ss=$("nzCity");ss.innerHTML="";cityList().forEach((c,i)=>{const o=document.createElement("option");o.value=i;o.textContent=c[0][LI[LANG]];ss.appendChild(o)});ss.value=NCi;ss.disabled=!!NPos;
+ $("nzLoc").textContent=L.loc;$("nzS").textContent=L.sub;$("qT").textContent=L.q;$("qComp").textContent=L.comp;$("qHelp").textContent=L.compH;$("nzNote").textContent=L.note;$("nzRk").textContent=L.rk;$("nzHd").textContent=L.hd;
+ $("namoz").dir=LANG==="ar"?"rtl":"ltr";renderRakat();renderNzHadis()}
+function save(){try{localStorage.setItem("qv_nz",JSON.stringify([NC,NCi]))}catch(e){}}
+$("nzCity").onchange=e=>{NCi=+e.target.value;save();loadTimes()};
+$("nzLoc").onclick=()=>{if(!navigator.geolocation){return}$("nzSrc").textContent=NZ[LANG].load;navigator.geolocation.getCurrentPosition(p=>{NPos={lat:+p.coords.latitude.toFixed(4),lng:+p.coords.longitude.toFixed(4),tz:Intl.DateTimeFormat().resolvedOptions().timeZone,name:NZ[LANG].loc.replace("📍 ","")};NDay="";nzSelects();loadTimes()},()=>{renderNz()},{timeout:10000})};
+$("qComp").onclick=async()=>{try{if(typeof DeviceOrientationEvent!=="undefined"&&DeviceOrientationEvent.requestPermission){const r=await DeviceOrientationEvent.requestPermission();if(r!=="granted")throw 0}}catch(e){$("qHelp").textContent=NZ[LANG].noComp;return}
+ let got=false;const h=e=>{let v=null;if(e.webkitCompassHeading!=null)v=e.webkitCompassHeading;else if(e.absolute&&e.alpha!=null)v=360-e.alpha;if(v!=null){got=true;heading=v;renderQibla()}};
+ window.addEventListener("deviceorientationabsolute",h,true);window.addEventListener("deviceorientation",h,true);setTimeout(()=>{if(!got)$("qHelp").textContent=NZ[LANG].noComp},3000)};
+const RK=[[0,2,2,0,0],[2,4,4,2,0],[3,0,4,0,0],[4,0,3,2,0],[5,0,4,2,3],["J",4,2,4,0]];
+function renderRakat(){const L=NZ[LANG];let h="<table><tr>"+L.rh.map(x=>"<th>"+x+"</th>").join("")+"</tr>";RK.forEach(r=>{h+="<tr><td>"+(r[0]==="J"?"🕌 "+L.juma:L.p[r[0]])+"</td>"+r.slice(1).map((v,i)=>"<td"+(i===1?' class="fz"':"")+">"+(v||"—")+"</td>").join("")+"</tr>"});$("nzRakat").innerHTML=h+"</table>"}
+const NH=[{a:"إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَوْقُوتًا",r:["Niso, 103","Ан-Ниса, 103","Nisâ, 103","النساء: ١٠٣"],m:["Albatta, namoz mo'minlarga vaqtlari belgilangan farz bo'ldi.","Воистину, намаз предписан верующим в определённое время.","Şüphesiz namaz, müminlere vakitleri belirlenmiş bir farzdır."]},
+{a:"فَوَلِّ وَجْهَكَ شَطْرَ الْمَسْجِدِ الْحَرَامِ ۚ وَحَيْثُ مَا كُنْتُمْ فَوَلُّوا وُجُوهَكُمْ شَطْرَهُ",r:["Baqara, 144","Аль-Бакара, 144","Bakara, 144","البقرة: ١٤٤"],m:["Yuzingni Masjidul Harom tomonga bur. Qayerda bo'lsangiz ham, yuzlaringizni o'sha tomonga buringlar.","Обрати же лицо в сторону Заповедной мечети. И где бы вы ни были, обращайте лица в её сторону.","Yüzünü Mescid-i Haram tarafına çevir. Nerede olursanız olun, yüzlerinizi o tarafa çevirin."]},
+{a:"أي العمل أحب إلى الله؟ قال: الصلاة على وقتها",r:["Buxoriy 527, Muslim 85","аль-Бухари 527, Муслим 85","Buhârî 527, Müslim 85","البخاري ٥٢٧، مسلم ٨٥"],m:["«Qaysi amal Allohga eng sevimli?» — «O'z vaqtida o'qilgan namoz».","«Какое дело наиболее любимо Аллахом?» — «Намаз, совершённый в своё время».","«Allah'a en sevimli amel hangisidir?» — «Vaktinde kılınan namaz»."]},
+{a:"أرأيتم لو أن نهرا بباب أحدكم يغتسل فيه كل يوم خمسا، هل يبقى من درنه شيء؟ … فذلك مثل الصلوات الخمس، يمحو الله بها الخطايا",r:["Buxoriy 528, Muslim 667","аль-Бухари 528, Муслим 667","Buhârî 528, Müslim 667","البخاري ٥٢٨، مسلم ٦٦٧"],m:["Birortangizning eshigi oldida daryo bo'lsa-yu, unda har kuni besh marta yuvinsa, undan kir qoladimi? … Besh vaqt namoz ham shunday: Alloh ular bilan xatolarni o'chiradi.","Если бы у дверей кого-то из вас протекала река и он омывался в ней пять раз в день, осталась бы на нём грязь? … Таков пример пяти молитв: ими Аллах стирает грехи.","Birinizin kapısının önünde bir nehir olsa da her gün beş kez yıkansa, üzerinde kir kalır mı? … İşte beş vakit namaz da böyledir; Allah onlarla hataları siler."]},
+{a:"إن أول ما يحاسب به العبد يوم القيامة من عمله صلاته",r:["Termiziy 413, Nasoiy 465","ат-Тирмизи 413, ан-Насаи 465","Tirmizî 413, Nesâî 465","الترمذي ٤١٣، النسائي ٤٦٥"],m:["Qiyomat kuni bandaning amallaridan birinchi hisob qilinadigani — uning namozidir.","Первое из дел раба, за которое с него спросят в Судный день, — его намаз.","Kıyamet günü kulun amellerinden ilk hesaba çekileceği şey namazıdır."]}];
+function renderNzHadis(){const b=$("nzHadis");b.innerHTML="";NH.forEach(h=>{const d=document.createElement("div");d.className="had";d.innerHTML='<div class="ha"></div>'+(LANG==="ar"?"":'<div class="ht"></div>')+'<div class="hs"><b></b></div>';d.querySelector(".ha").textContent=h.a;if(LANG!=="ar")d.querySelector(".ht").textContent=h.m[LI[LANG]];d.querySelector(".hs b").textContent="📚 "+h.r[LI[LANG]];b.appendChild(d)})}
+const _alNz=applyLang;applyLang=function(){_alNz();nzSelects();if(NTimes){NDay="";loadTimes()}else renderNz()};
+nzSelects();loadTimes();setInterval(()=>{if(!NTimes)return;const P=curPlace(),n=tzNowParts(P.tz);if(n.h===0&&n.mi===0&&n.s<2){NDay="";loadTimes()}renderNz()},1000);
 </script>
 </body>
 </html>
