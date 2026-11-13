@@ -241,6 +241,35 @@ button{color:var(--txt)}
 .nz-rakat td{padding:9px 6px;text-align:center;border-top:1px solid #f0e6c8;font-weight:700}
 .nz-rakat td:first-child{text-align:start;color:var(--g1)}
 .nz-rakat td.fz{color:#fff;background:#17845f}
+
+/* ===== QATORMA-QATOR MENYU ===== */
+.tabs{position:static!important;display:flex!important;flex-direction:column;gap:8px!important;padding:10px!important;border-radius:24px!important;overflow:visible!important;max-width:640px}
+.tabs button{display:flex!important;align-items:center;gap:12px;text-align:start;padding:12px 14px!important;border-radius:18px!important;background:rgba(255,252,243,.08)!important;color:#fff!important;border:1px solid rgba(243,220,149,.25)!important;font-size:16px!important;white-space:normal!important}
+.tabs button .mi{width:44px;height:44px;flex:none;display:grid;place-items:center;font-size:22px;border-radius:14px;background:rgba(243,220,149,.15)}
+.tabs button .mt{flex:1;min-width:0}
+.tabs button .mt b{display:block;font-size:16.5px;color:#fff}
+.tabs button .mt small{display:block;font-size:12.5px;font-weight:600;color:rgba(243,220,149,.85);margin-top:2px}
+.tabs button .mn{font-family:Amiri,serif;font-size:20px;color:var(--gold2);opacity:.8}
+.tabs button.on{background:linear-gradient(160deg,#c9a13b,#a87f22)!important;border-color:var(--gold2)!important}
+.tabs button.on .mt small{color:#2a1d00}.tabs button.on .mi{background:rgba(255,255,255,.25)}.tabs button.on .mn{color:#062b21}
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:40;width:54px;height:54px;border-radius:50%;border:2px solid var(--gold2);background:linear-gradient(160deg,#17845f,#062b21);color:var(--gold2);font-size:22px;cursor:pointer;box-shadow:0 10px 24px rgba(0,0,0,.4);display:none}
+.fab.show{display:grid;place-items:center}
+[dir=rtl] .fab{right:auto;left:16px}
+.player{top:12px!important}
+.sec{scroll-margin-top:14px!important}
+/* AI */
+.ai{border:1.5px solid #7c5cff;border-radius:18px;background:linear-gradient(160deg,#f6f3ff,#fff);margin-bottom:12px;overflow:hidden}
+.ai-h{display:flex;align-items:center;gap:8px;background:linear-gradient(160deg,#4b3bb5,#2c1f7a);color:#fff;font-weight:800;padding:10px 14px}
+.ai-b{padding:12px 14px;font-size:16px;line-height:1.6;white-space:normal}
+.ai-b p{margin:0 0 8px}
+.ai-f{font-size:12px;color:var(--muted);padding:0 14px 10px}
+.dots span{display:inline-block;width:8px;height:8px;margin:0 2px;border-radius:50%;background:#7c5cff;animation:bl 1s infinite}
+.dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
+@keyframes bl{50%{opacity:.2}}
+.sug{display:flex;flex-wrap:wrap;gap:6px;margin:-4px 0 12px}
+.sug button{font:inherit;font-size:13px;font-weight:800;padding:6px 11px;border-radius:99px;border:1.5px dashed var(--gold);background:#fffaf0;color:var(--g1);cursor:pointer}
+.cp{float:right;font:inherit;font-size:12px;font-weight:800;border:1px solid rgba(243,220,149,.6);background:transparent;color:var(--gold2);border-radius:8px;padding:3px 8px;cursor:pointer}
+[dir=rtl] .cp{float:left}
 </style>
 </head>
 <body>
@@ -266,6 +295,7 @@ button{color:var(--txt)}
 
 <div class="lbar"><button data-lang="uz">🇺🇿 O'zbek</button><button data-lang="tr">🇹🇷 Türkçe</button><button data-lang="ar">🇸🇦 العربية</button><button data-lang="ru">🇷🇺 Русский</button></div>
 <nav class="tabs"><button data-t="namoz" class="on">🕌 Namoz</button><button data-t="quiz">۞ Viktorina</button><button data-t="quran">📖 Qur'on</button><button data-t="qa">🤲 Savol bering</button><button data-t="hadis">✦ Hadislar</button></nav>
+<button class="fab" id="fab" aria-label="Menu">☰</button>
 <div class="wrap">
 
 <section class="sec" id="s-namoz">
@@ -378,7 +408,8 @@ button{color:var(--txt)}
   <h1 id="qaH"></h1>
   <div class="divider">✦ ۞ ✦</div>
   <p class="sub" id="qaS"></p>
-  <form id="qaForm"><input id="qaIn" autocomplete="off"><button class="btn" id="qaGo" type="submit"></button></form>
+  <form id="qaForm"><input id="qaIn" autocomplete="off" maxlength="600"><button class="btn" id="qaGo" type="submit"></button></form>
+  <div class="sug" id="qaSug"></div>
   <div id="qaEx"></div>
   <div id="qaLog"></div>
   <p class="sub" style="margin:16px 0 8px;font-weight:800" id="qaT"></p>
@@ -734,7 +765,26 @@ try{const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){c
 </script>
 <script>
 // ================= SAVOL-JAVOB (4 til) =================
-const SN={2:["Baqara","Бакара","Bakara","البقرة"],3:["Oli Imron","Аль Имран","Âl-i İmrân","آل عمران"],4:["Niso","Ан-Ниса","Nisâ","النساء"],9:["Tavba","Ат-Тауба","Tevbe","التوبة"],13:["Ra'd","Ар-Раад","Ra'd","الرعد"],14:["Ibrohim","Ибрахим","İbrâhîm","إبراهيم"],17:["Isro","Аль-Исра","İsrâ","الإسراء"],20:["Toha","Та Ха","Tâhâ","طه"],29:["Ankabut","Аль-Анкабут","Ankebût","العنكبوت"],30:["Rum","Ар-Рум","Rûm","الروم"],39:["Zumar","Аз-Зумар","Zümer","الزمر"],49:["Hujurot","Аль-Худжурат","Hucurât","الحجرات"],65:["Taloq","Ат-Талак","Talâk","الطلاق"],68:["Qalam","Аль-Калам","Kalem","القلم"],94:["Sharh","Аш-Шарх","İnşirâh","الشرح"],98:["Bayyina","Аль-Баййина","Beyyine","البينة"],112:["Ixlos","Аль-Ихлас","İhlâs","الإخلاص"]};
+// ====== AI sozlamasi: Cloudflare Worker manzilini shu yerga yozing ======
+const AI_URL="";
+const MENU_D={uz:{namoz:"Bugungi vaqtlar · qibla · rakatlar",quiz:"89 ta savol · 3 daraja",quran:"14 sura · audio tilovat · 3 tilda",qa:"Savolingizga Qur'on va hadisdan javob",hadis:"27 ta sahih hadis, mavzular bo'yicha"},
+ru:{namoz:"Время на сегодня · кибла · ракааты",quiz:"89 вопросов · 3 уровня",quran:"14 сур · аудио · 3 языка",qa:"Ответ на ваш вопрос из Корана и хадисов",hadis:"27 достоверных хадисов по темам"},
+tr:{namoz:"Bugünün vakitleri · kıble · rekâtlar",quiz:"89 soru · 3 seviye",quran:"14 sure · sesli tilavet · 3 dil",qa:"Sorunuza Kur'an ve hadisten cevap",hadis:"Konulara göre 27 sahih hadis"},
+ar:{namoz:"مواقيت اليوم · القبلة · الركعات",quiz:"٨٩ سؤالًا · ٣ مستويات",quran:"١٤ سورة · تلاوة صوتية · ٣ لغات",qa:"إجابة سؤالك من القرآن والسنة",hadis:"٢٧ حديثًا صحيحًا حسب المواضيع"}};
+const AIS={uz:{h:"🤖 Sun'iy intellekt javobi",w:"Javob yozilmoqda",e:"AI hozir javob bera olmadi. Birozdan keyin qayta urinib ko'ring.",f:"AI javoblari xato bo'lishi mumkin. Muhim masalalarda (fatvo) imom yoki muftiyga murojaat qiling.",cp:"Nusxa",cpd:"Nusxalandi ✓",lb:"Saytdagi oyat va hadislar"},
+ru:{h:"🤖 Ответ искусственного интеллекта",w:"Пишется ответ",e:"ИИ сейчас не смог ответить. Попробуйте чуть позже.",f:"Ответы ИИ могут содержать ошибки. По важным вопросам (фетва) обращайтесь к имаму или муфтию.",cp:"Копировать",cpd:"Скопировано ✓",lb:"Аяты и хадисы с сайта"},
+tr:{h:"🤖 Yapay zekâ cevabı",w:"Cevap yazılıyor",e:"Yapay zekâ şu an cevap veremedi. Biraz sonra tekrar deneyin.",f:"Yapay zekâ cevapları hatalı olabilir. Önemli konularda (fetva) imama veya müftüye danışın.",cp:"Kopyala",cpd:"Kopyalandı ✓",lb:"Sitedeki ayet ve hadisler"},
+ar:{h:"🤖 إجابة الذكاء الاصطناعي",w:"جارٍ كتابة الإجابة",e:"تعذّر على الذكاء الاصطناعي الإجابة الآن. حاول بعد قليل.",f:"قد تحتوي إجابات الذكاء الاصطناعي على أخطاء. في المسائل المهمة (الفتوى) يُرجى سؤال إمام أو مفتٍ.",cp:"نسخ",cpd:"تم النسخ ✓",lb:"آيات وأحاديث من الموقع"}};
+function esc(t){return t.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function md(t){return esc(t).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").split(/\n{2,}/).map(p=>"<p>"+p.replace(/\n/g,"<br>")+"</p>").join("")}
+async function askAI(q,wrap){const A=AIS[LANG];const c=document.createElement("div");c.className="ai";c.innerHTML='<div class="ai-h"></div><div class="ai-b"><span class="dots"><span></span><span></span><span></span></span> <span class="wt"></span></div><div class="ai-f"></div>';
+ c.querySelector(".ai-h").textContent=A.h;c.querySelector(".wt").textContent=A.w;c.querySelector(".ai-f").textContent=A.f;wrap.prepend(c);
+ try{const ct=new AbortController();const tm=setTimeout(()=>ct.abort(),45000);const r=await fetch(AI_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({q,lang:LANG}),signal:ct.signal});clearTimeout(tm);
+  const j=await r.json();if(!r.ok||!j.answer)throw 0;c.querySelector(".ai-b").innerHTML=md(j.answer);c.querySelector(".ai-b").dir="auto"}
+ catch(e){c.querySelector(".ai-b").textContent=A.e}}
+function copyBtn(card,txt){const b=document.createElement("button");b.className="cp";b.type="button";b.textContent=AIS[LANG].cp;b.onclick=()=>{try{navigator.clipboard.writeText(txt()).then(()=>{b.textContent=AIS[LANG].cpd;setTimeout(()=>b.textContent=AIS[LANG].cp,1500)})}catch(e){}};card.querySelector(".ans-h").appendChild(b)}
+
+const SN={2:["Baqara","Бакара","Bakara","البقرة"],3:["Oli Imron","Аль Имран","Âl-i İmrân","آل عمران"],4:["Niso","Ан-Ниса","Nisâ","النساء"],9:["Tavba","Ат-Тауба","Tevbe","التوبة"],13:["Ra'd","Ар-Раад","Ra'd","الرعد"],14:["Ibrohim","Ибрахим","İbrâhîm","إبراهيم"],17:["Isro","Аль-Исра","İsrâ","الإسراء"],20:["Toha","Та Ха","Tâhâ","طه"],29:["Ankabut","Аль-Анкабут","Ankebût","العنكبوت"],30:["Rum","Ар-Рум","Rûm","الروم"],39:["Zumar","Аз-Зумар","Zümer","الزمر"],49:["Hujurot","Аль-Худжурат","Hucurât","الحجرات"],65:["Taloq","Ат-Талак","Talâk","الطلاق"],68:["Qalam","Аль-Калам","Kalem","القلم"],94:["Sharh","Аш-Шарх","İnşirâh","الشرح"],98:["Bayyina","Аль-Баййина","Beyyine","البينة"],112:["Ixlos","Аль-Ихлас","İhlâs","الإخلاص"],5:["Moida","Аль-Маида","Mâide","المائدة"],24:["Nur","Ан-Нур","Nûr","النور"],62:["Juma","Аль-Джумуа","Cuma","الجمعة"],93:["Zuho","Ад-Духа","Duhâ","الضحى"],103:["Asr","Аль-Аср","Asr","العصر"]};
 const BK={b:["Buxoriy","аль-Бухари","Buhârî","البخاري"],m:["Muslim","Муслим","Müslim","مسلم"],t:["Termiziy","ат-Тирмизи","Tirmizî","الترمذي"],d:["Abu Dovud","Абу Дауд","Ebû Dâvûd","أبو داود"],a:["Imom Ahmad","Ахмад","Ahmed b. Hanbel","أحمد"]};
 const LI={uz:0,ru:1,tr:2,ar:3};
 // {k:kalit so'zlar, t:[uz,ru,tr,ar], s:sura, v:"oyat", a:arabcha oyat, am:[uz,ru,tr], h:arabcha hadis, hm:[uz,ru,tr], src:[[kitob,raqam]]}
@@ -816,7 +866,37 @@ const TP=[
  h:"إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى",hm:["Amallar faqat niyatlarga ko'radir va har bir kishiga niyat qilgan narsasi bo'ladi.","Поистине, дела оцениваются по намерениям, и каждому — то, что он намеревался.","Ameller ancak niyetlere göredir; herkese niyet ettiği şey vardır."],src:[["b",1],["m",1907]]},
 {k:["alloh","xudo","iymon","imon","tavhid","islom","musulmon","аллах","бог","вера","иман","ислам","мусульман","allah","tanrı","iman","islam","müslüman","аллоҳ","иймон","ислом","الله","إيمان","توحيد","إسلام"],t:["Iymon va Islom","Вера и Ислам","İman ve İslam","الإيمان والإسلام"],s:112,v:"1–2",
  a:"قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ",am:["Ayting: «U — Alloh yagonadir. Alloh behojatdir (hamma Unga muhtoj)».","Скажи: «Он — Аллах Единый, Аллах Самодостаточный».","De ki: «O, Allah'tır, tektir. Allah Samed'dir (her şey O'na muhtaçtır)»."],
- h:"بني الإسلام على خمس: شهادة أن لا إله إلا الله وأن محمدا رسول الله، وإقام الصلاة، وإيتاء الزكاة، والحج، وصوم رمضان",hm:["Islom besh narsa ustiga qurilgan: Allohdan o'zga iloh yo'q va Muhammad Allohning Rasuli ekaniga guvohlik berish, namozni qoim qilish, zakot berish, haj va Ramazon ro'zasi.","Ислам построен на пяти: свидетельстве, что нет божества, кроме Аллаха, и что Мухаммад — Посланник Аллаха, совершении намаза, выплате закята, хадже и посте в Рамадан.","İslam beş temel üzerine kurulmuştur: Allah'tan başka ilah olmadığına ve Muhammed'in Allah'ın Resulü olduğuna şahitlik etmek, namaz kılmak, zekât vermek, hac ve Ramazan orucu."],src:[["b",8],["m",16]]}
+ h:"بني الإسلام على خمس: شهادة أن لا إله إلا الله وأن محمدا رسول الله، وإقام الصلاة، وإيتاء الزكاة، والحج، وصوم رمضان",hm:["Islom besh narsa ustiga qurilgan: Allohdan o'zga iloh yo'q va Muhammad Allohning Rasuli ekaniga guvohlik berish, namozni qoim qilish, zakot berish, haj va Ramazon ro'zasi.","Ислам построен на пяти: свидетельстве, что нет божества, кроме Аллаха, и что Мухаммад — Посланник Аллаха, совершении намаза, выплате закята, хадже и посте в Рамадан.","İslam beş temel üzerine kurulmuştur: Allah'tan başka ilah olmadığına ve Muhammed'in Allah'ın Resulü olduğuna şahitlik etmek, namaz kılmak, zekât vermek, hac ve Ramazan orucu."],src:[["b",8],["m",16]]},{k:["juma","jum'a","jumʼa","cuma","джума","пятниц","жума","الجمعة","جمعة"],t:["Juma kuni","Пятница (Джума)","Cuma günü","يوم الجمعة"],s:62,v:"9",
+ a:"يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا نُودِيَ لِلصَّلَاةِ مِنْ يَوْمِ الْجُمُعَةِ فَاسْعَوْا إِلَىٰ ذِكْرِ اللَّهِ وَذَرُوا الْبَيْعَ",am:["Ey iymon keltirganlar, juma kuni namozga chaqirilganda Allohning zikriga shoshilinglar va savdoni tark qilinglar.","О те, которые уверовали! Когда призывают на молитву в пятницу, устремитесь к поминанию Аллаха и оставьте торговлю.","Ey iman edenler! Cuma günü namaza çağrıldığında Allah'ı anmaya koşun ve alışverişi bırakın."],
+ h:"خير يوم طلعت عليه الشمس يوم الجمعة",hm:["Quyosh chiqqan kunlarning eng yaxshisi — juma kunidir.","Лучший из дней, в которые восходило солнце, — пятница.","Üzerine güneşin doğduğu en hayırlı gün cuma günüdür."],src:[["m",854]]},
+{k:["foiz","riba","sudxo'r","kredit","ipoteka","процент","ростовщ","кредит","ипотек","faiz","kredi","riba","фоиз","ربا","فائدة"],t:["Foiz (ribo)","Ростовщичество (риба)","Faiz (riba)","الربا"],s:2,v:"275",
+ a:"وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا",am:["Alloh savdoni halol, ribo (foiz)ni harom qildi.","Аллах дозволил торговлю и запретил ростовщичество.","Allah alışverişi helal, faizi haram kıldı."],
+ h:"لعن رسول الله ﷺ آكل الربا وموكله وكاتبه وشاهديه، وقال: هم سواء",hm:["Rasululloh ﷺ ribo yeguvchini, uni yediruvchini, uni yozuvchini va unga guvoh bo'luvchilarni la'natladilar va: «Ular barobardirlar», dedilar.","Посланник Аллаха ﷺ проклял берущего лихву, дающего её, записывающего её и двух свидетелей, и сказал: «Они равны».","Resulullah ﷺ faiz yiyene, yedirene, onu yazana ve iki şahidine lanet etti ve «Onlar eşittir» buyurdu."],src:[["m",1598]]},
+{k:["ichkilik","aroq","alkogol","mast","spirtli","пиво","алкогол","спиртн","водк","вино","içki","alkol","sarhoş","шароб","خمر","مسكر"],t:["Ichkilik va mast qiluvchilar","Алкоголь и опьяняющее","İçki ve sarhoş edici","الخمر"],s:5,v:"90",
+ a:"يَا أَيُّهَا الَّذِينَ آمَنُوا إِنَّمَا الْخَمْرُ وَالْمَيْسِرُ وَالْأَنْصَابُ وَالْأَزْلَامُ رِجْسٌ مِنْ عَمَلِ الشَّيْطَانِ فَاجْتَنِبُوهُ لَعَلَّكُمْ تُفْلِحُونَ",am:["Ey iymon keltirganlar, aroq, qimor, butlar va fol o'qlari shayton amalidan bo'lgan nopoklikdir. Undan chetlaninglar, shoyad najot topsangiz.","О те, которые уверовали! Опьяняющее, азартные игры, жертвенники идолов и стрелы для гадания — мерзость из деяний сатаны. Сторонитесь её — быть может, вы преуспеете.","Ey iman edenler! İçki, kumar, dikili taşlar ve fal okları şeytan işi pisliklerdir. Bunlardan kaçının ki kurtuluşa eresiniz."],
+ h:"كل مسكر خمر، وكل مسكر حرام",hm:["Har bir mast qiluvchi narsa — xamr, har bir mast qiluvchi narsa haromdir.","Всё опьяняющее — хамр, и всё опьяняющее — запретно.","Sarhoş eden her şey hamrdır ve sarhoş eden her şey haramdır."],src:[["m",2003]]},
+{k:["qimor","kazino","stavka","azart","азарт","казино","ставк","kumar","bahis","قمار","ميسر"],t:["Qimor","Азартные игры","Kumar","الميسر"],s:5,v:"90",
+ a:"إِنَّمَا الْخَمْرُ وَالْمَيْسِرُ وَالْأَنْصَابُ وَالْأَزْلَامُ رِجْسٌ مِنْ عَمَلِ الشَّيْطَانِ فَاجْتَنِبُوهُ",am:["Aroq, qimor, butlar va fol o'qlari shayton amalidan bo'lgan nopoklikdir, undan chetlaninglar.","Опьяняющее, азартные игры, жертвенники идолов и стрелы для гадания — мерзость из деяний сатаны. Сторонитесь её.","İçki, kumar, dikili taşlar ve fal okları şeytan işi pisliklerdir; bunlardan kaçının."],
+ h:"من حلف فقال في حلفه: واللات والعزى، فليقل: لا إله إلا الله، ومن قال لصاحبه: تعال أقامرك، فليتصدق",hm:["…Kim do'stiga: «Kel, qimor o'ynaymiz», desa, (kafforat uchun) sadaqa bersin.","…Кто сказал товарищу: «Давай сыграем в азартную игру», пусть раздаст милостыню (во искупление).","…Kim arkadaşına «Gel kumar oynayalım» derse, (kefaret olarak) sadaka versin."],src:[["b",4860],["m",1647]]},
+{k:["yetim","yetimlar","сирот","yetim","öksüz","етим","يتيم","أيتام"],t:["Yetimlar","Сироты","Yetimler","اليتيم"],s:93,v:"9",
+ a:"فَأَمَّا الْيَتِيمَ فَلَا تَقْهَرْ",am:["Bas, yetimni xo'rlama.","Посему не притесняй сироту.","Öyleyse yetimi sakın ezme."],
+ h:"أنا وكافل اليتيم في الجنة هكذا، وأشار بالسبابة والوسطى",hm:["«Men va yetimga kafil bo'lgan kishi jannatda mana shunday (yonma-yon) bo'lamiz», deb ko'rsatkich va o'rta barmoqlarini ko'rsatdilar.","«Я и тот, кто опекает сироту, будем в Раю вот так», — и показал указательным и средним пальцами.","«Ben ve yetime bakan kimse cennette şöyleyiz» buyurup işaret ve orta parmağını gösterdi."],src:[["b",5304]]},
+{k:["salom","assalomu","salomlash","салам","приветств","selam","selamlaş","салом","سلام"],t:["Salom berish","Приветствие (салям)","Selamlaşmak","إفشاء السلام"],s:4,v:"86",
+ a:"وَإِذَا حُيِّيتُمْ بِتَحِيَّةٍ فَحَيُّوا بِأَحْسَنَ مِنْهَا أَوْ رُدُّوهَا",am:["Sizlarga salom berilsa, undan yaxshiroq salom bilan alik olinglar yoki xuddi o'zini qaytaringlar.","Когда вас приветствуют, отвечайте лучшим приветствием или тем же самым.","Bir selamla selamlandığınızda, ondan daha güzeliyle karşılık verin ya da aynısıyla karşılık verin."],
+ h:"لا تدخلون الجنة حتى تؤمنوا، ولا تؤمنوا حتى تحابوا… أفشوا السلام بينكم",hm:["Iymon keltirmaguningizcha jannatga kirmaysiz, bir-biringizni yaxshi ko'rmaguningizcha (komil) iymonli bo'lmaysiz… O'rtangizda salomni yoyinglar.","Вы не войдёте в Рай, пока не уверуете, и не уверуете, пока не полюбите друг друга… Распространяйте приветствие между собой.","İman etmedikçe cennete giremezsiniz, birbirinizi sevmedikçe iman etmiş olmazsınız… Aranızda selamı yayın."],src:[["m",54]]},
+{k:["afv","kechirim","kechirimli","xafa qildi","прощать","простить","обид","affetmek","bağışlamak","kırgın","عفو","صفح"],t:["Kechirimli bo'lish","Прощение людей","Affedici olmak","العفو"],s:24,v:"22",
+ a:"وَلْيَعْفُوا وَلْيَصْفَحُوا ۗ أَلَا تُحِبُّونَ أَنْ يَغْفِرَ اللَّهُ لَكُمْ",am:["Afv etsinlar va kechirsinlar. Allohning sizlarni mag'firat qilishini yaxshi ko'rmaysizlarmi?!","Пусть они прощают и снисходят. Разве вы не хотите, чтобы Аллах простил вас?","Affetsinler, hoş görsünler. Allah'ın sizi bağışlamasını istemez misiniz?"],
+ h:"وما زاد الله عبدا بعفو إلا عزا",hm:["Alloh afv etgan bandaning faqat izzatini ziyoda qiladi.","Аллах лишь возвеличивает раба за прощение.","Allah, affeden kulun ancak izzetini artırır."],src:[["m",2588]]},
+{k:["hasad","hasadgo'y","ko'rolmaslik","зависть","завид","haset","kıskanç","ҳасад","حسد"],t:["Hasad","Зависть","Haset","الحسد"],s:4,v:"32",
+ a:"وَلَا تَتَمَنَّوْا مَا فَضَّلَ اللَّهُ بِهِ بَعْضَكُمْ عَلَىٰ بَعْضٍ",am:["Alloh ba'zilaringizni ba'zilaringizdan ortiq qilgan narsalarni orzu qilmanglar.","Не желайте того, чем Аллах дал одним из вас преимущество перед другими.","Allah'ın kiminizi kiminize üstün kıldığı şeyleri arzulamayın."],
+ h:"لا تحاسدوا، ولا تباغضوا، ولا تدابروا، وكونوا عباد الله إخوانا",hm:["Bir-biringizga hasad qilmang, nafratlanmang, yuz o'girmang; ey Allohning bandalari, birodar bo'linglar.","Не завидуйте друг другу, не питайте ненависти, не отворачивайтесь друг от друга и будьте, рабы Аллаха, братьями.","Birbirinizi kıskanmayın, birbirinize buğzetmeyin, sırt çevirmeyin; ey Allah'ın kulları, kardeş olun."],src:[["b",6065],["m",2559]]},
+{k:["vaqt","salomatlik","sog'liq","bo'sh vaqt","umr","время","здоров","жизнь","zaman","sağlık","vakit","ömür","вақт","صحة","فراغ","وقت"],t:["Vaqt va salomatlik","Время и здоровье","Zaman ve sağlık","الصحة والفراغ"],s:103,v:"1–2",
+ a:"وَالْعَصْرِ ۝ إِنَّ الْإِنْسَانَ لَفِي خُسْرٍ",am:["Asr (zamon) bilan qasam. Albatta, inson ziyondadir.","Клянусь временем! Воистину, человек в убытке.","Asra yemin olsun ki insan gerçekten ziyandadır."],
+ h:"نعمتان مغبون فيهما كثير من الناس: الصحة والفراغ",hm:["Ikki ne'mat borki, ko'p odamlar ularda aldangan: sog'liq va bo'sh vaqt.","Есть две милости, в которых многие люди обмануты: здоровье и свободное время.","İki nimet vardır ki insanların çoğu onlarda aldanmıştır: sağlık ve boş vakit."],src:[["b",6412]]},
+{k:["hayo","uyat","nomus","ko'z","nigoh","стыд","скромн","взгляд","haya","utanma","edep","ҳаё","حياء","غض البصر"],t:["Hayo","Стыдливость (хая)","Hayâ","الحياء"],s:24,v:"30",
+ a:"قُلْ لِلْمُؤْمِنِينَ يَغُضُّوا مِنْ أَبْصَارِهِمْ وَيَحْفَظُوا فُرُوجَهُمْ ۚ ذَٰلِكَ أَزْكَىٰ لَهُمْ",am:["Mo'minlarga ayting: ko'zlarini (haromdan) tiysinlar va avratlarini saqlasinlar. Bu ular uchun pokizaroqdir.","Скажи верующим мужчинам, чтобы они потупляли свои взоры и оберегали свои половые органы. Так будет чище для них.","Mümin erkeklere söyle: Gözlerini (haramdan) sakınsınlar ve iffetlerini korusunlar. Bu onlar için daha temizdir."],
+ h:"الحياء شعبة من الإيمان",hm:["Hayo — iymonning bir bo'lagidir.","Стыдливость — ветвь веры.","Hayâ imanın bir şubesidir."],src:[["b",9],["m",35]]}
+
 ];
 const UI={
 uz:{tabs:["۞ Viktorina","📖 Qur'on","✦ Hadislar","🤲 Savol bering","🕌 Namoz vaqti"],qh:"Savol bering",qs:"Savolingizni yozing — Qur'on oyatlari va sahih hadislardan javob topib beraman",ph:"Masalan: Ota-onaga qanday munosabatda bo'lish kerak?",ask:"So'rash",ay:"Qur'ondan",hd:"Hadisdan",src:"Manba",ex:["Namoz haqida nima deyilgan?","Qiyin paytda nima qilay?","Gunohlarim kechiriladimi?","Ota-onaga yaxshilik","Rizq haqida","G'azabni qanday yengish mumkin?"],nf:"Kechirasiz, bu savolga mos oyat yoki hadis topa olmadim. Savolni boshqacha so'z bilan yozib ko'ring yoki quyidagi mavzulardan tanlang:",also:"Boshqa mavzular:",dis:"Bu yordamchi sun'iy intellekt emas: savolingizdagi so'zlarga qarab saytdagi oyat va hadislardan eng mosini tanlab beradi. Fiqhiy masalalar (fatvo) uchun imom yoki muftiyga murojaat qiling.",topics:"Mavzular"},
@@ -837,16 +917,19 @@ function answerCard(t){const L=LI[LANG],u=UI[LANG];const d=document.createElemen
  b[0].querySelector(".lb").textContent="📖 "+u.ay;b[0].querySelector(".arx").textContent="﴿ "+t.a+" ﴾";b[0].querySelector(".rf").textContent=refTxt(t);
  b[1].querySelector(".lb").textContent="✦ "+u.hd;b[1].querySelector(".arx").textContent="«"+t.h+"»";b[1].querySelector(".rf").textContent=u.src+": "+srcTxt(t);
  if(LANG==="ar"){b[0].querySelector(".mn").remove();b[1].querySelector(".mn").remove()}else{b[0].querySelector(".mn").textContent=t.am[L];b[1].querySelector(".mn").textContent=t.hm[L]}
+ copyBtn(d,()=>t.t[L]+"\n\n"+t.a+"\n"+(LANG==="ar"?"":t.am[L]+"\n")+"("+refTxt(t)+")\n\n"+t.h+"\n"+(LANG==="ar"?"":t.hm[L]+"\n")+"("+srcTxt(t)+")\n\n— muzaffarkarshiev.github.io/muzacom/quron");
  return d}
 function ask(q){q=q.trim();if(!q)return;const u=UI[LANG],box=$("qaLog");
  const me=document.createElement("div");me.className="me";me.textContent=q;box.appendChild(me);
  const res=findTopics(q);const wrap=document.createElement("div");wrap.className="bot";
  if(!res.length){const p=document.createElement("p");p.className="nf";p.textContent=u.nf;wrap.appendChild(p);wrap.appendChild(topicChips())}
  else{res.forEach(r=>wrap.appendChild(answerCard(TP[r.i])))}
- box.appendChild(wrap);$("qaIn").value="";me.scrollIntoView({behavior:"smooth",block:"start"})}
+ box.appendChild(wrap);if(AI_URL)askAI(q,wrap);$("qaSug").innerHTML="";$("qaIn").value="";me.scrollIntoView({behavior:"smooth",block:"start"})}
 function topicChips(){const c=document.createElement("div");c.className="chips";TP.forEach(t=>{const b=document.createElement("button");b.textContent=t.t[LI[LANG]];b.onclick=()=>{const box=$("qaLog");const me=document.createElement("div");me.className="me";me.textContent=t.t[LI[LANG]];box.appendChild(me);const w=document.createElement("div");w.className="bot";w.appendChild(answerCard(t));box.appendChild(w);me.scrollIntoView({behavior:"smooth",block:"start"})};c.appendChild(b)});return c}
 function applyLang(){const u=UI[LANG];document.querySelectorAll(".lbar button").forEach(b=>b.classList.toggle("on",b.dataset.lang===LANG));
- const TI={quiz:0,quran:1,hadis:2,qa:3,namoz:4};document.querySelectorAll(".tabs button").forEach(b=>b.textContent=u.tabs[TI[b.dataset.t]]);document.querySelectorAll(".sec-t").forEach(b=>b.textContent=u.tabs[TI[b.dataset.sec]].replace(/^\S+\s/,""));
+ const TI={quiz:0,quran:1,hadis:2,qa:3,namoz:4};const MD=MENU_D[LANG],NUM={namoz:"١",quiz:"٢",quran:"٣",qa:"٤",hadis:"٥"};
+ document.querySelectorAll(".tabs button").forEach(b=>{const full=u.tabs[TI[b.dataset.t]],sp=full.indexOf(" ");b.innerHTML='<span class="mi"></span><span class="mt"><b></b><small></small></span><span class="mn">'+NUM[b.dataset.t]+'</span>';b.querySelector(".mi").textContent=full.slice(0,sp);b.querySelector(".mt b").textContent=full.slice(sp+1);b.querySelector(".mt small").textContent=MD[b.dataset.t]});
+ document.querySelector(".tabs").dir=LANG==="ar"?"rtl":"ltr";document.querySelectorAll(".sec-t").forEach(b=>b.textContent=u.tabs[TI[b.dataset.sec]].replace(/^\S+\s/,""));
  $("qaH").textContent=u.qh;$("qaS").textContent=u.qs;$("qaIn").placeholder=u.ph;$("qaGo").textContent=u.ask;$("qaDis").textContent=u.dis;$("qaT").textContent=u.topics;
  $("qa").dir=LANG==="ar"?"rtl":"ltr";
  const ex=$("qaEx");ex.innerHTML="";u.ex.forEach(s=>{const b=document.createElement("button");b.textContent=s;b.onclick=()=>ask(s);ex.appendChild(b)});
@@ -854,6 +937,9 @@ function applyLang(){const u=UI[LANG];document.querySelectorAll(".lbar button").
  try{localStorage.setItem("qv_lang",LANG)}catch(e){};if(typeof mark==="function")mark();$("pRep").title=plTxt().rep}
 document.querySelectorAll(".lbar button").forEach(b=>b.onclick=()=>{LANG=b.dataset.lang;applyLang()});
 $("qaForm").onsubmit=e=>{e.preventDefault();ask($("qaIn").value)};
+$("qaIn").oninput=()=>{const v=$("qaIn").value,box=$("qaSug");box.innerHTML="";if(v.trim().length<3)return;findTopics(v).forEach(r=>{const t=TP[r.i],b=document.createElement("button");b.type="button";b.textContent="💡 "+t.t[LI[LANG]];b.onclick=()=>{const bx=$("qaLog");const me=document.createElement("div");me.className="me";me.textContent=$("qaIn").value;bx.appendChild(me);const w=document.createElement("div");w.className="bot";w.appendChild(answerCard(t));bx.appendChild(w);if(AI_URL)askAI($("qaIn").value,w);$("qaIn").value="";box.innerHTML="";me.scrollIntoView({behavior:"smooth",block:"start"})};box.appendChild(b)})};
+const fab=$("fab"),nav=document.querySelector(".tabs");fab.onclick=()=>nav.scrollIntoView({behavior:"smooth",block:"start"});
+try{new IntersectionObserver(es=>es.forEach(e=>fab.classList.toggle("show",!e.isIntersecting))).observe(nav)}catch(e){}
 applyLang();
 </script>
 <script>
