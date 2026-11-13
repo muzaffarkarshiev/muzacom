@@ -87,7 +87,7 @@ button{color:var(--txt)}
 .opt:disabled{cursor:default}
 /* tabs */
 .tabs{display:flex;gap:6px;max-width:640px;margin:0 auto;background:var(--g0);padding:6px;border-radius:16px 16px 0 0;border:1.5px solid var(--gold);border-bottom:none}
-.tabs button{flex:1;font:inherit;font-weight:800;font-size:15px;padding:11px 6px;border:0;border-radius:11px;background:transparent;color:var(--gold2);cursor:pointer}
+.tabs button{flex:1;font:inherit;font-weight:800;font-size:14px;padding:11px 6px;border:0;border-radius:11px;background:transparent;color:var(--gold2);cursor:pointer}
 .tabs button.on{background:var(--gold);color:var(--g0)}
 .card{border-radius:0 0 22px 22px}
 /* qur'on */
@@ -114,6 +114,28 @@ button{color:var(--txt)}
 @media(min-width:600px){.pair{grid-template-columns:1fr 1fr;align-items:center}.pair .c{order:-1}}
 .ayah .c{font-size:17px;line-height:1.6;font-weight:700;color:#0b4a38;background:#eef7f2;border:1px solid #cfe6da;border-radius:12px;padding:10px 12px}
 .ayah .c:before{content:"Ўқилиши: ";font-size:11px;font-weight:800;color:var(--gold);display:block}
+/* til va savol-javob */
+.lbar{display:flex;justify-content:center;gap:6px;max-width:640px;margin:0 auto 8px;position:relative;z-index:3}
+.lbar button{font:inherit;font-weight:800;font-size:13px;padding:7px 12px;border-radius:99px;border:1.5px solid var(--gold);background:rgba(6,43,33,.85);color:var(--gold2);cursor:pointer}
+.lbar button.on{background:var(--gold);color:var(--g0)}
+#qa form{display:flex;gap:8px;margin-bottom:12px}
+#qa input{flex:1;min-width:0;font:inherit;font-size:16px;padding:13px 14px;border-radius:14px;border:2px solid var(--gold);background:#fff;color:var(--txt)}
+#qa form .btn{flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.chips button,#qaEx button{font:inherit;font-size:13.5px;font-weight:700;padding:7px 12px;border-radius:99px;border:1.5px solid #e2d4a8;background:#fff;color:var(--g1);cursor:pointer}
+.chips button:hover,#qaEx button:hover{border-color:var(--g2);background:#f3faf6}
+#qaEx{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.me{margin:16px 0 10px auto;max-width:85%;width:fit-content;background:linear-gradient(160deg,var(--g2),var(--g1));color:#fff;padding:10px 14px;border-radius:16px 16px 4px 16px;font-weight:700}
+[dir=rtl] .me{margin:16px auto 10px 0;border-radius:16px 16px 16px 4px}
+.ans{border:1.5px solid var(--gold);border-radius:18px;background:#fff;margin-bottom:12px;overflow:hidden}
+.ans-h{background:linear-gradient(160deg,var(--g2),var(--g1));color:var(--gold2);font-weight:800;padding:10px 14px;font-size:16px}
+.blk{padding:12px 14px;border-top:1px dashed #e2d4a8}
+.blk:first-of-type{border-top:0}
+.blk .lb{font-size:12px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.04em}
+.blk .arx{font-family:Amiri,serif;font-size:23px;line-height:1.9;direction:rtl;text-align:right;color:#10352a;margin:4px 0}
+.blk .mn{font-size:16px;line-height:1.55;font-weight:600}
+.blk .rf{font-size:13px;color:var(--g2);font-weight:800;margin-top:6px}
+.nf{font-weight:700;color:var(--bad)}
 /* hadis */
 .hsearch{width:100%;font:inherit;padding:11px 14px;border-radius:12px;border:1.5px solid #e2d4a8;margin-bottom:10px;background:#fff}
 .hcats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
@@ -164,8 +186,23 @@ button{color:var(--txt)}
   </svg>
 </div>
 
-<nav class="tabs"><button data-t="quiz" class="on">۞ Viktorina</button><button data-t="quran">📖 Qur'on</button><button data-t="hadis">✦ Hadislar</button></nav>
+<div class="lbar"><button data-lang="uz">🇺🇿 O'zbek</button><button data-lang="tr">🇹🇷 Türkçe</button><button data-lang="ar">🇸🇦 العربية</button><button data-lang="ru">🇷🇺 Русский</button></div>
+<nav class="tabs"><button data-t="quiz" class="on">۞ Viktorina</button><button data-t="quran">📖 Qur'on</button><button data-t="hadis">✦ Hadislar</button><button data-t="qa">🤲 Savol bering</button></nav>
 <div class="wrap">
+
+<div class="card hidden" id="qa">
+  <div class="frame"></div>
+  <p class="ar">وَقُل رَّبِّ زِدْنِي عِلْمًا</p>
+  <h1 id="qaH"></h1>
+  <div class="divider">✦ ۞ ✦</div>
+  <p class="sub" id="qaS"></p>
+  <form id="qaForm"><input id="qaIn" autocomplete="off"><button class="btn" id="qaGo" type="submit"></button></form>
+  <div id="qaEx"></div>
+  <div id="qaLog"></div>
+  <p class="sub" style="margin:16px 0 8px;font-weight:800" id="qaT"></p>
+  <div id="qaTopics"></div>
+  <div class="note" id="qaDis"></div>
+</div>
 
 <div class="card hidden" id="quran">
   <div class="frame"></div>
@@ -340,7 +377,7 @@ const T={1:25,2:20,3:15,0:20},L="ABCD",LN={1:"Oson",2:"O'rta",3:"Qiyin",0:"Arala
 let set=[],i=0,score=0,correct=0,combo=0,used=false,timer=null,left=0,lvl=1,log=[],N=10;
 const $=id=>document.getElementById(id);
 function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
-function show(id){["home","game","end","quran","hadis"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo(0,0)}
+function show(id){["home","game","end","quran","hadis","qa"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo(0,0)}
 function shuffle(a){a=a.slice();for(let j=a.length-1;j>0;j--){const k=Math.random()*(j+1)|0;[a[j],a[k]]=[a[k],a[j]]}return a}
 function bestText(){const b=store("qv_best")||{};const s=Object.keys(LN).filter(k=>b[k]).map(k=>LN[k]+": "+b[k]).join(" · ");$("best").textContent=s?"🏆 Eng yaxshi natijalar — "+s:"Jami savollar bazasi: "+Q.length+" ta"}
 document.querySelectorAll(".count button").forEach(b=>b.onclick=()=>{N=+b.dataset.n;document.querySelectorAll(".count button").forEach(x=>x.classList.toggle("on",x===b))});
@@ -531,6 +568,130 @@ $("hq").oninput=renderH;renderCats();renderH();
 // ================= TABLAR =================
 document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{clearInterval(timer);document.querySelectorAll(".tabs button").forEach(x=>x.classList.toggle("on",x===b));
  const t=b.dataset.t;if(t==="quiz"){bestText();show("home")}else show(t)});
+</script>
+<script>
+// ================= SAVOL-JAVOB (4 til) =================
+const SN={2:["Baqara","Бакара","Bakara","البقرة"],3:["Oli Imron","Аль Имран","Âl-i İmrân","آل عمران"],4:["Niso","Ан-Ниса","Nisâ","النساء"],9:["Tavba","Ат-Тауба","Tevbe","التوبة"],13:["Ra'd","Ар-Раад","Ra'd","الرعد"],14:["Ibrohim","Ибрахим","İbrâhîm","إبراهيم"],17:["Isro","Аль-Исра","İsrâ","الإسراء"],20:["Toha","Та Ха","Tâhâ","طه"],29:["Ankabut","Аль-Анкабут","Ankebût","العنكبوت"],30:["Rum","Ар-Рум","Rûm","الروم"],39:["Zumar","Аз-Зумар","Zümer","الزمر"],49:["Hujurot","Аль-Худжурат","Hucurât","الحجرات"],65:["Taloq","Ат-Талак","Talâk","الطلاق"],68:["Qalam","Аль-Калам","Kalem","القلم"],94:["Sharh","Аш-Шарх","İnşirâh","الشرح"],98:["Bayyina","Аль-Баййина","Beyyine","البينة"],112:["Ixlos","Аль-Ихлас","İhlâs","الإخلاص"]};
+const BK={b:["Buxoriy","аль-Бухари","Buhârî","البخاري"],m:["Muslim","Муслим","Müslim","مسلم"],t:["Termiziy","ат-Тирмизи","Tirmizî","الترمذي"],d:["Abu Dovud","Абу Дауд","Ebû Dâvûd","أبو داود"],a:["Imom Ahmad","Ахмад","Ahmed b. Hanbel","أحمد"]};
+const LI={uz:0,ru:1,tr:2,ar:3};
+// {k:kalit so'zlar, t:[uz,ru,tr,ar], s:sura, v:"oyat", a:arabcha oyat, am:[uz,ru,tr], h:arabcha hadis, hm:[uz,ru,tr], src:[[kitob,raqam]]}
+const TP=[
+{k:["namoz","namaz","salat","salah","намоз","намаз","молитв","молиться","صلاة","الصلاة","besh vaqt","беш вақт"],t:["Namoz","Намаз","Namaz","الصلاة"],s:29,v:"45",
+ a:"إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنْكَرِ",am:["Albatta, namoz fahsh va yomon ishlardan qaytaradi.","Воистину, намаз удерживает от мерзости и порицаемого.","Şüphesiz namaz, hayâsızlıktan ve kötülükten alıkoyar."],
+ h:"الصلوات الخمس، والجمعة إلى الجمعة، ورمضان إلى رمضان، مكفرات ما بينهن إذا اجتنب الكبائر",hm:["Besh vaqt namoz, bir jumadan keyingi jumagacha va bir Ramazondan keyingi Ramazongacha — katta gunohlardan saqlanilsa — ular orasidagi gunohlarga kafforatdir.","Пять молитв, от пятницы до пятницы и от Рамадана до Рамадана — искупление грехов, совершённых между ними, если избегать великих грехов.","Beş vakit namaz, iki cuma arası ve iki Ramazan arası — büyük günahlardan kaçınıldıkça — aralarındaki günahlara kefarettir."],src:[["m",233]]},
+{k:["ro'za","roza","ruza","ramazon","ramadan","ramazan","oruc","oruç","пост","ураза","рамадан","рўза","рамазон","صيام","صوم","رمضان","iftor","saharlik","iftar","sahur"],t:["Ro'za","Пост","Oruç","الصيام"],s:2,v:"183",
+ a:"يَا أَيُّهَا الَّذِينَ آمَنُوا كُتِبَ عَلَيْكُمُ الصِّيَامُ كَمَا كُتِبَ عَلَى الَّذِينَ مِنْ قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ",am:["Ey iymon keltirganlar, sizlardan avvalgilarga farz qilinganidek, sizlarga ham ro'za farz qilindi, shoyad taqvodor bo'lsangiz.","О те, которые уверовали! Вам предписан пост, как он был предписан тем, кто был до вас, — быть может, вы станете богобоязненными.","Ey iman edenler! Oruç, sizden öncekilere farz kılındığı gibi size de farz kılındı; umulur ki sakınırsınız."],
+ h:"من صام رمضان إيمانا واحتسابا غفر له ما تقدم من ذنبه",hm:["Kim Ramazon ro'zasini iymon bilan va savob umidida tutsa, uning o'tgan gunohlari kechiriladi.","Тому, кто постился в Рамадан с верой и надеждой на награду, будут прощены его прошлые грехи.","Kim inanarak ve sevabını Allah'tan umarak Ramazan orucunu tutarsa, geçmiş günahları bağışlanır."],src:[["b",38],["m",760]]},
+{k:["zakot","zakat","zekat","sadaqa","sadaka","садака","закят","милостын","пожертв","xayr","ehson","infoq","закот","садақа","زكاة","صدقة","bağış","yardım","faqir","miskin"],t:["Zakot va sadaqa","Закят и милостыня","Zekât ve sadaka","الزكاة والصدقة"],s:3,v:"92",
+ a:"لَنْ تَنَالُوا الْبِرَّ حَتَّىٰ تُنْفِقُوا مِمَّا تُحِبُّونَ",am:["Sevgan narsalaringizdan infoq qilmaguningizcha, yaxshilikka erisha olmaysiz.","Вы не достигнете благочестия, пока не станете расходовать из того, что любите.","Sevdiğiniz şeylerden Allah yolunda harcamadıkça iyiliğe erişemezsiniz."],
+ h:"ما نقصت صدقة من مال",hm:["Sadaqa moldan hech narsani kamaytirmaydi.","Милостыня не уменьшает имущества.","Sadaka maldan hiçbir şey eksiltmez."],src:[["m",2588]]},
+{k:["haj","hajj","hac","хадж","ҳаж","umra","umre","умра","makka","mekke","мекк","макка","ka'ba","kabe","кааба","حج","عمرة","مكة"],t:["Haj","Хадж","Hac","الحج"],s:3,v:"97",
+ a:"وَلِلَّهِ عَلَى النَّاسِ حِجُّ الْبَيْتِ مَنِ اسْتَطَاعَ إِلَيْهِ سَبِيلًا",am:["Yo'l topishga qodir bo'lgan kishilar zimmasida Alloh uchun Baytni haj qilish (farz)dir.","Совершить хадж к Дому — обязанность людей перед Аллахом, если они в состоянии сделать это.","Yoluna gücü yetenlerin Beyt'i haccetmesi, Allah'ın insanlar üzerindeki bir hakkıdır."],
+ h:"من حج فلم يرفث ولم يفسق رجع كيوم ولدته أمه",hm:["Kim haj qilsa va (unda) behayo gap va gunoh qilmasa, onasidan tug'ilgan kunidagidek (gunohsiz) bo'lib qaytadi.","Кто совершит хадж, не сквернословя и не греша, вернётся (безгрешным), как в день, когда его родила мать.","Kim hacceder de kötü söz söylemez ve günaha dalmazsa, annesinden doğduğu gün gibi (günahsız) döner."],src:[["b",1521],["m",1350]]},
+{k:["ota","ona","ota-ona","onam","otam","dada","oyi","родител","мать","мама","отец","папа","anne","baba","ebeveyn","ота","она","ота-она","والدين","والد","أم","أب","ummi"],t:["Ota-onaga yaxshilik","Почитание родителей","Anne-babaya iyilik","بر الوالدين"],s:17,v:"23",
+ a:"وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا",am:["Robbing faqat Ungagina ibodat qilishingizni va ota-onaga yaxshilik qilishingizni amr etdi.","Твой Господь повелел вам не поклоняться никому, кроме Него, и делать добро родителям.","Rabbin, yalnız O'na kulluk etmenizi ve anne-babaya iyilik etmenizi emretti."],
+ h:"أمك، ثم أمك، ثم أمك، ثم أبوك",hm:["(Yaxshi muomalamga eng haqli kim, deb so'ralganda:) «Onang, keyin onang, keyin onang, keyin otang».","(На вопрос, кто больше всех достоин хорошего обращения:) «Твоя мать, затем твоя мать, затем твоя мать, затем твой отец».","(İyi davranılmaya en layık kim diye sorulunca:) «Annen, sonra annen, sonra annen, sonra baban»."],src:[["b",5971],["m",2548]]},
+{k:["sabr","sabir","сабр","терпен","горе","беда","musibat","qayg'u","qaygu","kasal","bemor","болезн","болею","hastalık","hasta","dert","musibet","صبر","مصيبة","мусибат","касал","bela"],t:["Sabr va musibat","Терпение в беде","Sabır ve musibet","الصبر"],s:2,v:"153",
+ a:"يَا أَيُّهَا الَّذِينَ آمَنُوا اسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ۚ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ",am:["Ey iymon keltirganlar, sabr va namoz bilan yordam so'ranglar. Albatta, Alloh sabrlilar bilan birgadir.","О те, которые уверовали! Обращайтесь за помощью к терпению и намазу. Воистину, Аллах — с терпеливыми.","Ey iman edenler! Sabır ve namazla yardım dileyin. Şüphesiz Allah sabredenlerle beraberdir."],
+ h:"عجبا لأمر المؤمن، إن أمره كله خير… إن أصابته سراء شكر فكان خيرا له، وإن أصابته ضراء صبر فكان خيرا له",hm:["Mo'minning ishi ajoyib, uning har bir ishi yaxshilikdir: unga xursandchilik yetsa, shukr qiladi — bu unga yaxshilik; zarar yetsa, sabr qiladi — bu ham unga yaxshilik.","Удивительно положение верующего: всё для него — благо. Если его постигает радость, он благодарит — и это благо для него; если постигает беда, он терпит — и это благо для него.","Müminin durumu ne hoştur, her işi hayırdır: Sevindirici bir şey olursa şükreder, bu onun için hayırdır; başına bir sıkıntı gelirse sabreder, bu da onun için hayırdır."],src:[["m",2999]]},
+{k:["qiyin","og'ir","ogir","umid","tushkun","depress","stress","xafa","yolg'iz","трудно","тяжело","надежд","депресс","грусть","одинок","zor","umut","ümit","bunal","üzgün","yalnız","қийин","умид","عسر","يسر","حزن","شدة","ضيق","هموم"],t:["Qiyinchilik va umid","Трудности и надежда","Zorluk ve umut","الأمل بعد الشدة"],s:94,v:"5–6",
+ a:"فَإِنَّ مَعَ الْعُسْرِ يُسْرًا ۝ إِنَّ مَعَ الْعُسْرِ يُسْرًا",am:["Albatta, qiyinchilik bilan birga yengillik bor. Albatta, qiyinchilik bilan birga yengillik bor.","Воистину, за тягостью — облегчение. Воистину, за тягостью — облегчение.","Şüphesiz zorlukla beraber bir kolaylık vardır. Gerçekten zorlukla beraber bir kolaylık vardır."],
+ h:"أنا عند ظن عبدي بي",hm:["(Alloh taolo aytadi:) «Men bandamning Men haqimdagi gumoni yonidaman».","(Аллах говорит:) «Я — таков, каким Мой раб Меня представляет».","(Allah buyurur:) «Ben kulumun Beni zannı üzereyim»."],src:[["b",7405],["m",2675]]},
+{k:["tavba","gunoh","kechir","mag'firat","magfirat","istig'for","istigfor","грех","покаян","прощен","простит","tövbe","günah","bağışla","affet","тавба","гуноҳ","кечир","توبة","ذنب","ذنوب","يغفر","مغفرة","استغفار","يتوب"],t:["Tavba va gunoh","Покаяние и грехи","Tövbe ve günah","التوبة"],s:39,v:"53",
+ a:"قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَىٰ أَنْفُسِهِمْ لَا تَقْنَطُوا مِنْ رَحْمَةِ اللَّهِ ۚ إِنَّ اللَّهَ يَغْفِرُ الذُّنُوبَ جَمِيعًا ۚ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",am:["Ayting: «Ey o'zlariga (gunoh bilan) haddan oshgan bandalarim, Allohning rahmatidan noumid bo'lmanglar! Albatta, Alloh barcha gunohlarni kechiradi. U Kechiruvchi, Rahmlidir».","Скажи: «О Мои рабы, которые излишествовали во вред себе! Не отчаивайтесь в милости Аллаха. Воистину, Аллах прощает все грехи. Он — Прощающий, Милосердный».","De ki: «Ey kendilerinin aleyhine haddi aşan kullarım! Allah'ın rahmetinden ümidinizi kesmeyin. Şüphesiz Allah bütün günahları bağışlar. O, çok bağışlayan, çok merhamet edendir»."],
+ h:"كل ابن آدم خطاء، وخير الخطائين التوابون",hm:["Barcha odam bolalari xato qiluvchidir, xato qiluvchilarning eng yaxshisi tavba qiluvchilardir.","Все сыны Адама ошибаются, а лучшие из ошибающихся — кающиеся.","Âdemoğlunun hepsi hata eder; hata edenlerin en hayırlısı tövbe edenlerdir."],src:[["t",2499]]},
+{k:["duo","dua","ادعيه","дуа","мольб","просить","so'ra","sora","iltijo","dilek","yakar","дуо","دعاء","ادعو"],t:["Duo","Дуа (мольба)","Dua","الدعاء"],s:2,v:"186",
+ a:"وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌ ۖ أُجِيبُ دَعْوَةَ الدَّاعِ إِذَا دَعَانِ",am:["Qachon bandalarim sendan Men haqimda so'rasalar, (ayt:) Men yaqinman. Duo qiluvchi Menga duo qilsa, duosini ijobat qilaman.","Если Мои рабы спросят тебя обо Мне, то ведь Я близок и отвечаю на мольбу молящегося, когда он взывает ко Мне.","Kullarım sana Beni sorduklarında (söyle): Ben yakınım. Bana dua edince, dua edenin duasına karşılık veririm."],
+ h:"الدعاء هو العبادة",hm:["Duo — bu ibodatdir.","Мольба — это и есть поклонение.","Dua, ibadetin ta kendisidir."],src:[["t",2969],["d",1479]]},
+{k:["ilm","bilim","o'rgan","organ","talaba","maktab","universitet","знани","учеб","учить","учиться","наук","школ","ilim","öğren","okul","илм","علم","تعلم"],t:["Ilm olish","Получение знаний","İlim öğrenmek","طلب العلم"],s:39,v:"9",
+ a:"قُلْ هَلْ يَسْتَوِي الَّذِينَ يَعْلَمُونَ وَالَّذِينَ لَا يَعْلَمُونَ",am:["Ayting: «Biladiganlar bilan bilmaydiganlar teng bo'ladimi?!»","Скажи: «Разве равны те, которые знают, и те, которые не знают?»","De ki: «Hiç bilenlerle bilmeyenler bir olur mu?»"],
+ h:"من سلك طريقا يلتمس فيه علما سهل الله له به طريقا إلى الجنة",hm:["Kim ilm talab qilib yo'lga chiqsa, Alloh unga shu sababli jannatga boradigan yo'lni oson qilib qo'yadi.","Тому, кто вступит на путь поиска знаний, Аллах облегчит путь в Рай.","Kim ilim öğrenmek için bir yola girerse, Allah onun için cennete giden yolu kolaylaştırır."],src:[["m",2699]]},
+{k:["shukr","shukur","minnatdor","rahmat","благодар","спасибо","şükür","şükret","teşekkür","шукр","شكر"],t:["Shukr","Благодарность","Şükür","الشكر"],s:14,v:"7",
+ a:"لَئِنْ شَكَرْتُمْ لَأَزِيدَنَّكُمْ",am:["Agar shukr qilsangizlar, albatta (ne'matimni) ziyoda qilaman.","Если вы будете благодарны, Я приумножу вам (милость).","Andolsun, eğer şükrederseniz elbette size (nimetimi) artırırım."],
+ h:"من لا يشكر الناس لا يشكر الله",hm:["Odamlarga shukr (minnatdorchilik) qilmagan kishi Allohga ham shukr qilmaydi.","Кто не благодарит людей, тот не благодарит и Аллаха.","İnsanlara teşekkür etmeyen, Allah'a da şükretmez."],src:[["d",4811],["t",1954]]},
+{k:["tavakkul","tayan","qo'rq","qorq","xavotir","kelajak","упова","довер","страх","боюсь","тревог","будущ","tevekkül","güven","kaygı","endişe","korku","gelecek","таваккул","қўрқ","توكل","خوف"],t:["Tavakkul (Allohga tayanish)","Упование на Аллаха","Tevekkül","التوكل"],s:65,v:"3",
+ a:"وَمَنْ يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ",am:["Kim Allohga tavakkul qilsa, U unga kifoya qiladi.","Кто уповает на Аллаха, тому достаточно Его.","Kim Allah'a tevekkül ederse, O ona yeter."],
+ h:"لو أنكم توكلتم على الله حق توكله لرزقكم كما يرزق الطير، تغدو خماصا وتروح بطانا",hm:["Agar Allohga haqiqiy tavakkul qilsangiz, qushlarni rizqlantirgani kabi sizlarni ham rizqlantirardi: ular ertalab och chiqib, kechqurun to'q qaytadi.","Если бы вы уповали на Аллаха должным образом, Он наделял бы вас уделом, как наделяет птиц: утром они улетают голодными, а вечером возвращаются сытыми.","Allah'a hakkıyla tevekkül etseydiniz, kuşları rızıklandırdığı gibi sizi de rızıklandırırdı: Sabah aç çıkar, akşam tok dönerler."],src:[["t",2344]]},
+{k:["rizq","rizk","pul","ish","qarz","kambag'al","kambagal","boylik","savdo","biznes","maosh","деньг","работ","бизнес","долг","бедн","богат","удел","зарплат","para","iş","borç","fakir","zengin","ticaret","rızık","maaş","ризқ","пул","қарз","رزق","مال","عمل"],t:["Rizq va mol","Удел и достаток","Rızık ve kazanç","الرزق"],s:65,v:"2–3",
+ a:"وَمَنْ يَتَّقِ اللَّهَ يَجْعَلْ لَهُ مَخْرَجًا ۝ وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ",am:["Kim Allohdan qo'rqsa, (Alloh) unga chiqish yo'lini qilib beradi va uni o'ylamagan tomonidan rizqlantiradi.","Тому, кто боится Аллаха, Он создаёт выход и дарует удел оттуда, откуда он и не предполагал.","Kim Allah'tan sakınırsa, Allah ona bir çıkış yolu açar ve onu hiç ummadığı yerden rızıklandırır."],
+ h:"من أحب أن يبسط له في رزقه وينسأ له في أثره فليصل رحمه",hm:["Kim rizqi kengayishini va umri uzayishini istasa, qarindoshlik aloqalarini (silai rahmni) bog'lasin.","Кто желает, чтобы его удел был расширен, а жизнь продлена, пусть поддерживает родственные связи.","Rızkının genişlemesini ve ömrünün uzamasını isteyen, akrabalık bağlarını gözetsin."],src:[["b",5986],["m",2557]]},
+{k:["zikr","zikir","tasbeh","тасбих","зикр","xotirjam","tinchlik","qalb","yurak","сердц","спокой","покой","kalp","huzur","tesbih","huzursuz","қалб","ذكر","قلب","طمأنينة"],t:["Zikr va qalb xotirjamligi","Поминание Аллаха и покой сердца","Zikir ve kalp huzuru","الذكر"],s:13,v:"28",
+ a:"أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",am:["Ogoh bo'lingizkim, Allohning zikri bilan qalblar xotirjam bo'ladi.","Воистину, поминанием Аллаха утешаются сердца.","Bilesiniz ki, kalpler ancak Allah'ı anmakla huzur bulur."],
+ h:"كلمتان خفيفتان على اللسان، ثقيلتان في الميزان، حبيبتان إلى الرحمن: سبحان الله وبحمده، سبحان الله العظيم",hm:["Ikki kalima borki, tilga yengil, tarozida og'ir, Rahmonga sevimli: «Subhanallohi va bihamdihi, subhanallohil-azim».","Два слова легки для языка, тяжелы на Весах и любимы Милостивым: «Субхана-Ллахи ва би-хамдихи, субхана-Ллахи-ль-‘азым».","İki söz vardır ki dile hafif, mizanda ağır, Rahmân'a sevimlidir: «Sübhânallâhi ve bihamdihî, sübhânallâhi'l-azîm»."],src:[["b",6406],["m",2694]]},
+{k:["o'lim","olim vafot","vafot","oxirat","qabr","jannat","do'zax","dozax","qiyomat","смерт","умер","ахират","рай","ад ","могил","судн","ölüm","ahiret","cennet","cehennem","kabir","kıyamet","ўлим","жаннат","охират","موت","آخرة","جنة","النار","قبر"],t:["O'lim va oxirat","Смерть и Вечная жизнь","Ölüm ve ahiret","الموت والآخرة"],s:3,v:"185",
+ a:"كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ ۗ وَإِنَّمَا تُوَفَّوْنَ أُجُورَكُمْ يَوْمَ الْقِيَامَةِ",am:["Har bir jon o'limni totuvchidir. Ajrlaringiz qiyomat kuni to'liq beriladi.","Каждая душа вкусит смерть, и в День воскресения вы получите сполна свою награду.","Her canlı ölümü tadacaktır. Ecirleriniz ancak kıyamet günü tam olarak verilecektir."],
+ h:"أكثروا ذكر هاذم اللذات",hm:["Lazzatlarni buzuvchi narsa (o'lim)ni ko'p eslanglar.","Чаще вспоминайте разрушительницу наслаждений (смерть).","Lezzetleri yok eden (ölümü) çokça anın."],src:[["t",2307]]},
+{k:["rost","rostgo'y","yolg'on","yolgon","aldash","alda","haqiqat","ложь","лгать","врать","правд","обман","честн","yalan","doğru","dürüst","kandır","рост","ёлғон","صدق","كذب"],t:["Rostgo'ylik va yolg'on","Правдивость и ложь","Doğruluk ve yalan","الصدق"],s:9,v:"119",
+ a:"يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَكُونُوا مَعَ الصَّادِقِينَ",am:["Ey iymon keltirganlar, Allohdan qo'rqinglar va rostgo'ylar bilan birga bo'linglar.","О те, которые уверовали! Бойтесь Аллаха и будьте вместе с правдивыми.","Ey iman edenler! Allah'tan sakının ve doğrularla beraber olun."],
+ h:"إن الصدق يهدي إلى البر، وإن البر يهدي إلى الجنة",hm:["Albatta, rostgo'ylik yaxshilikka yetaklaydi, yaxshilik esa jannatga yetaklaydi.","Воистину, правдивость ведёт к благочестию, а благочестие ведёт в Рай.","Doğruluk iyiliğe, iyilik de cennete götürür."],src:[["b",6094],["m",2607]]},
+{k:["g'iybat","giybat","g‘iybat","chaqimchi","orqasidan","гибат","сплетн","злослов","за спиной","gıybet","dedikodu","arkasından","ғийбат","غيبة","نميمة"],t:["G'iybat va til","Злословие и язык","Gıybet ve dil","الغيبة"],s:49,v:"12",
+ a:"وَلَا يَغْتَبْ بَعْضُكُمْ بَعْضًا",am:["Bir-birlaringizni g'iybat qilmanglar.","Не злословьте за спиной друг друга.","Birbirinizin gıybetini yapmayın."],
+ h:"أتدرون ما الغيبة؟ … ذكرك أخاك بما يكره",hm:["«G'iybat nima ekanini bilasizlarmi? — Birodaringni u yoqtirmaydigan narsa bilan eslashing».","«Знаете ли вы, что такое злословие? — Это когда ты говоришь о брате то, что ему неприятно».","«Gıybet nedir bilir misiniz? — Kardeşini hoşlanmadığı bir şeyle anmandır»."],src:[["m",2589]]},
+{k:["g'azab","gazab","jahl","achchiq","asab","janjal","urish","гнев","злость","злюсь","ссор","раздраж","öfke","kızgın","sinir","kavga","ғазаб","жаҳл","غضب"],t:["G'azab","Гнев","Öfke","الغضب"],s:3,v:"134",
+ a:"وَالْكَاظِمِينَ الْغَيْظَ وَالْعَافِينَ عَنِ النَّاسِ ۗ وَاللَّهُ يُحِبُّ الْمُحْسِنِينَ",am:["(Taqvodorlar) g'azabini yutuvchi va odamlarni afv etuvchilardir. Alloh yaxshilik qiluvchilarni sevadi.","(Богобоязненные) — сдерживающие гнев и прощающие людей. Аллах любит творящих добро.","(Takva sahipleri) öfkelerini yutan ve insanları affedenlerdir. Allah iyilik yapanları sever."],
+ h:"لا تغضب",hm:["(Nasihat so'ragan kishiga bir necha bor:) «G'azablanma!»","(Человеку, просившему совета, несколько раз:) «Не гневайся!»","(Öğüt isteyen kişiye birkaç kez:) «Öfkelenme!»"],src:[["b",6116]]},
+{k:["oila","nikoh","xotin","turmush","uylan","ayol","farzand","bola","эр-хотин","семь","брак","жена","муж","свадьб","дети","ребён","aile","evlilik","eş","eşim","eşimle","karım","kocam","koca","kadın","çocuk","оила","никоҳ","نكاح","زوج","أسرة","أولاد"],t:["Oila va nikoh","Семья и брак","Aile ve evlilik","الأسرة والزواج"],s:30,v:"21",
+ a:"وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنْفُسِكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَوَدَّةً وَرَحْمَةً",am:["Uning oyatlaridan biri — sizlar uchun o'zlaringizdan juftlar yaratgani, toki ularga taskin topsangiz; va o'rtangizda muhabbat va mehribonlik paydo qildi.","Среди Его знамений — то, что Он сотворил из вас самих жён, чтобы вы находили в них успокоение, и установил между вами любовь и милосердие.","O'nun ayetlerinden biri de, kendileriyle huzur bulasınız diye size kendi cinsinizden eşler yaratması ve aranızda sevgi ve merhamet var etmesidir."],
+ h:"خيركم خيركم لأهله، وأنا خيركم لأهلي",hm:["Sizlarning eng yaxshingiz o'z ahliga eng yaxshi bo'lganingizdir. Men esa ahlimga eng yaxshi bo'lganingizman.","Лучший из вас — лучший к своей семье, а я — лучший из вас к своей семье.","Sizin en hayırlınız, ailesine en hayırlı olanınızdır. Ben de aileme karşı en hayırlınızım."],src:[["t",3895]]},
+{k:["poklik","pok","tahorat","g'usl","gusl","tozalik","toza","чистот","омовен","тахарат","гусль","temizlik","abdest","gusül","таҳорат","طهارة","وضوء","غسل"],t:["Poklik va tahorat","Чистота и омовение","Temizlik ve abdest","الطهارة"],s:2,v:"222",
+ a:"إِنَّ اللَّهَ يُحِبُّ التَّوَّابِينَ وَيُحِبُّ الْمُتَطَهِّرِينَ",am:["Albatta, Alloh tavba qiluvchilarni sevadi va poklanuvchilarni sevadi.","Воистину, Аллах любит кающихся и любит очищающихся.","Şüphesiz Allah tövbe edenleri sever, temizlenenleri de sever."],
+ h:"الطهور شطر الإيمان",hm:["Poklik iymonning yarmidir.","Чистота — половина веры.","Temizlik imanın yarısıdır."],src:[["m",223]]},
+{k:["qo'shni","qoshni","mehmon","do'st","dost","qarindosh","yaqin","сосед","гост","друг","родствен","komşu","misafir","arkadaş","akraba","қўшни","меҳмон","جار","ضيف","صديق"],t:["Qo'shni va qarindosh","Соседи и родственники","Komşu ve akraba","الجار"],s:4,v:"36",
+ a:"وَاعْبُدُوا اللَّهَ وَلَا تُشْرِكُوا بِهِ شَيْئًا ۖ وَبِالْوَالِدَيْنِ إِحْسَانًا وَبِذِي الْقُرْبَىٰ وَالْيَتَامَىٰ وَالْمَسَاكِينِ وَالْجَارِ ذِي الْقُرْبَىٰ وَالْجَارِ الْجُنُبِ …",am:["Allohga ibodat qilinglar, Unga hech narsani sherik qilmanglar. Ota-onaga, qarindoshlarga, yetimlarga, miskinlarga, yaqin qo'shniga va begona qo'shniga yaxshilik qilinglar…","Поклоняйтесь Аллаху и не приобщайте к Нему сотоварищей. Делайте добро родителям, родственникам, сиротам, беднякам, соседу из родственников и соседу-чужаку…","Allah'a ibadet edin, O'na hiçbir şeyi ortak koşmayın. Anne-babaya, akrabaya, yetimlere, yoksullara, yakın komşuya ve uzak komşuya iyilik edin…"],
+ h:"ما زال جبريل يوصيني بالجار حتى ظننت أنه سيورثه",hm:["Jabroil menga qo'shni haqida shunchalik ko'p tavsiya qildiki, hatto uni merosxo'r qilib qo'yadi, deb o'yladim.","Джибриль так часто наставлял меня относительно соседа, что я подумал, что он сделает его наследником.","Cebrail bana komşu hakkında o kadar çok tavsiyede bulundu ki, onu mirasçı kılacak sandım."],src:[["b",6014],["m",2625]]},
+{k:["axloq","odob","xulq","yaxshi inson","yaxshi odam","мораль","нрав","характер","поведен","воспитан","ahlak","edep","huy","iyi insan","ахлоқ","одоб","أخلاق","خلق","أدب"],t:["Go'zal axloq","Благой нрав","Güzel ahlak","حسن الخلق"],s:68,v:"4",
+ a:"وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ",am:["(Ey Muhammad,) albatta, sen ulug' xulq ustidasan.","Воистину, ты (о Мухаммад) обладаешь великим нравом.","Ve şüphesiz sen (ey Muhammed) yüce bir ahlak üzeresin."],
+ h:"إن من خياركم أحسنكم أخلاقا",hm:["Sizlarning eng yaxshilaringiz axloqi eng go'zal bo'lganlaringizdir.","Лучшие из вас — те, у кого лучший нрав.","Sizin en hayırlılarınız, ahlakı en güzel olanlarınızdır."],src:[["b",3559]]},
+{k:["qur'on","quron","quran","kuran","коран","куран","oyat","sura","tilovat","xatm","hatim","ayet","sure","оят","сура","аят","қуръон","قرآن","آية","سورة","تلاوة"],t:["Qur'on o'qish","Чтение Корана","Kur'an okumak","تلاوة القرآن"],s:17,v:"9",
+ a:"إِنَّ هَٰذَا الْقُرْآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ",am:["Albatta, bu Qur'on eng to'g'ri yo'lga hidoyat qiladi.","Воистину, этот Коран ведёт к тому, что прямее.","Şüphesiz bu Kur'an, en doğru olana iletir."],
+ h:"خيركم من تعلم القرآن وعلمه",hm:["Sizlarning eng yaxshingiz Qur'onni o'rgangan va uni o'rgatganingizdir.","Лучший из вас — тот, кто изучил Коран и обучил ему других.","Sizin en hayırlınız Kur'an'ı öğrenen ve öğretendir."],src:[["b",5027]]},
+{k:["kibr","mag'rur","magrur","millat","irq","teng","kamsit","гордын","высокомер","надменн","националь","расизм","раса","равен","kibir","ırk","eşit","ırkçılık","кибр","كبر","تقوى","عنصرية"],t:["Kibr va tenglik","Гордыня и равенство","Kibir ve eşitlik","التقوى والمساواة"],s:49,v:"13",
+ a:"إِنَّ أَكْرَمَكُمْ عِنْدَ اللَّهِ أَتْقَاكُمْ",am:["Albatta, Alloh huzurida eng hurmatlingiz — eng taqvodoringizdir.","Воистину, самый почитаемый из вас перед Аллахом — самый богобоязненный.","Allah katında en değerliniz, O'ndan en çok sakınanınızdır."],
+ h:"لا فضل لعربي على أعجمي، ولا لعجمي على عربي … إلا بالتقوى",hm:["Arabning arab bo'lmaganga, arab bo'lmaganning arabga ustunligi yo'q… faqat taqvo bilangina.","Нет у араба превосходства над неарабом, ни у неараба над арабом… кроме как в богобоязненности.","Arabın Arap olmayana, Arap olmayanın da Arab'a üstünlüğü yoktur… ancak takva iledir."],src:[["a",23489]]},
+{k:["niyat","amal","ixlos","ikhlos","riyo","намерен","ният","искрен","показ","niyet","ihlas","riya","амал","نية","إخلاص","رياء"],t:["Niyat va ixlos","Намерение и искренность","Niyet ve ihlas","النية والإخلاص"],s:98,v:"5",
+ a:"وَمَا أُمِرُوا إِلَّا لِيَعْبُدُوا اللَّهَ مُخْلِصِينَ لَهُ الدِّينَ",am:["Ularga faqat dinni Allohga xolis qilgan holda Unga ibodat qilishlari buyurilgan edi.","Им было велено лишь поклоняться Аллаху, очищая перед Ним веру.","Onlara ancak dini yalnız Allah'a has kılarak O'na ibadet etmeleri emredilmişti."],
+ h:"إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى",hm:["Amallar faqat niyatlarga ko'radir va har bir kishiga niyat qilgan narsasi bo'ladi.","Поистине, дела оцениваются по намерениям, и каждому — то, что он намеревался.","Ameller ancak niyetlere göredir; herkese niyet ettiği şey vardır."],src:[["b",1],["m",1907]]},
+{k:["alloh","xudo","iymon","imon","tavhid","islom","musulmon","аллах","бог","вера","иман","ислам","мусульман","allah","tanrı","iman","islam","müslüman","аллоҳ","иймон","ислом","الله","إيمان","توحيد","إسلام"],t:["Iymon va Islom","Вера и Ислам","İman ve İslam","الإيمان والإسلام"],s:112,v:"1–2",
+ a:"قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ",am:["Ayting: «U — Alloh yagonadir. Alloh behojatdir (hamma Unga muhtoj)».","Скажи: «Он — Аллах Единый, Аллах Самодостаточный».","De ki: «O, Allah'tır, tektir. Allah Samed'dir (her şey O'na muhtaçtır)»."],
+ h:"بني الإسلام على خمس: شهادة أن لا إله إلا الله وأن محمدا رسول الله، وإقام الصلاة، وإيتاء الزكاة، والحج، وصوم رمضان",hm:["Islom besh narsa ustiga qurilgan: Allohdan o'zga iloh yo'q va Muhammad Allohning Rasuli ekaniga guvohlik berish, namozni qoim qilish, zakot berish, haj va Ramazon ro'zasi.","Ислам построен на пяти: свидетельстве, что нет божества, кроме Аллаха, и что Мухаммад — Посланник Аллаха, совершении намаза, выплате закята, хадже и посте в Рамадан.","İslam beş temel üzerine kurulmuştur: Allah'tan başka ilah olmadığına ve Muhammed'in Allah'ın Resulü olduğuna şahitlik etmek, namaz kılmak, zekât vermek, hac ve Ramazan orucu."],src:[["b",8],["m",16]]}
+];
+const UI={
+uz:{tabs:["۞ Viktorina","📖 Qur'on","✦ Hadislar","🤲 Savol bering"],qh:"Savol bering",qs:"Savolingizni yozing — Qur'on oyatlari va sahih hadislardan javob topib beraman",ph:"Masalan: Ota-onaga qanday munosabatda bo'lish kerak?",ask:"So'rash",ay:"Qur'ondan",hd:"Hadisdan",src:"Manba",ex:["Namoz haqida nima deyilgan?","Qiyin paytda nima qilay?","Gunohlarim kechiriladimi?","Ota-onaga yaxshilik","Rizq haqida","G'azabni qanday yengish mumkin?"],nf:"Kechirasiz, bu savolga mos oyat yoki hadis topa olmadim. Savolni boshqacha so'z bilan yozib ko'ring yoki quyidagi mavzulardan tanlang:",also:"Boshqa mavzular:",dis:"Bu yordamchi sun'iy intellekt emas: savolingizdagi so'zlarga qarab saytdagi oyat va hadislardan eng mosini tanlab beradi. Fiqhiy masalalar (fatvo) uchun imom yoki muftiyga murojaat qiling.",topics:"Mavzular"},
+ru:{tabs:["۞ Викторина","📖 Коран","✦ Хадисы","🤲 Задать вопрос"],qh:"Задайте вопрос",qs:"Напишите вопрос — я найду ответ в аятах Корана и достоверных хадисах",ph:"Например: Как относиться к родителям?",ask:"Спросить",ay:"Из Корана",hd:"Из хадиса",src:"Источник",ex:["Что сказано о намазе?","Что делать в трудное время?","Простятся ли мои грехи?","Почитание родителей","Об уделе и деньгах","Как справиться с гневом?"],nf:"К сожалению, по этому вопросу не найден подходящий аят или хадис. Попробуйте другие слова или выберите тему:",also:"Другие темы:",dis:"Этот помощник — не искусственный интеллект: он подбирает наиболее подходящие аяты и хадисы из сайта по словам вашего вопроса. По вопросам фикха (фетвы) обращайтесь к имаму или муфтию.",topics:"Темы"},
+tr:{tabs:["۞ Yarışma","📖 Kur'an","✦ Hadisler","🤲 Soru sor"],qh:"Soru sorun",qs:"Sorunuzu yazın — Kur'an ayetleri ve sahih hadislerden cevap bulayım",ph:"Örneğin: Anne-babaya nasıl davranmalı?",ask:"Sor",ay:"Kur'an'dan",hd:"Hadisten",src:"Kaynak",ex:["Namaz hakkında ne denmiş?","Zor zamanda ne yapmalıyım?","Günahlarım affedilir mi?","Anne-babaya iyilik","Rızık hakkında","Öfkeyi nasıl yenerim?"],nf:"Üzgünüm, bu soruya uygun ayet veya hadis bulamadım. Farklı kelimelerle yazın ya da bir konu seçin:",also:"Diğer konular:",dis:"Bu yardımcı yapay zekâ değildir: sorunuzdaki kelimelere göre sitedeki ayet ve hadislerden en uygununu seçer. Fıkhi meseleler (fetva) için imama veya müftüye başvurun.",topics:"Konular"},
+ar:{tabs:["۞ مسابقة","📖 القرآن","✦ الأحاديث","🤲 اسأل"],qh:"اسأل سؤالك",qs:"اكتب سؤالك وسأجد لك الجواب من آيات القرآن والأحاديث الصحيحة",ph:"مثال: كيف أبر والديّ؟",ask:"اسأل",ay:"من القرآن",hd:"من الحديث",src:"المصدر",ex:["ماذا قيل عن الصلاة؟","ماذا أفعل في الشدة؟","هل تغفر ذنوبي؟","بر الوالدين","عن الرزق","كيف أتغلب على الغضب؟"],nf:"عذرًا، لم أجد آية أو حديثًا مناسبًا لهذا السؤال. جرّب كلمات أخرى أو اختر موضوعًا:",also:"مواضيع أخرى:",dis:"هذا المساعد ليس ذكاءً اصطناعيًا: يختار أنسب الآيات والأحاديث الموجودة في الموقع بحسب كلمات سؤالك. وفي المسائل الفقهية (الفتوى) يُرجى الرجوع إلى إمام أو مفتٍ.",topics:"المواضيع"}};
+let LANG="uz";try{LANG=localStorage.getItem("qv_lang")||"uz"}catch(e){}
+const norm=s=>s.toLowerCase().replace(/[ʻʼ'’‘`´]/g,"").normalize("NFD").replace(/[̀-ًͯ-ْٰ]/g,"").replace(/[إأآٱ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه");
+TP.forEach(t=>t.nk=t.k.map(norm));
+function findTopics(q){const n=" "+norm(q).replace(/[^\p{L}\p{N}\s-]/gu," ")+" ";const words=n.trim().split(/[\s-]+/);
+ const W=words.concat(words.map(w=>w.replace(/^(وال|بال|فال|ال|و)/,"")));const SUF=/^((lar|lik|i|si|im|ing|m|ng|miz|imiz|ngiz|ingiz)?(ni|ga|ka|da|dan|ning|mi)?|ي|ك|ه|ها|هم|نا|كم|ين|ان)$/;
+ return TP.map((t,i)=>{let sc=0;t.nk.forEach(k=>{if(k.includes(" ")){if(n.includes(k))sc+=2}else if(W.some(w=>k.length<=4?(w===k||(w.startsWith(k)&&(w.length-k.length<=2||SUF.test(w.slice(k.length))))):(w.startsWith(k)||(k.length>5&&w.includes(k)))))sc+=k.length>3?2:1});return{i,sc}}).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc).filter((x,_,a)=>x.sc*2>=a[0].sc).slice(0,3)}
+function refTxt(t){const L=LI[LANG];return LANG==="ar"?"سورة "+SN[t.s][3]+": "+t.v.replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]):SN[t.s][L]+", "+t.v}
+function srcTxt(t){const L=LI[LANG];return t.src.map(([b,n])=>BK[b][L]+" "+(LANG==="ar"?String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]):n)).join(LANG==="ar"?"، ":", ")}
+function answerCard(t){const L=LI[LANG],u=UI[LANG];const d=document.createElement("div");d.className="ans";
+ d.innerHTML='<div class="ans-h"></div><div class="blk"><span class="lb"></span><div class="arx"></div><div class="mn"></div><div class="rf"></div></div><div class="blk"><span class="lb"></span><div class="arx"></div><div class="mn"></div><div class="rf"></div></div>';
+ d.querySelector(".ans-h").textContent="۞ "+t.t[L];const b=d.querySelectorAll(".blk");
+ b[0].querySelector(".lb").textContent="📖 "+u.ay;b[0].querySelector(".arx").textContent="﴿ "+t.a+" ﴾";b[0].querySelector(".rf").textContent=refTxt(t);
+ b[1].querySelector(".lb").textContent="✦ "+u.hd;b[1].querySelector(".arx").textContent="«"+t.h+"»";b[1].querySelector(".rf").textContent=u.src+": "+srcTxt(t);
+ if(LANG==="ar"){b[0].querySelector(".mn").remove();b[1].querySelector(".mn").remove()}else{b[0].querySelector(".mn").textContent=t.am[L];b[1].querySelector(".mn").textContent=t.hm[L]}
+ return d}
+function ask(q){q=q.trim();if(!q)return;const u=UI[LANG],box=$("qaLog");
+ const me=document.createElement("div");me.className="me";me.textContent=q;box.appendChild(me);
+ const res=findTopics(q);const wrap=document.createElement("div");wrap.className="bot";
+ if(!res.length){const p=document.createElement("p");p.className="nf";p.textContent=u.nf;wrap.appendChild(p);wrap.appendChild(topicChips())}
+ else{res.forEach(r=>wrap.appendChild(answerCard(TP[r.i])))}
+ box.appendChild(wrap);$("qaIn").value="";me.scrollIntoView({behavior:"smooth",block:"start"})}
+function topicChips(){const c=document.createElement("div");c.className="chips";TP.forEach(t=>{const b=document.createElement("button");b.textContent=t.t[LI[LANG]];b.onclick=()=>{const box=$("qaLog");const me=document.createElement("div");me.className="me";me.textContent=t.t[LI[LANG]];box.appendChild(me);const w=document.createElement("div");w.className="bot";w.appendChild(answerCard(t));box.appendChild(w);me.scrollIntoView({behavior:"smooth",block:"start"})};c.appendChild(b)});return c}
+function applyLang(){const u=UI[LANG];document.querySelectorAll(".lbar button").forEach(b=>b.classList.toggle("on",b.dataset.lang===LANG));
+ document.querySelectorAll(".tabs button").forEach((b,i)=>b.textContent=u.tabs[i]);
+ $("qaH").textContent=u.qh;$("qaS").textContent=u.qs;$("qaIn").placeholder=u.ph;$("qaGo").textContent=u.ask;$("qaDis").textContent=u.dis;$("qaT").textContent=u.topics;
+ $("qa").dir=LANG==="ar"?"rtl":"ltr";
+ const ex=$("qaEx");ex.innerHTML="";u.ex.forEach(s=>{const b=document.createElement("button");b.textContent=s;b.onclick=()=>ask(s);ex.appendChild(b)});
+ const tc=$("qaTopics");tc.innerHTML="";tc.appendChild(topicChips());$("qaLog").innerHTML="";
+ try{localStorage.setItem("qv_lang",LANG)}catch(e){}}
+document.querySelectorAll(".lbar button").forEach(b=>b.onclick=()=>{LANG=b.dataset.lang;applyLang()});
+$("qaForm").onsubmit=e=>{e.preventDefault();ask($("qaIn").value)};
+applyLang();
 </script>
 </body>
 </html>
