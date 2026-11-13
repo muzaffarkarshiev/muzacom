@@ -358,6 +358,41 @@ body{padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
 #arQ .btn{width:100%;margin-top:6px}
 .arres{text-align:center;margin:20px 0}.arres b{display:block;font-family:"Reem Kufi";font-size:48px;color:var(--g1)}
 .bnav button{font-size:9.5px!important}.bnav button .bi{font-size:18px!important}
+
+/* duolar */
+.tsbox{padding:16px;border-radius:22px;background:radial-gradient(circle at 50% 0%,rgba(243,220,149,.3),transparent 60%),linear-gradient(160deg,#13684f,#062b21);color:#fff;margin-bottom:6px}
+.tsbox .nz-h{color:var(--gold2)}
+.tsbox .seg button{font-size:13px}
+.tsbox select{background:#fff}
+.tsbox .qsm{color:rgba(255,255,255,.75)}
+.tsbox label{color:#fff}
+.tsar{font-family:Amiri,serif;font-size:30px;text-align:center;color:var(--gold2);margin:12px 0 0;cursor:pointer;line-height:1.7;direction:rtl}
+.tstr{text-align:center;font-weight:700;opacity:.85;font-size:14px}
+.tsbtn{position:relative;display:block;width:210px;height:210px;margin:14px auto 6px;border-radius:50%;border:0;cursor:pointer;background:radial-gradient(circle at 35% 30%,#2fae80,#0b4a38 70%);box-shadow:0 14px 34px rgba(0,0,0,.45),inset 0 -6px 16px rgba(0,0,0,.3);color:#fff;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.tsbtn svg{position:absolute;inset:0;width:100%;height:100%}
+#tsRing{transition:stroke-dashoffset .2s}
+.tsbtn .tsn{position:absolute;left:0;right:0;top:62px;font-family:"Reem Kufi",sans-serif;font-size:56px;font-weight:700;color:var(--gold2)}
+.tsbtn .tso{position:absolute;left:0;right:0;top:132px;font-weight:800;opacity:.8}
+.tsbtn .tst{position:absolute;left:0;right:0;bottom:30px;font-size:12px;opacity:.6;font-weight:800}
+.tsbtn.pop{animation:tsp .18s ease}
+@keyframes tsp{50%{transform:scale(.95)}}
+.tsmsg{text-align:center;font-weight:800;color:var(--gold2);min-height:20px;margin:4px 0}
+.duac{border:1.5px solid #e2d4a8;border-radius:18px;background:#fff;padding:12px 14px;margin-bottom:12px}
+.duac .dh{display:flex;justify-content:space-between;align-items:center}
+.duac .dn{width:28px;height:28px;border-radius:50%;background:var(--g1);color:var(--gold2);display:grid;place-items:center;font-weight:800;font-size:13px}
+.duac .dx{font-weight:800;color:var(--gold);font-size:14px}
+.duac .da{display:block;width:100%;border:0;background:transparent;padding:6px 0;text-align:right;cursor:pointer}
+.duac .da .ab{display:block;font-family:Amiri,serif;font-size:26px;line-height:1.9;color:#10352a;direction:rtl}
+.duac .da.spk{background:#fff4d6;border-radius:12px}
+.duac .dl{font-style:italic;color:var(--g2);font-weight:700;font-size:14.5px;margin:4px 0}
+.duac .dm{font-size:15.5px;line-height:1.55}
+.duac .df{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+.duac .ds{font-size:12.5px;color:var(--muted);font-weight:700}
+.duac .db{display:flex;gap:6px}
+.bnav{overflow-x:auto;scrollbar-width:none;justify-content:flex-start}
+.bnav::-webkit-scrollbar{display:none}
+.bnav button{flex:1 1 0!important;min-width:0!important;padding:7px 0!important}
+.bnav button .bi{font-size:17px!important}
 </style>
 </head>
 <body>
@@ -539,6 +574,25 @@ body{padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
   <div class="nz-row" style="align-items:center;justify-content:flex-end;margin:6px 0 12px"><span id="arSpL" style="font-weight:700;font-size:13px"></span><select id="arSp" style="flex:none;width:auto"><option value="0.5">0.5×</option><option value="0.75" selected>0.75×</option><option value="1">1×</option></select></div>
   <div id="arBody"></div>
   <div class="note" id="arNote"></div>
+</div>
+</section>
+<section class="sec" id="s-dua">
+<div class="sec-h"><span class="sec-n">٧</span><span class="sec-t" data-sec="dua"></span><span class="sec-ar">الأدعية</span></div>
+<div class="card" id="dua">
+  <div class="frame"></div>
+  <h2 class="blk-h" id="duaT"></h2><p class="sub" id="duaS"></p>
+  <div class="tsbox" id="tsBox">
+    <h3 class="nz-h" id="tsH" style="margin-top:0;text-align:center"></h3>
+    <div class="seg" id="tsMode"></div>
+    <div class="nz-row" id="tsFree" style="flex-wrap:wrap;align-items:center"><select id="tsZ" style="flex:2;min-width:180px"></select><span id="tsTgL" style="font-weight:700;font-size:13px"></span><select id="tsT" style="flex:none;width:auto"><option value="33">33</option><option value="99">99</option><option value="100">100</option><option value="0">∞</option></select></div>
+    <div class="tsar" id="tsAr" title="🔊"></div><div class="tstr" id="tsTr"></div>
+    <button class="tsbtn" id="tsBtn" type="button"><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="90" fill="none" stroke="rgba(243,220,149,.25)" stroke-width="10"/><circle id="tsRing" cx="100" cy="100" r="90" fill="none" stroke="#f3dc95" stroke-width="10" stroke-linecap="round" stroke-dasharray="565.5" stroke-dashoffset="565.5" transform="rotate(-90 100 100)"/></svg><span class="tsn" id="tsNum">0</span><span class="tso" id="tsOf"></span><span class="tst" id="tsTap"></span></button>
+    <p class="tsmsg" id="tsMsg"></p>
+    <div class="nz-row" style="justify-content:space-between;align-items:center"><span class="qsm" id="tsTot"></span><label style="font-size:13px;font-weight:700"><input type="checkbox" id="tsVib"> <span id="tsVibL"></span></label><button class="tg2" id="tsRst" type="button"></button></div>
+  </div>
+  <div class="artabs" id="duaCats" style="margin:16px 0 12px"></div>
+  <div id="duaList"></div>
+  <div class="note" id="duaNote"></div>
 </div>
 </section>
 <section class="sec" id="s-hadis">
@@ -1059,7 +1113,7 @@ function ask(q){q=q.trim();if(!q)return;const u=UI[LANG],box=$("qaLog");
  box.appendChild(wrap);if(AI_URL)askAI(q,wrap);$("qaSug").innerHTML="";$("qaIn").value="";me.scrollIntoView({behavior:"smooth",block:"start"})}
 function topicChips(){const c=document.createElement("div");c.className="chips";TP.forEach(t=>{const b=document.createElement("button");b.textContent=t.t[LI[LANG]];b.onclick=()=>{const box=$("qaLog");const me=document.createElement("div");me.className="me";me.textContent=t.t[LI[LANG]];box.appendChild(me);const w=document.createElement("div");w.className="bot";w.appendChild(answerCard(t));box.appendChild(w);me.scrollIntoView({behavior:"smooth",block:"start"})};c.appendChild(b)});return c}
 function applyLang(){const u=UI[LANG];document.querySelectorAll(".lbar button").forEach(b=>b.classList.toggle("on",b.dataset.lang===LANG));
- const TI={quiz:0,quran:1,hadis:2,qa:3,namoz:4,arab:5};const MD=MENU_D[LANG],NUM={namoz:"١",quiz:"٢",quran:"٣",qa:"٤",hadis:"٥",arab:"٦"};
+ const TI={quiz:0,quran:1,hadis:2,qa:3,namoz:4,arab:5,dua:6};const MD=MENU_D[LANG],NUM={namoz:"١",quiz:"٢",quran:"٣",qa:"٤",hadis:"٥",arab:"٦",dua:"٧"};
  document.querySelectorAll(".tabs button").forEach(b=>{const full=u.tabs[TI[b.dataset.t]]||"";if(!full)return;const sp=full.indexOf(" ");b.innerHTML='<span class="mi"></span><span class="mt"><b></b><small></small></span><span class="mn">'+NUM[b.dataset.t]+'</span>';b.querySelector(".mi").textContent=full.slice(0,sp);b.querySelector(".mt b").textContent=full.slice(sp+1);b.querySelector(".mt small").textContent=MD[b.dataset.t]});
  document.querySelector(".tabs").dir=LANG==="ar"?"rtl":"ltr";document.querySelectorAll(".sec-t").forEach(b=>b.textContent=(u.tabs[TI[b.dataset.sec]]||"").replace(/^\S+\s/,""));
  $("qaH").textContent=u.qh;$("qaS").textContent=u.qs;$("qaIn").placeholder=u.ph;$("qaGo").textContent=u.ask;$("qaDis").textContent=u.dis;$("qaT").textContent=u.topics;
@@ -1464,6 +1518,96 @@ const _alAr=applyLang;applyLang=function(){_alAr();arInit()};
  UI.uz.tabs.push("ع Arab tili");UI.ru.tabs.push("ع Арабский язык");UI.tr.tabs.push("ع Arapça");UI.ar.tabs.push("ع اللغة العربية");
  const nav=document.querySelector(".tabs");const b=document.createElement("button");b.dataset.t="arab";b.onclick=()=>{location.hash="arab"};nav.appendChild(b)})();
 arInit();applyLang();route();
+</script>
+<script>
+// ================= DUOLAR + TASBEH + ISTIG'FOR =================
+// kategoriya: [id, icon, nom[uz,ru,tr,ar], duolar:[[arabcha, o'qilishi, ma'no[uz,ru,tr], manba, takror]]]
+const DUA=[
+["tong","🌅",["Tong va kech zikrlari","Утренние и вечерние зикры","Sabah ve akşam zikirleri","أذكار الصباح والمساء"],[
+["اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ","Allohumma bika asbahnaa va bika amsaynaa va bika nahyaa va bika namuutu va ilaykan-nushuur",["Allohim, Sen bilan tongga kirdik, Sen bilan kechga kirdik, Sen bilan yashaymiz, Sen bilan o'lamiz va qaytish Sengadir (tongda).","О Аллах, с Тобой мы встретили утро и с Тобой — вечер, с Тобой живём и с Тобой умираем, и к Тебе воскрешение (утром).","Allah'ım! Seninle sabaha, Seninle akşama erdik; Seninle yaşar, Seninle ölürüz; dönüş Sanadır (sabah)."],"Termiziy 3391, Abu Dovud 5068",1],
+["اللَّهُمَّ بِكَ أَمْسَيْنَا وَبِكَ أَصْبَحْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ الْمَصِيرُ","Allohumma bika amsaynaa va bika asbahnaa va bika nahyaa va bika namuutu va ilaykal-masiyr",["Allohim, Sen bilan kechga kirdik, Sen bilan tongga kirdik, Sen bilan yashaymiz, Sen bilan o'lamiz va qaytish Sengadir (kechqurun).","О Аллах, с Тобой мы встретили вечер и с Тобой — утро… и к Тебе возвращение (вечером).","Allah'ım! Seninle akşama, Seninle sabaha erdik… varış Sanadır (akşam)."],"Termiziy 3391, Abu Dovud 5068",1],
+["بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ","Bismillahil-laziy laa yazurru ma'asmihiy shay'un fil-arzi va laa fis-samaa'i va huvas-samiy'ul-'aliym",["Ismi bilan yerda ham, osmonda ham hech narsa zarar bera olmaydigan Alloh nomi bilan. U eshituvchi va biluvchidir. (Ertalab va kechqurun 3 marta)","Именем Аллаха, с именем Которого ничто не причинит вреда ни на земле, ни на небе. Он — Слышащий, Знающий. (3 раза утром и вечером)","Adıyla yerde ve gökte hiçbir şeyin zarar veremeyeceği Allah'ın adıyla. O işitendir, bilendir. (Sabah-akşam 3 kez)"],"Abu Dovud 5088, Termiziy 3388",3],
+["سُبْحَانَ اللَّهِ وَبِحَمْدِهِ","Subhaanallohi va bihamdihi",["Allohni hamdi bilan poklab yod etaman. (100 marta — gunohlar kechiriladi)","Пречист Аллах, и хвала Ему. (100 раз)","Allah'ı hamd ile tesbih ederim. (100 kez)"],"Muslim 2691, 2692",100]]],
+["namoz","🕌",["Namozdan keyin","После намаза","Namazdan sonra","بعد الصلاة"],[
+["أَسْتَغْفِرُ اللَّهَ","Astag'firulloh",["Allohdan mag'firat so'rayman. (3 marta)","Прошу прощения у Аллаха. (3 раза)","Allah'tan bağışlanma dilerim. (3 kez)"],"Muslim 591",3],
+["اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ","Allohumma antas-salaamu va minkas-salaamu tabaarakta yaa zal-jalaali val-ikroom",["Allohim, Sen Salomsan, tinchlik Sendandir. Ey ulug'lik va ikrom egasi, Sen barakotlisan.","О Аллах, Ты — Мир, и от Тебя мир. Благословен Ты, о Обладатель величия и щедрости.","Allah'ım! Sen Selam'sın, selamet Sendendir. Ey celal ve ikram sahibi, Sen ne yücesin."],"Muslim 591",1],
+["سُبْحَانَ اللَّهِ","Subhaanalloh",["Alloh pokdir. (33 marta)","Пречист Аллах. (33 раза)","Allah her türlü eksiklikten münezzehtir. (33 kez)"],"Muslim 597",33],
+["الْحَمْدُ لِلَّهِ","Alhamdulillah",["Allohga hamd bo'lsin. (33 marta)","Хвала Аллаху. (33 раза)","Hamd Allah'adır. (33 kez)"],"Muslim 597",33],
+["اللَّهُ أَكْبَرُ","Allohu akbar",["Alloh buyukdir. (33 marta)","Аллах велик. (33 раза)","Allah en büyüktür. (33 kez)"],"Muslim 597",33],
+["لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ","Laa ilaaha illallohu vahdahu laa shariyka lah, lahul-mulku va lahul-hamdu va huva 'alaa kulli shay'in qodiyr",["Yolg'iz Allohdan o'zga iloh yo'q, Uning sherigi yo'q. Mulk Unikidir, hamd Ungadir va U har narsaga qodirdir. (100-ni to'ldiradi)","Нет божества, кроме одного Аллаха, у Него нет сотоварища. Ему принадлежит власть и хвала, и Он над всякой вещью мощен. (завершает сотню)","Allah'tan başka ilah yoktur, tektir, ortağı yoktur. Mülk O'nundur, hamd O'nadır ve O her şeye kadirdir. (yüzü tamamlar)"],"Muslim 597",1]]],
+["kun","🏠",["Kundalik duolar","Повседневные дуа","Günlük dualar","أدعية يومية"],[
+["الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ","Alhamdu lillahil-laziy ahyaanaa ba'da maa amaatanaa va ilayhin-nushuur",["Uyg'onganda: Bizni o'ldirgandan (uxlatgandan) keyin tiriltirgan Allohga hamd bo'lsin, qaytish Ungadir.","При пробуждении: Хвала Аллаху, Который оживил нас после того, как умертвил, и к Нему воскрешение.","Uyanınca: Bizi öldürdükten sonra dirilten Allah'a hamd olsun; dönüş O'nadır."],"Buxoriy 6312",1],
+["بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا","Bismika Allohumma amuutu va ahyaa",["Uxlashdan oldin: Allohim, Sening isming bilan o'laman va tirilaman.","Перед сном: С Твоим именем, о Аллах, я умираю и оживаю.","Uyumadan önce: Allah'ım, Senin adınla ölür ve dirilirim."],"Buxoriy 6324",1],
+["بِسْمِ اللَّهِ","Bismillah",["Ovqatdan oldin: Alloh nomi bilan. (Unutsangiz: «Bismillahi avvalahu va oxirahu»)","Перед едой: Именем Аллаха. (Если забыли: «Бисмилляхи авваляху ва ахираху»)","Yemekten önce: Allah'ın adıyla. (Unutursanız: «Bismillahi evvelehû ve âhirehû»)"],"Abu Dovud 3767, Termiziy 1858",1],
+["الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ","Alhamdu lillahil-laziy at'amaniy haazaa va razaqoniyhi min g'oyri havlin minniy va laa quvvah",["Ovqatdan keyin: Menga buni yedirgan va mening kuch-quvvatimsiz rizq qilib bergan Allohga hamd bo'lsin.","После еды: Хвала Аллаху, Который накормил меня этим и наделил этим без всякой силы и мощи с моей стороны.","Yemekten sonra: Bana bunu yediren ve benim hiçbir güç ve kuvvetim olmadan rızık veren Allah'a hamd olsun."],"Abu Dovud 4023, Termiziy 3458",1],
+["بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ","Bismillahi tavakkaltu 'alallohi va laa havla va laa quvvata illaa billah",["Uydan chiqishda: Alloh nomi bilan, Allohga tavakkul qildim. Kuch-quvvat faqat Alloh bilandir.","Выходя из дома: С именем Аллаха, уповаю на Аллаха, нет силы и мощи, кроме как у Аллаха.","Evden çıkarken: Allah'ın adıyla, Allah'a tevekkül ettim; güç ve kuvvet ancak Allah iledir."],"Abu Dovud 5095, Termiziy 3426",1],
+["اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ","Allohummaftah liy abvaaba rohmatik",["Masjidga kirishda: Allohim, menga rahmating eshiklarini och.","Входя в мечеть: О Аллах, открой мне врата Своей милости.","Camiye girerken: Allah'ım, bana rahmet kapılarını aç."],"Muslim 713",1],
+["اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ","Allohumma inniy as'aluka min fazlik",["Masjiddan chiqishda: Allohim, Sening fazlingdan so'rayman.","Выходя из мечети: О Аллах, прошу у Тебя Твоей милости.","Camiden çıkarken: Allah'ım, Senin lütfundan isterim."],"Muslim 713",1],
+["اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ","Allohumma inniy a'uuzu bika minal-xubusi val-xobaa'is",["Hojatxonaga kirishda: Allohim, erkak va ayol shaytonlardan Senga panoh so'rayman.","Входя в туалет: О Аллах, прибегаю к Тебе от злых духов мужского и женского пола.","Tuvalete girerken: Allah'ım, erkek ve dişi şeytanlardan Sana sığınırım."],"Buxoriy 142, Muslim 375",1],
+["غُفْرَانَكَ","G'ufroonak",["Hojatxonadan chiqishda: (Allohim,) mag'firatingni so'rayman.","Выходя из туалета: (Прошу) Твоего прощения.","Tuvaletten çıkarken: (Allah'ım,) bağışlamanı dilerim."],"Abu Dovud 30, Termiziy 7",1],
+["سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ","Subhaanal-laziy saxxoro lanaa haazaa va maa kunnaa lahu muqriniyn, va innaa ilaa robbinaa lamunqolibuun",["Safarda (ulovga minganda): Buni bizga bo'ysundirgan Zot pokdir, biz bunga qodir emas edik. Albatta, biz Robbimizga qaytuvchimiz.","В пути: Пречист Тот, Кто подчинил нам это, ведь сами мы не смогли бы. Воистину, мы вернёмся к нашему Господу.","Yolculukta: Bunu bize boyun eğdiren Allah münezzehtir; biz buna güç yetiremezdik. Şüphesiz Rabbimize döneceğiz."],"Zuxruf 13–14; Muslim 1342",1]]],
+["quron","📖",["Qur'ondagi duolar","Дуа из Корана","Kur'an'daki dualar","أدعية قرآنية"],[
+["رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ","Robbanaa aatinaa fid-dunyaa hasanatan va fil-aaxiroti hasanatan va qinaa 'azaaban-naar",["Robbimiz, bizga dunyoda ham yaxshilik, oxiratda ham yaxshilik bergin va bizni do'zax azobidan saqlagin.","Господь наш! Даруй нам в этом мире добро и в Последней жизни добро и защити нас от мучений Огня.","Rabbimiz! Bize dünyada da iyilik ver, ahirette de iyilik ver ve bizi ateş azabından koru."],"Baqara 201; Buxoriy 6389",1],
+["رَبِّ زِدْنِي عِلْمًا","Robbi zidniy 'ilmaa",["Robbim, ilmimni ziyoda qil.","Господи, приумножь мне знание.","Rabbim, ilmimi artır."],"Toha 114",1],
+["رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا","Robbir-hamhumaa kamaa robbayaaniy sog'iyroo",["Ota-ona uchun: Robbim, ular meni kichikligimda tarbiya qilganlaridek, ularga rahm qil.","За родителей: Господи, помилуй их, как они растили меня маленьким.","Anne-baba için: Rabbim, onlar beni küçükken nasıl yetiştirdilerse Sen de onlara öyle merhamet et."],"Isro 24",1],
+["رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِنْ لَدُنْكَ رَحْمَةً إِنَّكَ أَنْتَ الْوَهَّابُ","Robbanaa laa tuzig' quluubanaa ba'da iz hadaytanaa va hab lanaa min ladunka rohmah, innaka antal-vahhaab",["Robbimiz, bizni hidoyat qilganingdan keyin qalblarimizni og'dirma va bizga O'z huzuringdan rahmat ato et. Albatta, Sen ato qiluvchisan.","Господь наш! Не уклоняй наши сердца после того, как Ты наставил нас, и даруй нам милость от Себя. Воистину, Ты — Дарующий.","Rabbimiz! Bizi doğru yola ilettikten sonra kalplerimizi eğriltme, bize katından rahmet bağışla. Şüphesiz Sen çok bağışlayansın."],"Oli Imron 8",1],
+["رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا","Robbanaa hab lanaa min azvaajinaa va zurriyyaatinaa qurrota a'yunin vaj'alnaa lil-muttaqiyna imaamaa",["Oila uchun: Robbimiz, bizga juftlarimiz va zurriyotlarimizdan ko'z quvonchi ato et va bizni taqvodorlarga peshvo qil.","За семью: Господь наш! Даруй нам в супругах и потомстве отраду глаз и сделай нас примером для богобоязненных.","Aile için: Rabbimiz! Eşlerimizi ve çocuklarımızı bize göz aydınlığı kıl ve bizi takva sahiplerine önder yap."],"Furqon 74",1]]],
+["qiyin","💔",["Qiyinchilik va musibatda","В трудностях и беде","Sıkıntı ve musibette","عند الكرب والمصيبة"],[
+["لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ","Laa ilaaha illaa anta subhaanaka inniy kuntu minaz-zoolimiyn",["Yunus a.s. duosi: Sendan o'zga iloh yo'q, Sen poksan, albatta, men zolimlardan bo'ldim.","Мольба Юнуса: Нет божества, кроме Тебя, Пречист Ты, воистину, я был из числа несправедливых.","Yunus (as) duası: Senden başka ilah yoktur, Sen münezzehsin; ben gerçekten zalimlerden oldum."],"Anbiyo 87; Termiziy 3505",1],
+["حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ","Hasbunallohu va ni'mal-vakiyl",["Bizga Alloh kifoya, U qanday yaxshi vakil!","Достаточно нам Аллаха, и как прекрасен Он как Покровитель!","Allah bize yeter, O ne güzel vekildir!"],"Oli Imron 173; Buxoriy 4563",1],
+["إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ، اللَّهُمَّ أْجُرْنِي فِي مُصِيبَتِي وَأَخْلِفْ لِي خَيْرًا مِنْهَا","Innaa lillahi va innaa ilayhi rooji'uun, Allohumma'jurniy fiy musiybatiy va axlif liy xoyran minhaa",["Musibatda: Albatta, biz Allohnikimiz va Unga qaytuvchimiz. Allohim, musibatimda ajr ber va o'rniga undan yaxshirog'ini ber.","В беде: Воистину, мы принадлежим Аллаху и к Нему вернёмся. О Аллах, вознагради меня в беде и замени её лучшим.","Musibette: Biz Allah'a aidiz ve O'na döneceğiz. Allah'ım, musibetimde bana ecir ver ve yerine daha hayırlısını ver."],"Baqara 156; Muslim 918",1],
+["أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ","A'uuzu billahi minash-shaytoonir-rojiym",["G'azablanganda: Quvilgan shaytondan Allohga panoh so'rayman.","В гневе: Прибегаю к Аллаху от проклятого шайтана.","Öfkelenince: Kovulmuş şeytandan Allah'a sığınırım."],"Buxoriy 3282",1],
+["لَا بَأْسَ طَهُورٌ إِنْ شَاءَ اللَّهُ","Laa ba'sa tohuurun in shaa Alloh",["Bemorni ko'rganda: Zarari yo'q, inshaAlloh (bu kasallik gunohlardan) poklovchidir.","Навещая больного: Ничего страшного, (это) очищение, если пожелает Аллах.","Hastayı ziyarette: Zararı yok, inşallah (günahlardan) temizlenmedir."],"Buxoriy 3616",1]]],
+["boshqa","🌧",["Boshqa duolar","Другие дуа","Diğer dualar","أدعية أخرى"],[
+["اللَّهُمَّ صَيِّبًا نَافِعًا","Allohumma soyyiban naafi'aa",["Yomg'ir yog'ganda: Allohim, foydali yomg'ir qil.","Во время дождя: О Аллах, (сделай его) полезным дождём.","Yağmur yağınca: Allah'ım, faydalı bir yağmur kıl."],"Buxoriy 1032",1],
+["الْحَمْدُ لِلَّهِ — يَرْحَمُكَ اللَّهُ — يَهْدِيكُمُ اللَّهُ وَيُصْلِحُ بَالَكُمْ","Alhamdulillah — Yarhamukalloh — Yahdiykumullohu va yuslihu baalakum",["Aksa urganda: aksa urgan «Alhamdulillah», eshitgan «Yarhamukalloh», u esa «Yahdiykumulloh…» deydi.","При чихании: чихнувший — «Альхамдулиллях», слышащий — «Ярхамукаллах», а тот отвечает «Яхдикуму-Ллах…».","Aksırınca: aksıran «Elhamdülillah», duyan «Yerhamukallah», o da «Yehdîkumullah…» der."],"Buxoriy 6224",1],
+["ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ","Zahabaz-zoma'u vabtallatil-'uruuqu va sabatal-ajru in shaa Alloh",["Iftorda: Chanqoq ketdi, tomirlar namlandi va inshaAlloh ajr sobit bo'ldi.","При разговении: Ушла жажда, увлажнились жилы, и утвердилась награда, если пожелает Аллах.","İftarda: Susuzluk gitti, damarlar ıslandı ve inşallah sevap sabit oldu."],"Abu Dovud 2357",1],
+["اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ","Allohumma solli 'alaa Muhammadin va 'alaa aali Muhammad, kamaa sollayta 'alaa Ibroohiyma va 'alaa aali Ibroohiym, innaka hamiydun majiyd",["Salovat: Allohim, Ibrohim va uning oilasiga rahmat yog'dirganingdek, Muhammad va uning oilasiga ham rahmat yog'dir. Albatta, Sen maqtovli va ulug'san.","Салават: О Аллах, благослови Мухаммада и семейство Мухаммада, как Ты благословил Ибрахима и семейство Ибрахима. Воистину, Ты — Достохвальный, Славный.","Salavat: Allah'ım, İbrahim'e ve ailesine rahmet ettiğin gibi Muhammed'e ve ailesine de rahmet et. Şüphesiz Sen övülmeye layık ve yücesin."],"Buxoriy 3370",10]]],
+["istigfor","🔁",["Istig'for (kechirim so'rash)","Истигфар (покаяние)","İstiğfar","الاستغفار"],[
+["اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ","Allohumma anta robbiy laa ilaaha illaa ant, xolaqtaniy va ana 'abduk, va ana 'alaa 'ahdika va va'dika mastato't, a'uuzu bika min sharri maa sona't, abuu'u laka bini'matika 'alayya, va abuu'u bizanbiy fag'firliy, fa innahu laa yag'firuz-zunuuba illaa ant",["Sayyidul istig'for: Allohim, Sen mening Robbimsan, Sendan o'zga iloh yo'q. Meni yaratding, men Sening bandangman, qodir bo'lganimcha ahdu va'dangdaman. Qilgan ishlarimning yomonligidan Senga panoh so'rayman. Menga bergan ne'matingni tan olaman, gunohimni ham tan olaman, meni kechir — gunohlarni faqat Sen kechirasan. (Kim buni ishonib kunduzi aytib, kechgacha vafot etsa — jannat ahlidan bo'ladi.)","Саййид аль-истигфар: О Аллах, Ты — мой Господь, нет божества, кроме Тебя. Ты создал меня, и я Твой раб, и я верен договору с Тобой, насколько могу. Прибегаю к Тебе от зла того, что я совершил. Признаю Твою милость ко мне и признаю свой грех — прости же меня, ведь никто не прощает грехи, кроме Тебя.","Seyyidü'l-istiğfar: Allah'ım! Sen benim Rabbimsin, Senden başka ilah yoktur. Beni Sen yarattın, ben Senin kulunum; gücüm yettiğince ahdine ve vaadine bağlıyım. Yaptıklarımın şerrinden Sana sığınırım. Bana verdiğin nimetleri ve günahımı itiraf ederim; beni bağışla, günahları ancak Sen bağışlarsın."],"Buxoriy 6306",1],
+["أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ","Astag'firullohal-'aziymal-laziy laa ilaaha illaa huval-hayyul-qoyyuumu va atuubu ilayh",["Undan o'zga iloh yo'q, Tirik va hamma narsani tutib turuvchi ulug' Allohdan mag'firat so'rayman va Unga tavba qilaman.","Прошу прощения у Аллаха Великого, нет божества, кроме Него, Живого, Вседержителя, и каюсь перед Ним.","Kendisinden başka ilah olmayan, Hayy ve Kayyum olan yüce Allah'tan bağışlanma diler ve O'na tövbe ederim."],"Abu Dovud 1517, Termiziy 3577",3],
+["أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ","Astag'firulloha va atuubu ilayh",["Allohdan mag'firat so'rayman va Unga tavba qilaman. (Payg'ambarimiz ﷺ kuniga 100 martadan ko'p aytganlar)","Прошу прощения у Аллаха и каюсь перед Ним. (Пророк ﷺ говорил это более 100 раз в день)","Allah'tan bağışlanma diler, O'na tövbe ederim. (Peygamberimiz ﷺ günde 100'den fazla söylerdi)"],"Buxoriy 6307, Muslim 2702",100]]]];
+const ZK=[["سُبْحَانَ اللَّهِ","Subhaanalloh"],["الْحَمْدُ لِلَّهِ","Alhamdulillah"],["اللَّهُ أَكْبَرُ","Allohu akbar"],["لَا إِلَهَ إِلَّا اللَّهُ","Laa ilaaha illalloh"],["أَسْتَغْفِرُ اللَّهَ","Astag'firulloh"],["سُبْحَانَ اللَّهِ وَبِحَمْدِهِ","Subhaanallohi va bihamdihi"],["لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ","Laa havla va laa quvvata illaa billah"],["اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ","Allohumma solli 'alaa Muhammad"]];
+const DT={uz:{t:"Duolar",s:"Kun bo'yi o'qiladigan duolar — tartib bilan, ovozi va ma'nosi bilan",tb:"📿 Elektron tasbeh",seqN:"Namozdan keyingi tasbeh (33+33+33+1)",free:"Erkin zikr",tgt:"Maqsad",tot:"Jami",rst:"↺ Qaytadan",done:"Barakalloh! Tamom ✓",tap:"Bosing",cnt:"📿 Sanab aytish",lis:"🔊",all:"▶ Ketma-ket tinglash",stp:"⏹ To'xtatish",src:"Manba",vib:"Tebranish",note:"Duolar sahih manbalardan olingan; ma'no tarjimasi taxminiy. Ovozni sun'iy ovoz o'qiydi — to'g'ri talaffuzni ustozdan o'rganing."},
+ru:{t:"Дуа",s:"Мольбы на каждый день — по порядку, с аудио и смыслом",tb:"📿 Электронные чётки",seqN:"Тасбих после намаза (33+33+33+1)",free:"Свободный зикр",tgt:"Цель",tot:"Всего",rst:"↺ Сначала",done:"Баракаллах! Готово ✓",tap:"Нажмите",cnt:"📿 Считать",lis:"🔊",all:"▶ Слушать по порядку",stp:"⏹ Стоп",src:"Источник",vib:"Вибрация",note:"Дуа взяты из достоверных источников; перевод смысловой. Звук — синтез речи; правильному произношению учитесь у учителя."},
+tr:{t:"Dualar",s:"Gün boyu okunan dualar — sırayla, sesli ve anlamıyla",tb:"📿 Elektronik tesbih",seqN:"Namaz sonrası tesbihat (33+33+33+1)",free:"Serbest zikir",tgt:"Hedef",tot:"Toplam",rst:"↺ Baştan",done:"Barekallah! Tamam ✓",tap:"Dokun",cnt:"📿 Sayarak oku",lis:"🔊",all:"▶ Sırayla dinle",stp:"⏹ Durdur",src:"Kaynak",vib:"Titreşim",note:"Dualar sahih kaynaklardandır; meal yaklaşıktır. Ses yapay sestir — doğru telaffuzu bir hocadan öğrenin."},
+ar:{t:"الأدعية",s:"أدعية اليوم والليلة — مرتبة، بالصوت والمعنى",tb:"📿 مسبحة إلكترونية",seqN:"تسبيح ما بعد الصلاة (٣٣+٣٣+٣٣+١)",free:"ذكر حر",tgt:"الهدف",tot:"المجموع",rst:"↺ من جديد",done:"بارك الله فيك! تم ✓",tap:"اضغط",cnt:"📿 عدّ",lis:"🔊",all:"▶ استمع بالترتيب",stp:"⏹ إيقاف",src:"المصدر",vib:"اهتزاز",note:"الأدعية من مصادر صحيحة. الصوت آلي — تعلّم النطق الصحيح من معلّم."}};
+const TS=Object.assign({mode:"seq",z:0,tgt:33,n:0,step:0,total:0,vib:true},(()=>{try{return JSON.parse(localStorage.getItem("qv_ts")||"{}")}catch(e){return{}}})());
+const tsSave=()=>{try{localStorage.setItem("qv_ts",JSON.stringify(TS))}catch(e){}};
+const SEQ=[[0,33],[1,33],[2,33],[-1,1]];const TAHLIL=["لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ","Laa ilaaha illallohu vahdahu laa shariyka lah…"];
+let DCAT=0;
+function tsCur(){if(TS.mode==="seq"){const st=SEQ[Math.min(TS.step,3)];return{z:st[0]<0?TAHLIL:ZK[st[0]],tgt:st[1]}}return{z:TS.zc||ZK[TS.z],tgt:TS.tgt}}
+function tsRender(){const D=DT[LANG],c=tsCur();$("tsAr").textContent=c.z[0];$("tsTr").textContent=c.z[1];
+ const tg=c.tgt||0,done=TS.mode==="seq"?TS.step>=4:(tg&&TS.n>=tg);$("tsNum").textContent=done?"✓":TS.n;$("tsOf").textContent=tg?"/ "+tg:"∞";
+ const pct=tg?Math.min(1,TS.n/tg):0;$("tsRing").style.strokeDashoffset=String(565.5*(1-pct));
+ $("tsTot").textContent=D.tot+": "+TS.total;$("tsMsg").textContent=done?D.done:"";
+ $("tsMode").innerHTML="";[["seq",D.seqN],["free",D.free]].forEach(([m,n])=>{const b=document.createElement("button");b.type="button";b.textContent=n;b.className=TS.mode===m?"on":"";b.onclick=()=>{TS.mode=m;TS.n=0;TS.step=0;TS.zc=null;tsSave();tsRender()};$("tsMode").appendChild(b)});
+ $("tsFree").style.display=TS.mode==="free"?"":"none";$("tsZ").style.display=TS.zc?"none":"";$("tsT").style.display=TS.zc?"none":"";$("tsTgL").style.display=TS.zc?"none":"";const zs=$("tsZ");if(!zs.options.length||zs.dataset.l!==LANG){zs.innerHTML="";ZK.forEach((z,i)=>{const o=document.createElement("option");o.value=i;o.textContent=z[1]+" — "+z[0];zs.appendChild(o)});zs.dataset.l=LANG}zs.value=TS.z;$("tsT").value=TS.tgt;
+ $("tsTgL").textContent=D.tgt;$("tsRst").textContent=D.rst;$("tsVibL").textContent=D.vib;$("tsVib").checked=TS.vib;$("tsH").textContent=D.tb;$("tsTap").textContent=D.tap}
+function tsTap(){const c=tsCur();if(TS.mode==="seq"&&TS.step>=4)return;TS.n++;TS.total++;let fin=false;
+ if(c.tgt&&TS.n>=c.tgt){if(TS.mode==="seq"){TS.step++;TS.n=0;fin=true}else fin=true}
+ if(TS.vib&&navigator.vibrate)try{navigator.vibrate(fin?[120,80,220]:25)}catch(e){}
+ if(fin&&typeof chime==="function"&&TS.mode==="free")try{_chime&&_chime()}catch(e){}
+ tsSave();tsRender();const b=$("tsBtn");b.classList.remove("pop");void b.offsetWidth;b.classList.add("pop")}
+$("tsBtn").onclick=tsTap;$("tsRst").onclick=()=>{TS.n=0;TS.step=0;tsSave();tsRender()};
+$("tsZ").onchange=()=>{TS.z=+$("tsZ").value;TS.zc=null;TS.n=0;tsSave();tsRender()};$("tsT").onchange=()=>{TS.tgt=+$("tsT").value;TS.n=0;tsSave();tsRender()};$("tsVib").onchange=()=>{TS.vib=$("tsVib").checked;tsSave()};
+$("tsAr").onclick=()=>say(tsCur().z[0],$("tsAr"));
+function duaRender(){const D=DT[LANG],L=TLI[LANG];$("duaT").textContent=D.t;$("duaS").textContent=D.s;$("duaNote").textContent=D.note;$("dua").dir=LANG==="ar"?"rtl":"ltr";
+ const cs=$("duaCats");cs.innerHTML="";DUA.forEach((c,i)=>{const b=document.createElement("button");b.type="button";b.textContent=c[1]+" "+c[2][LANG==="ar"?3:L];b.className=i===DCAT?"on":"";b.onclick=()=>{DCAT=i;duaRender();$("duaCats").scrollIntoView({behavior:"smooth",block:"start"})};cs.appendChild(b)});
+ const B=$("duaList");B.innerHTML="";const cat=DUA[DCAT];const pa=document.createElement("button");pa.type="button";pa.className="btn";pa.style.cssText="width:100%;margin-bottom:12px";pa.textContent=D.all;B.appendChild(pa);
+ const items=[];cat[3].forEach((d,k)=>{const e=document.createElement("div");e.className="duac";e.innerHTML='<div class="dh"><span class="dn"></span><span class="dx"></span></div><div class="da arc" tabindex="0"><span class="ab"></span></div><div class="dl"></div><div class="dm"></div><div class="df"><span class="ds"></span><span class="db"></span></div>';
+  e.querySelector(".dn").textContent=(k+1)+"";e.querySelector(".dx").textContent=d[4]>1?"× "+d[4]:"";const da=e.querySelector(".da");da.querySelector(".ab").textContent=d[0];da.dataset.say=d[0].replace(/—/g,"،");da.onclick=()=>say(da.dataset.say,da);
+  e.querySelector(".dl").textContent=d[1];if(LANG!=="ar")e.querySelector(".dm").textContent=d[2][L];e.querySelector(".ds").textContent="📚 "+D.src+": "+d[3];
+  const bb=e.querySelector(".db");const lb=document.createElement("button");lb.type="button";lb.className="tg2";lb.textContent=D.lis;lb.onclick=()=>say(da.dataset.say,da);bb.appendChild(lb);
+  if(d[4]>1){const cb=document.createElement("button");cb.type="button";cb.className="tg2";cb.textContent=D.cnt+" ×"+d[4];cb.onclick=()=>{TS.mode="free";TS.zc=[d[0],d[1]];TS.tgt=d[4];TS.n=0;tsSave();tsRender();$("tsBox").scrollIntoView({behavior:"smooth",block:"center"})};bb.appendChild(cb)}
+  items.push([da.dataset.say,da]);B.appendChild(e)});
+ pa.onclick=()=>{if(AR.seq){AR.seq=null;AR.audio.pause();pa.textContent=D.all;return}pa.textContent=D.stp;playSeq(items)};tsRender()}
+const _alDua=applyLang;applyLang=function(){_alDua();duaRender()};
+(function(){if(!PAGES.includes("dua"))PAGES.push("dua");PICON.dua="📿";BNI.push(["dua","📿"]);BN.uz.push("Duolar");BN.ru.push("Дуа");BN.tr.push("Dualar");BN.ar.push("الأدعية");
+ MENU_D.uz.dua="Kundalik duolar, tasbeh, istig'for — tartib bilan";MENU_D.ru.dua="Дуа на каждый день, чётки, истигфар";MENU_D.tr.dua="Günlük dualar, tesbih, istiğfar";MENU_D.ar.dua="أدعية يومية ومسبحة واستغفار";
+ UI.uz.tabs.push("📿 Duolar");UI.ru.tabs.push("📿 Дуа");UI.tr.tabs.push("📿 Dualar");UI.ar.tabs.push("📿 الأدعية");
+ const nav=document.querySelector(".tabs");const b=document.createElement("button");b.dataset.t="dua";b.onclick=()=>{location.hash="dua"};nav.appendChild(b)})();
+duaRender();applyLang();route();
 </script>
 </body>
 </html>
