@@ -369,7 +369,8 @@ body{padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
     <label class="sw"><input type="checkbox" id="rmOn"><span class="tr"></span><span id="rmOnL"></span></label>
     <p class="qsm" id="rmMsg"></p>
     <div class="nz-row" style="align-items:center;margin:6px 0"><span id="rmPreL" style="font-weight:700;font-size:14px;flex:1"></span><select id="rmPre" style="flex:1"></select></div>
-    <div class="nz-row" style="align-items:center;margin:6px 0"><span id="azL" style="font-weight:700;font-size:14px;flex:1"></span><select id="azType" style="flex:1"></select></div>
+    <div class="nz-row" style="align-items:center;margin:6px 0;flex-wrap:wrap"><span id="azL" style="font-weight:700;font-size:14px;flex-basis:100%"></span><select id="azType" style="flex:1;min-width:170px"></select><button class="tg2" id="azLis" type="button"></button></div>
+    <p class="qsm" id="azFj"></p>
     <div id="azFileRow" class="nz-row" style="align-items:center;margin:6px 0;flex-wrap:wrap"><label class="tg2" style="cursor:pointer"><input type="file" id="azFile" accept="audio/*" style="display:none"><span id="azPick"></span></label><span class="qsm" id="azName" style="flex:1"></span></div>
     <div class="lang" style="justify-content:flex-start;margin:8px 0"><label><input type="checkbox" id="rmSnd"> <span id="rmSndL"></span></label><label><input type="checkbox" id="rmVib"> <span id="rmVibL"></span></label><button class="tg2" id="rmTest" type="button"></button></div>
     <button class="btn" id="rmIcs" type="button" style="width:100%;margin-top:6px"></button>
@@ -1257,7 +1258,7 @@ let FIRED={};try{FIRED=JSON.parse(localStorage.getItem("qv_fired")||"{}")}catch(
 function rmTick(){if(!RS.on||!NTimes)return;const P=curPlace(),n=tzNowParts(P.tz),now=n.h*60+n.mi,day=n.y+"-"+n.m+"-"+n.d,L=NZ[LANG],R=RM[LANG];
  [0,2,3,4,5].forEach(i=>{const t=NTimes[i];const keys=[[t,"at"],...(RS.pre>0?[[t-RS.pre,"pre"]]:[])];keys.forEach(([at,kind])=>{const k=day+"|"+P.lat+"|"+i+"|"+kind;if(FIRED[k])return;
   if(now>=at&&now<at+3){FIRED[k]=1;try{localStorage.setItem("qv_fired",JSON.stringify(FIRED))}catch(e){}
-   const o={p:L.p[i],c:P.name,t:fm(t),m:RS.pre};kind==="at"?notify(fmtS(R.title,o),fmtS(R.body,o)):notify(fmtS(R.tpre,o),fmtS(R.bpre,o))}})});
+   const o={p:L.p[i],c:P.name,t:fm(t),m:RS.pre};window._azF=(i===0&&kind==="at");window._azPre=(kind==="pre");kind==="at"?notify(fmtS(R.title,o),fmtS(R.body,o)):notify(fmtS(R.tpre,o),fmtS(R.bpre,o))}})});
  const keys=Object.keys(FIRED);if(keys.length>200){FIRED={};}}
 setInterval(rmTick,10000);
 function rmUI(){const R=RM[LANG];$("rmH").textContent=R.h;$("rmOnL").textContent=R.on;$("rmPreL").textContent=R.pre;$("rmSndL").textContent=R.snd;$("rmVibL").textContent=R.vib;$("rmTest").textContent=R.test;$("rmIcs").textContent=R.ics;$("rmIcsH").textContent=R.icsH;$("rmNote").textContent=R.note;
@@ -1278,22 +1279,35 @@ $("rmIcs").onclick=()=>{const P=curPlace(),M=MTH[NC],L=NZ[LANG],pre=RS.pre;const
 const _alRm=applyLang;applyLang=function(){_alRm();rmUI()};rmUI();
 </script>
 <script>
-// ================= AZON OVOZI (foydalanuvchining o'z fayli, IndexedDB'da saqlanadi) =================
-const AZT={uz:{l:"Signal turi",t:["🔔 Qo'ng'iroq ovozi","🕌 Azon (o'z faylim)"],pick:"📂 Azon faylini tanlash",none:"Fayl tanlanmagan",hint:"Telefoningizdagi azon (mp3) faylini tanlang — u faqat shu qurilmada saqlanadi.",stop:"Bosing — azonni to'xtatish"},
-ru:{l:"Тип сигнала",t:["🔔 Звонок","🕌 Азан (мой файл)"],pick:"📂 Выбрать файл азана",none:"Файл не выбран",hint:"Выберите файл азана (mp3) на телефоне — он хранится только на этом устройстве.",stop:"Нажмите — остановить азан"},
-tr:{l:"Uyarı türü",t:["🔔 Zil sesi","🕌 Ezan (kendi dosyam)"],pick:"📂 Ezan dosyası seç",none:"Dosya seçilmedi",hint:"Telefonunuzdaki ezan (mp3) dosyasını seçin — yalnızca bu cihazda saklanır.",stop:"Dokunun — ezanı durdur"},
-ar:{l:"نوع التنبيه",t:["🔔 جرس","🕌 الأذان (ملفي)"],pick:"📂 اختر ملف الأذان",none:"لم يُختر ملف",hint:"اختر ملف الأذان (mp3) من هاتفك — يُحفظ على هذا الجهاز فقط.",stop:"اضغط لإيقاف الأذان"}};
-const azAudio=new Audio();let azURL=null;RS.az=RS.az||0;
+// ================= AZON OVOZI (tayyor azonlar + o'z fayli) =================
+const AZB="https://cdn.jsdelivr.net/gh/abodehq/Athan-MP3@master/Sounds/";
+const AZL=[null,"Athan Makkah.mp3","Athan Mishary Alafasi.mp3","Athan Nasser Alqatami.mp3","Athan Mohammad Almenshawy.mp3","FILE"];
+const AZFAJR="Athan Al-fajer - Malek chebae.mp3";
+const AZT={uz:{l:"Signal turi",t:["🔔 Qo'ng'iroq ovozi","🕌 Azon — Makka","🕌 Azon — Mishari Alafasiy","🕌 Azon — Nosir al-Qatomiy","🕌 Azon — Minshoviy","📂 O'z azon faylim"],pick:"📂 Azon faylini tanlash",hint:"Telefoningizdagi azon (mp3) faylini tanlang — u faqat shu qurilmada saqlanadi.",stop:"Bosing — azonni to'xtatish",lis:"▶ Tinglash",fj:"Bomdodda «as-salotu xoyrun minan-navm» qo'shilgan azon chalinadi."},
+ru:{l:"Тип сигнала",t:["🔔 Звонок","🕌 Азан — Мекка","🕌 Азан — Мишари Афаси","🕌 Азан — Насир аль-Катами","🕌 Азан — Миншави","📂 Мой файл азана"],pick:"📂 Выбрать файл азана",hint:"Выберите файл азана (mp3) на телефоне — он хранится только на этом устройстве.",stop:"Нажмите — остановить азан",lis:"▶ Прослушать",fj:"На фаджр звучит азан со словами «ас-саляту хайрум-мина-н-наум»."},
+tr:{l:"Uyarı türü",t:["🔔 Zil sesi","🕌 Ezan — Mekke","🕌 Ezan — Mişari Afasi","🕌 Ezan — Nasır el-Katami","🕌 Ezan — Minşavi","📂 Kendi ezan dosyam"],pick:"📂 Ezan dosyası seç",hint:"Telefonunuzdaki ezan (mp3) dosyasını seçin — yalnızca bu cihazda saklanır.",stop:"Dokunun — ezanı durdur",lis:"▶ Dinle",fj:"Sabah namazında «es-salâtu hayrun mine'n-nevm» eklenmiş ezan okunur."},
+ar:{l:"نوع التنبيه",t:["🔔 جرس","🕌 أذان — مكة","🕌 أذان — مشاري العفاسي","🕌 أذان — ناصر القطامي","🕌 أذان — المنشاوي","📂 ملف أذان خاص بي"],pick:"📂 اختر ملف الأذان",hint:"اختر ملف الأذان (mp3) من هاتفك — يُحفظ على هذا الجهاز فقط.",stop:"اضغط لإيقاف الأذان",lis:"▶ استماع",fj:"في الفجر يُرفع أذان فيه «الصلاة خير من النوم»."}};
+const azAudio=new Audio();azAudio.preload="none";let azURL=null;
+if(!("azv"in RS)){RS.az=1;RS.azv=2}if(!("onDef"in RS)){RS.on=true;RS.onDef=1}rmSave();
 function idb(){return new Promise((res,rej)=>{try{const r=indexedDB.open("qv_db",1);r.onupgradeneeded=()=>r.result.createObjectStore("f");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
 async function azPut(blob,name){const db=await idb();return new Promise(r=>{const tx=db.transaction("f","readwrite");tx.objectStore("f").put({blob,name},"azan");tx.oncomplete=()=>r(true);tx.onerror=()=>r(false)})}
 async function azGet(){try{const db=await idb();return await new Promise(r=>{const q=db.transaction("f").objectStore("f").get("azan");q.onsuccess=()=>r(q.result||null);q.onerror=()=>r(null)})}catch(e){return null}}
-async function azLoad(){const v=await azGet();if(v&&v.blob){if(azURL)URL.revokeObjectURL(azURL);azURL=URL.createObjectURL(v.blob);azAudio.src=azURL;$("azName").textContent="✓ "+v.name}else $("azName").textContent=AZT[LANG].hint}
-function azUI(){const A=AZT[LANG];$("azL").textContent=A.l;$("azPick").textContent=A.pick;const t=$("azType");t.innerHTML="";A.t.forEach((x,i)=>{const o=document.createElement("option");o.value=i;o.textContent=x;t.appendChild(o)});t.value=RS.az;$("azFileRow").style.display=RS.az==1?"":"none";if(!azURL)$("azName").textContent=A.hint}
+async function azLoad(){const v=await azGet();if(v&&v.blob){if(azURL)URL.revokeObjectURL(azURL);azURL=URL.createObjectURL(v.blob);$("azName").textContent="✓ "+v.name}else $("azName").textContent=AZT[LANG].hint}
+function azSrc(fajr){const k=AZL[RS.az];if(!k)return null;if(k==="FILE")return azURL;return AZB+encodeURIComponent(fajr?AZFAJR:k)}
+function azUI(){const A=AZT[LANG];$("azL").textContent=A.l;$("azPick").textContent=A.pick;const t=$("azType");t.innerHTML="";A.t.forEach((x,i)=>{const o=document.createElement("option");o.value=i;o.textContent=x;t.appendChild(o)});t.value=RS.az;
+ $("azFileRow").style.display=AZL[RS.az]==="FILE"?"":"none";$("azLis").textContent=A.lis;$("azLis").style.display=AZL[RS.az]?"":"none";$("azFj").textContent=AZL[RS.az]&&AZL[RS.az]!=="FILE"?A.fj:"";if(!azURL)$("azName").textContent=A.hint;$("rmOn").checked=RS.on}
 $("azType").onchange=()=>{RS.az=+$("azType").value;rmSave();azUI()};
-$("azFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;await azPut(f,f.name);await azLoad();try{azAudio.currentTime=0;await azAudio.play();setTimeout(()=>azAudio.pause(),4000)}catch(e){}};
-const _chime=chime;chime=function(){if(RS.az==1&&azURL){try{azAudio.currentTime=0;azAudio.play().catch(()=>_chime())}catch(e){_chime()}}else _chime()};
+$("azFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;await azPut(f,f.name);await azLoad()};
+$("azLis").onclick=()=>{if(!azAudio.paused){azAudio.pause();$("azLis").textContent=AZT[LANG].lis;return}const u=azSrc(false);if(!u)return;azAudio.src=u;azAudio.currentTime=0;azAudio.play().then(()=>$("azLis").textContent="⏹").catch(()=>{})};
+azAudio.onended=()=>{$("azLis").textContent=AZT[LANG].lis};
+const _chime=chime;chime=function(){if(window._azPre||!AZL[RS.az]){_chime();return}const u=azSrc(!!window._azF);if(!u){_chime();return}try{azAudio.src=u;azAudio.currentTime=0;azAudio.play().catch(()=>_chime())}catch(e){_chime()}};
 $("rmBanner").addEventListener("click",()=>{try{azAudio.pause()}catch(e){}});
-const _notify=notify;notify=async function(t,b){await _notify(t,b);if(RS.az==1&&azURL){const bn=$("rmBanner");const sp=document.createElement("small");sp.textContent="⏹ "+AZT[LANG].stop;bn.appendChild(sp)}};
+const _notify=notify;notify=async function(t,b){await _notify(t,b);if(AZL[RS.az]&&!window._azPre){const bn=$("rmBanner");const sp=document.createElement("small");sp.textContent="⏹ "+AZT[LANG].stop;bn.appendChild(sp)}window._azPre=false;window._azF=false};
+// birinchi teginishda ovoz va bildirishnomani o'zi yoqib qo'yadi
+let unlocked=false;document.addEventListener("pointerdown",async()=>{if(unlocked)return;unlocked=true;
+ try{actx=actx||new(window.AudioContext||window.webkitAudioContext)();actx.resume()}catch(e){}
+ try{azAudio.muted=true;azAudio.src=azSrc(false)||"";await azAudio.play().catch(()=>{});azAudio.pause();azAudio.muted=false}catch(e){azAudio.muted=false}
+ try{if(RS.on&&"Notification"in window&&Notification.permission==="default"&&!localStorage.getItem("qv_asked")){localStorage.setItem("qv_asked","1");Notification.requestPermission().then(p=>{$("rmMsg").textContent=p==="granted"?RM[LANG].ok:""})}}catch(e){}},{capture:true});
 const _alAz=applyLang;applyLang=function(){_alAz();azUI();if(azURL)azGet().then(v=>{if(v)$("azName").textContent="✓ "+v.name})};
 azUI();azLoad();
 </script>
