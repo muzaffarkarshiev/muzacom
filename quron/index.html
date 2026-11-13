@@ -278,6 +278,22 @@ button{color:var(--txt)}
 #fqBody .ayah .fcy{font-size:16px;line-height:1.6;font-weight:700;color:#0b4a38;background:#eef7f2;border:1px solid #cfe6da;border-radius:12px;padding:8px 12px;margin-top:6px}
 #hlList .had .ha{font-size:21px}
 #hlList .had .ht{font-weight:500;font-size:15.5px}
+
+/* ===== ALOHIDA SAHIFALAR ===== */
+.sec{display:none}
+.sec.act{display:block;animation:pgIn .25s ease}
+@keyframes pgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+body.inpage .tabs{display:none!important}
+.backbar{display:none;max-width:640px;margin:0 auto 14px;gap:8px;align-items:center}
+body.inpage .backbar{display:flex}
+.backbar button{white-space:nowrap;font:inherit;font-weight:800;font-size:14px;padding:10px 13px;border-radius:99px;border:1.5px solid var(--gold);background:rgba(6,43,33,.8);color:var(--gold2);cursor:pointer;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.backbar .pgs{margin-left:auto;display:flex;gap:6px}
+[dir=rtl] .backbar .pgs{margin-left:0;margin-right:auto}
+.backbar .pgs button{padding:8px 10px;font-size:15px}
+@media(max-width:400px){.backbar .pgs button{padding:7px 8px;font-size:14px}}
+.backbar .pgs button.on{background:var(--gold);color:var(--g0)}
+body.inpage .sky{height:110px}
+.home-hint{text-align:center;color:rgba(243,220,149,.75);font-size:13px;margin:4px 0 0}
 </style>
 </head>
 <body>
@@ -304,6 +320,7 @@ button{color:var(--txt)}
 <div class="lbar"><button data-lang="uz">🇺🇿 O'zbek</button><button data-lang="tr">🇹🇷 Türkçe</button><button data-lang="ar">🇸🇦 العربية</button><button data-lang="ru">🇷🇺 Русский</button></div>
 <nav class="tabs"><button data-t="namoz" class="on">🕌 Namoz</button><button data-t="quiz">۞ Viktorina</button><button data-t="quran">📖 Qur'on</button><button data-t="qa">🤲 Savol bering</button><button data-t="hadis">✦ Hadislar</button></nav>
 <button class="fab" id="fab" aria-label="Menu">☰</button>
+<div class="backbar" id="backbar"><button type="button" id="backBtn"></button><div class="pgs" id="pgs"></div></div>
 <div class="wrap">
 
 <section class="sec" id="s-namoz">
@@ -559,7 +576,7 @@ const T={1:25,2:20,3:15,0:20},L="ABCD",LN={1:"Oson",2:"O'rta",3:"Qiyin",0:"Arala
 let set=[],i=0,score=0,correct=0,combo=0,used=false,timer=null,left=0,lvl=1,log=[],N=10;
 const $=id=>document.getElementById(id);
 function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
-function show(id){["home","game","end"].forEach(x=>$(x).classList.toggle("hidden",x!==id));const sq=$("s-quiz");if(sq&&sq.getBoundingClientRect().top<0)sq.scrollIntoView({behavior:"smooth"})}
+function show(id){["home","game","end"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo(0,0)}
 function shuffle(a){a=a.slice();for(let j=a.length-1;j>0;j--){const k=Math.random()*(j+1)|0;[a[j],a[k]]=[a[k],a[j]]}return a}
 function bestText(){const b=store("qv_best")||{};const s=Object.keys(LN).filter(k=>b[k]).map(k=>LN[k]+": "+b[k]).join(" · ");$("best").textContent=s?"🏆 Eng yaxshi natijalar — "+s:"Jami savollar bazasi: "+Q.length+" ta"}
 document.querySelectorAll(".count button").forEach(b=>b.onclick=()=>{N=+b.dataset.n;document.querySelectorAll(".count button").forEach(x=>x.classList.toggle("on",x===b))});
@@ -961,8 +978,7 @@ function applyLang(){const u=UI[LANG];document.querySelectorAll(".lbar button").
 document.querySelectorAll(".lbar button").forEach(b=>b.onclick=()=>{LANG=b.dataset.lang;applyLang()});
 $("qaForm").onsubmit=e=>{e.preventDefault();ask($("qaIn").value)};
 $("qaIn").oninput=()=>{const v=$("qaIn").value,box=$("qaSug");box.innerHTML="";if(v.trim().length<3)return;findTopics(v).forEach(r=>{const t=TP[r.i],b=document.createElement("button");b.type="button";b.textContent="💡 "+t.t[LI[LANG]];b.onclick=()=>{const bx=$("qaLog");const me=document.createElement("div");me.className="me";me.textContent=$("qaIn").value;bx.appendChild(me);const w=document.createElement("div");w.className="bot";w.appendChild(answerCard(t));bx.appendChild(w);askAI($("qaIn").value,w);$("qaIn").value="";box.innerHTML="";me.scrollIntoView({behavior:"smooth",block:"start"})};box.appendChild(b)})};
-const fab=$("fab"),nav=document.querySelector(".tabs");fab.onclick=()=>nav.scrollIntoView({behavior:"smooth",block:"start"});
-try{new IntersectionObserver(es=>es.forEach(e=>fab.classList.toggle("show",!e.isIntersecting))).observe(nav)}catch(e){}
+
 applyLang();
 </script>
 <script>
@@ -1146,6 +1162,25 @@ const _askOld=ask;ask=function(q){q=q.trim();if(!q)return;_askOld(q);if(!AI_URL)
 
 const _alFull=applyLang;applyLang=function(){_alFull();fqInit();hlInit()};
 fqInit();hlInit();
+</script>
+<script>
+// ================= SAHIFALARGA AJRATISH (#hash) =================
+const PAGES=["namoz","quiz","quran","qa","hadis"],PICON={namoz:"🕌",quiz:"۞",quran:"📖",qa:"🤲",hadis:"✦"};
+const BACK={uz:"← Bosh sahifa",ru:"← Главная",tr:"← Ana sayfa",ar:"→ الرئيسية"};
+function route(){const h=location.hash.replace("#","");const pg=PAGES.includes(h)?h:"";
+ document.body.classList.toggle("inpage",!!pg);document.querySelectorAll(".sec").forEach(x=>x.classList.toggle("act",x.id==="s-"+pg));
+ document.querySelectorAll("#pgs button").forEach(b=>b.classList.toggle("on",b.dataset.p===pg));
+ $("fab").classList.toggle("show",!!pg);
+ if(pg!=="quran"){try{if(playing)stopA()}catch(e){}try{if(FQ.play)fqStop()}catch(e){}}
+ window.scrollTo(0,0);try{document.title=pg?(document.querySelector(".tabs button[data-t='"+pg+"'] .mt b")||{}).textContent+" · Qur'on Viktorinasi":"Qur'on Viktorinasi"}catch(e){}}
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{location.hash=b.dataset.t});
+$("backBtn").onclick=()=>{if(history.length>1&&document.referrer===""&&location.hash){history.pushState("",document.title,location.pathname+location.search);route()}else{history.pushState("",document.title,location.pathname+location.search);route()}};
+$("fab").onclick=()=>$("backBtn").click();
+const pgs=$("pgs");PAGES.forEach(p=>{const b=document.createElement("button");b.type="button";b.dataset.p=p;b.textContent=PICON[p];b.onclick=()=>{location.hash=p};pgs.appendChild(b)});
+const _alPg=applyLang;applyLang=function(){_alPg();$("backBtn").textContent=BACK[LANG];$("backbar").dir=LANG==="ar"?"rtl":"ltr";document.querySelectorAll("#pgs button").forEach(b=>{const t=document.querySelector(".tabs button[data-t='"+b.dataset.p+"'] .mt b");b.title=t?t.textContent:""})};
+window.addEventListener("hashchange",route);
+$("backBtn").textContent=BACK[LANG];document.querySelectorAll("#pgs button").forEach(b=>{const t=document.querySelector(".tabs button[data-t='"+b.dataset.p+"'] .mt b");b.title=t?t.textContent:""});
+route();
 </script>
 </body>
 </html>
