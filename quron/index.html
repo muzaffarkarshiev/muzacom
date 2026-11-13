@@ -294,6 +294,17 @@ body.inpage .backbar{display:flex}
 .backbar .pgs button.on{background:var(--gold);color:var(--g0)}
 body.inpage .sky{height:110px}
 .home-hint{text-align:center;color:rgba(243,220,149,.75);font-size:13px;margin:4px 0 0}
+
+/* ===== PASTKI DOIMIY MENYU ===== */
+.fab{display:none!important}
+.bnav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(8px + env(safe-area-inset-bottom));z-index:50;width:min(640px,calc(100% - 16px));display:flex;gap:2px;padding:6px;border-radius:22px;
+ background:rgba(6,43,33,.88);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);border:1px solid rgba(243,220,149,.45);box-shadow:0 12px 30px rgba(0,0,0,.45)}
+.bnav button{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 2px;border:0;border-radius:16px;background:transparent;color:rgba(243,220,149,.8);font:inherit;font-size:10.5px;font-weight:800;cursor:pointer;line-height:1.1}
+.bnav button .bi{font-size:20px;line-height:1}
+.bnav button span:last-child{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bnav button.on{background:var(--gold);color:var(--g0)}
+body{padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
+.backbar .pgs{display:none!important}
 </style>
 </head>
 <body>
@@ -320,6 +331,7 @@ body.inpage .sky{height:110px}
 <div class="lbar"><button data-lang="uz">🇺🇿 O'zbek</button><button data-lang="tr">🇹🇷 Türkçe</button><button data-lang="ar">🇸🇦 العربية</button><button data-lang="ru">🇷🇺 Русский</button></div>
 <nav class="tabs"><button data-t="namoz" class="on">🕌 Namoz</button><button data-t="quiz">۞ Viktorina</button><button data-t="quran">📖 Qur'on</button><button data-t="qa">🤲 Savol bering</button><button data-t="hadis">✦ Hadislar</button></nav>
 <button class="fab" id="fab" aria-label="Menu">☰</button>
+<nav class="bnav" id="bnav"></nav>
 <div class="backbar" id="backbar"><button type="button" id="backBtn"></button><div class="pgs" id="pgs"></div></div>
 <div class="wrap">
 
@@ -1181,6 +1193,18 @@ const _alPg=applyLang;applyLang=function(){_alPg();$("backBtn").textContent=BACK
 window.addEventListener("hashchange",route);
 $("backBtn").textContent=BACK[LANG];document.querySelectorAll("#pgs button").forEach(b=>{const t=document.querySelector(".tabs button[data-t='"+b.dataset.p+"'] .mt b");b.title=t?t.textContent:""});
 route();
+</script>
+<script>
+// ================= PASTKI MENYU (har doim ko'rinadi) =================
+const BN={uz:["Bosh","Namoz","Viktorina","Qur'on","Savol","Hadis"],ru:["Главная","Намаз","Викторина","Коран","Вопрос","Хадисы"],tr:["Ana sayfa","Namaz","Yarışma","Kur'an","Soru","Hadis"],ar:["الرئيسية","الصلاة","مسابقة","القرآن","اسأل","الأحاديث"]};
+const BNI=[["","🏠"],["namoz","🕌"],["quiz","۞"],["quran","📖"],["qa","🤲"],["hadis","✦"]];
+function bnRender(){const b=$("bnav");b.innerHTML="";b.dir=LANG==="ar"?"rtl":"ltr";const cur=location.hash.replace("#","");
+ BNI.forEach(([p,ic],i)=>{const x=document.createElement("button");x.type="button";x.innerHTML='<span class="bi"></span><span></span>';x.querySelector(".bi").textContent=ic;x.lastChild.textContent=BN[LANG][i];
+  x.className=(PAGES.includes(cur)?cur:"")===p?"on":"";x.onclick=()=>{if(p){location.hash=p}else{history.pushState("",document.title,location.pathname+location.search);route()}};b.appendChild(x)})}
+const _routeOld=route;route=function(){_routeOld();bnRender()};
+window.removeEventListener("hashchange",_routeOld);window.addEventListener("hashchange",route);
+const _alBn=applyLang;applyLang=function(){_alBn();bnRender()};
+bnRender();
 </script>
 </body>
 </html>
