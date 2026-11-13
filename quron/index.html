@@ -270,6 +270,14 @@ button{color:var(--txt)}
 .sug button{font:inherit;font-size:13px;font-weight:800;padding:6px 11px;border-radius:99px;border:1.5px dashed var(--gold);background:#fffaf0;color:var(--g1);cursor:pointer}
 .cp{float:right;font:inherit;font-size:12px;font-weight:800;border:1px solid rgba(243,220,149,.6);background:transparent;color:var(--gold2);border-radius:8px;padding:3px 8px;cursor:pointer}
 [dir=rtl] .cp{float:left}
+
+.fullq{margin-top:22px;padding-top:18px;border-top:2px dashed var(--gold)}
+.blk-h{font-family:"Reem Kufi",Nunito,sans-serif;color:var(--g1);font-size:22px;margin:0 0 4px;text-align:center}
+.fullq .nz-row select{min-width:0}
+#fqBody .ayah .fla{font-size:14px;color:var(--muted);font-style:italic;margin-top:4px}
+#fqBody .ayah .fcy{font-size:16px;line-height:1.6;font-weight:700;color:#0b4a38;background:#eef7f2;border:1px solid #cfe6da;border-radius:12px;padding:8px 12px;margin-top:6px}
+#hlList .had .ha{font-size:21px}
+#hlList .had .ht{font-weight:500;font-size:15.5px}
 </style>
 </head>
 <body>
@@ -397,6 +405,13 @@ button{color:var(--txt)}
     <div class="pbar"><i id="pBar"></i></div>
   </div>
   <div id="sura"></div>
+  <div id="fq" class="fullq">
+    <h2 class="blk-h" id="fqT"></h2><p class="sub" id="fqS"></p>
+    <div class="nz-row"><button class="tg2" id="fqPrev" type="button">‹</button><select id="fqSel"></select><button class="tg2" id="fqNext" type="button">›</button></div>
+    <div class="nz-row" style="margin-top:8px"><select id="fqTr"></select><button class="btn" id="fqPlay" type="button" style="flex:none"></button></div>
+    <div class="lang" style="margin-top:10px"><label><input type="checkbox" id="fqTrOn" checked> <span id="fqTrL"></span></label><label><input type="checkbox" id="fqCy" checked> <span id="fqCyL"></span></label><label><input type="checkbox" id="fqLa"> <span id="fqLaL"></span></label></div>
+    <div id="fqBody"></div>
+  </div>
   <div class="note"><b>Kirill o'qilishi</b> arab yozuvini bilmaganlar uchun taxminiy talaffuzdir: arabchadagi ayrim tovushlarni (ع, ح, ق, ص, ض, ط, ظ) kirill harflari to'liq bera olmaydi. To'g'ri talaffuzni qori yoki ustoz tilovatini tinglab o'rganing. Belgilar: <b>ъ</b> — ع (ayn), <b>ҳ</b> — ح/ه, <b>қ</b> — ق, <b>ғ</b> — غ, <b>х</b> — خ.<br><br>Tarjimalar — oyatlarning ma'nosini tushunish uchun berilgan qisqa izohli tarjima; Qur'onning o'rnini bosmaydi. Bu yerda namozda ko'p o'qiladigan suralar jamlangan. Qur'onning <b>to'liq</b> matnini o'zbek, rus va boshqa tillardagi tarjimasi hamda qorilar tilovati bilan <a href="https://quran.com" target="_blank" rel="noopener">quran.com</a> saytida o'qishingiz mumkin.</div>
 </div>
 </section>
@@ -428,6 +443,14 @@ button{color:var(--txt)}
   <input class="hsearch" id="hq" placeholder="🔍 Hadislardan qidirish... (masalan: ilm, ro'za, axloq)">
   <div class="hcats" id="hcats"></div>
   <div id="hlist"></div>
+  <div id="hlLib" class="fullq">
+    <h2 class="blk-h" id="hlT"></h2><p class="sub" id="hlS"></p>
+    <div class="nz-row"><select id="hlCol"></select><select id="hlTl" style="flex:.6"></select></div>
+    <div class="nz-row" style="margin-top:8px"><select id="hlSec"></select></div>
+    <input class="hsearch" id="hlQ" style="margin-top:8px">
+    <div id="hlList"></div>
+    <button class="btn" id="hlMore" type="button" style="width:100%;margin-top:6px"></button>
+  </div>
   <div class="note">Hadis raqamlari keng tarqalgan nashrlar bo'yicha berilgan. Hadislarning to'liq arabcha matni va sharhlarini <a href="https://sunnah.com" target="_blank" rel="noopener">sunnah.com</a> saytida tekshirishingiz mumkin.</div>
 </div>
 </section>
@@ -703,7 +726,7 @@ function plTxt(){return (typeof LANG!=="undefined"&&PL[LANG])||PL.uz}
 function mark(){document.querySelectorAll("#sura .ayah").forEach((e,i)=>{const on=playing&&AQ[AI]&&AQ[AI].j===i;e.classList.toggle("playing",on);e.querySelector(".ap").textContent=on?"❚❚":"▶";if(on)e.scrollIntoView({behavior:"smooth",block:"center"})});
  $("pPlay").textContent=playing?"❚❚":"▶";const t=plTxt(),it=AQ[AI];
  $("pStat").textContent=!playing?t.all:(it&&it.j<0?t.bis:(it?(it.j+1)+"-"+t.ay:""))}
-function playAt(i){AI=i;const it=AQ[AI];if(!it){stopA();return}playing=true;aud.src=it.u;aud.playbackRate=spd;
+function playAt(i){try{if(FQ.play)fqStop()}catch(e){}AI=i;const it=AQ[AI];if(!it){stopA();return}playing=true;aud.src=it.u;aud.playbackRate=spd;
  const p=aud.play();if(p&&p.catch)p.catch(()=>{playing=false;$("pStat").textContent=plTxt().err;mark()});$("pStat").textContent=plTxt().ld;mark()}
 function stopA(){playing=false;aud.pause();mark()}
 aud.onended=()=>{if(AI+1<AQ.length)playAt(AI+1);else if(rep)playAt(0);else{stopA();$("pBar").style.width="0"}};
@@ -767,10 +790,10 @@ try{const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){c
 // ================= SAVOL-JAVOB (4 til) =================
 // ====== AI sozlamasi: Cloudflare Worker manzilini shu yerga yozing ======
 const AI_URL="";
-const MENU_D={uz:{namoz:"Bugungi vaqtlar · qibla · rakatlar",quiz:"89 ta savol · 3 daraja",quran:"14 sura · audio tilovat · 3 tilda",qa:"Savolingizga Qur'on va hadisdan javob",hadis:"27 ta sahih hadis, mavzular bo'yicha"},
-ru:{namoz:"Время на сегодня · кибла · ракааты",quiz:"89 вопросов · 3 уровня",quran:"14 сур · аудио · 3 языка",qa:"Ответ на ваш вопрос из Корана и хадисов",hadis:"27 достоверных хадисов по темам"},
-tr:{namoz:"Bugünün vakitleri · kıble · rekâtlar",quiz:"89 soru · 3 seviye",quran:"14 sure · sesli tilavet · 3 dil",qa:"Sorunuza Kur'an ve hadisten cevap",hadis:"Konulara göre 27 sahih hadis"},
-ar:{namoz:"مواقيت اليوم · القبلة · الركعات",quiz:"٨٩ سؤالًا · ٣ مستويات",quran:"١٤ سورة · تلاوة صوتية · ٣ لغات",qa:"إجابة سؤالك من القرآن والسنة",hadis:"٢٧ حديثًا صحيحًا حسب المواضيع"}};
+const MENU_D={uz:{namoz:"Bugungi vaqtlar · qibla · rakatlar",quiz:"89 ta savol · 3 daraja",quran:"To'liq Qur'on: 114 sura · tarjima · audio",qa:"Istalgan savol — AI + Qur'on va hadis",hadis:"Buxoriy, Muslim va yana 7 ta to'plam"},
+ru:{namoz:"Время на сегодня · кибла · ракааты",quiz:"89 вопросов · 3 уровня",quran:"Полный Коран: 114 сур · перевод · аудио",qa:"Любой вопрос — ИИ + Коран и хадисы",hadis:"Бухари, Муслим и ещё 7 сборников"},
+tr:{namoz:"Bugünün vakitleri · kıble · rekâtlar",quiz:"89 soru · 3 seviye",quran:"Kur'an-ı Kerim: 114 sure · meal · ses",qa:"Her soru — YZ + Kur'an ve hadis",hadis:"Buhârî, Müslim ve 7 eser daha"},
+ar:{namoz:"مواقيت اليوم · القبلة · الركعات",quiz:"٨٩ سؤالًا · ٣ مستويات",quran:"القرآن كاملًا: ١١٤ سورة · ترجمة · تلاوة",qa:"أي سؤال — ذكاء اصطناعي + القرآن والسنة",hadis:"البخاري ومسلم و٧ كتب أخرى"}};
 const AIS={uz:{h:"🤖 Sun'iy intellekt javobi",w:"Javob yozilmoqda",e:"AI hozir javob bera olmadi. Birozdan keyin qayta urinib ko'ring.",f:"AI javoblari xato bo'lishi mumkin. Muhim masalalarda (fatvo) imom yoki muftiyga murojaat qiling.",cp:"Nusxa",cpd:"Nusxalandi ✓",lb:"Saytdagi oyat va hadislar"},
 ru:{h:"🤖 Ответ искусственного интеллекта",w:"Пишется ответ",e:"ИИ сейчас не смог ответить. Попробуйте чуть позже.",f:"Ответы ИИ могут содержать ошибки. По важным вопросам (фетва) обращайтесь к имаму или муфтию.",cp:"Копировать",cpd:"Скопировано ✓",lb:"Аяты и хадисы с сайта"},
 tr:{h:"🤖 Yapay zekâ cevabı",w:"Cevap yazılıyor",e:"Yapay zekâ şu an cevap veremedi. Biraz sonra tekrar deneyin.",f:"Yapay zekâ cevapları hatalı olabilir. Önemli konularda (fetva) imama veya müftüye danışın.",cp:"Kopyala",cpd:"Kopyalandı ✓",lb:"Sitedeki ayet ve hadisler"},
@@ -937,7 +960,7 @@ function applyLang(){const u=UI[LANG];document.querySelectorAll(".lbar button").
  try{localStorage.setItem("qv_lang",LANG)}catch(e){};if(typeof mark==="function")mark();$("pRep").title=plTxt().rep}
 document.querySelectorAll(".lbar button").forEach(b=>b.onclick=()=>{LANG=b.dataset.lang;applyLang()});
 $("qaForm").onsubmit=e=>{e.preventDefault();ask($("qaIn").value)};
-$("qaIn").oninput=()=>{const v=$("qaIn").value,box=$("qaSug");box.innerHTML="";if(v.trim().length<3)return;findTopics(v).forEach(r=>{const t=TP[r.i],b=document.createElement("button");b.type="button";b.textContent="💡 "+t.t[LI[LANG]];b.onclick=()=>{const bx=$("qaLog");const me=document.createElement("div");me.className="me";me.textContent=$("qaIn").value;bx.appendChild(me);const w=document.createElement("div");w.className="bot";w.appendChild(answerCard(t));bx.appendChild(w);if(AI_URL)askAI($("qaIn").value,w);$("qaIn").value="";box.innerHTML="";me.scrollIntoView({behavior:"smooth",block:"start"})};box.appendChild(b)})};
+$("qaIn").oninput=()=>{const v=$("qaIn").value,box=$("qaSug");box.innerHTML="";if(v.trim().length<3)return;findTopics(v).forEach(r=>{const t=TP[r.i],b=document.createElement("button");b.type="button";b.textContent="💡 "+t.t[LI[LANG]];b.onclick=()=>{const bx=$("qaLog");const me=document.createElement("div");me.className="me";me.textContent=$("qaIn").value;bx.appendChild(me);const w=document.createElement("div");w.className="bot";w.appendChild(answerCard(t));bx.appendChild(w);askAI($("qaIn").value,w);$("qaIn").value="";box.innerHTML="";me.scrollIntoView({behavior:"smooth",block:"start"})};box.appendChild(b)})};
 const fab=$("fab"),nav=document.querySelector(".tabs");fab.onclick=()=>nav.scrollIntoView({behavior:"smooth",block:"start"});
 try{new IntersectionObserver(es=>es.forEach(e=>fab.classList.toggle("show",!e.isIntersecting))).observe(nav)}catch(e){}
 applyLang();
@@ -1024,6 +1047,105 @@ const NH=[{a:"إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْم
 function renderNzHadis(){const b=$("nzHadis");b.innerHTML="";NH.forEach(h=>{const d=document.createElement("div");d.className="had";d.innerHTML='<div class="ha"></div>'+(LANG==="ar"?"":'<div class="ht"></div>')+'<div class="hs"><b></b></div>';d.querySelector(".ha").textContent=h.a;if(LANG!=="ar")d.querySelector(".ht").textContent=h.m[LI[LANG]];d.querySelector(".hs b").textContent="📚 "+h.r[LI[LANG]];b.appendChild(d)})}
 const _alNz=applyLang;applyLang=function(){_alNz();nzSelects();if(NTimes){NDay="";loadTimes()}else renderNz()};
 nzSelects();loadTimes();setInterval(()=>{if(!NTimes)return;const P=curPlace(),n=tzNowParts(P.tz);if(n.h===0&&n.mi===0&&n.s<2){NDay="";loadTimes()}renderNz()},1000);
+</script>
+<script>
+// ================= TO'LIQ QUR'ON (alquran.cloud) + HADIS KUTUBXONASI (fawazahmed0) + BEPUL AI =================
+const FT={
+uz:{fq:"📖 To'liq Qur'on — 114 sura",fqs:"Arabcha matn, tarjima, o'qilishi va audio",sel:"Surani tanlang",tr:"Tarjima",cy:"Kirillcha o'qilishi (taxminiy)",la:"Lotincha o'qilishi",ld:"Yuklanmoqda…",err:"Yuklab bo'lmadi. Internetni tekshirib, qayta urinib ko'ring.",play:"▶ Surani tinglash",stop:"⏸ To'xtatish",ay:"oyat",mk:"Makkiy",md:"Madaniy",
+ hl:"📚 Hadis kutubxonasi",hls:"Olti sahih to'plam va boshqalar — bob-bob, arabcha matn va tarjima bilan",col:"To'plam",sec:"Bob",q:"Shu bobdan qidirish…",gr:"Daraja",no:"Hadis",more:"Yana ko'rsatish",tl:"Tarjima tili",
+ aiN:"🤖 Javoblarni bepul sun'iy intellekt (Pollinations) yozadi. U xato qilishi mumkin — muhim masalada imomdan so'rang.",aiBusy:"AI band — 15 soniyadan keyin qayta urinib ko'ring."},
+ru:{fq:"📖 Полный Коран — 114 сур",fqs:"Арабский текст, перевод, чтение и аудио",sel:"Выберите суру",tr:"Перевод",cy:"Чтение кириллицей (примерно)",la:"Чтение латиницей",ld:"Загрузка…",err:"Не удалось загрузить. Проверьте интернет и попробуйте снова.",play:"▶ Слушать суру",stop:"⏸ Стоп",ay:"аятов",mk:"Мекканская",md:"Мединская",
+ hl:"📚 Библиотека хадисов",hls:"Шесть достоверных сборников и другие — по главам, с арабским текстом и переводом",col:"Сборник",sec:"Глава",q:"Поиск в этой главе…",gr:"Степень",no:"Хадис",more:"Показать ещё",tl:"Язык перевода",
+ aiN:"🤖 Ответы пишет бесплатный ИИ (Pollinations). Он может ошибаться — по важным вопросам спросите имама.",aiBusy:"ИИ занят — попробуйте через 15 секунд."},
+tr:{fq:"📖 Kur'an-ı Kerim — 114 sure",fqs:"Arapça metin, meal, okunuş ve ses",sel:"Sure seçin",tr:"Meal",cy:"Kiril okunuşu (yaklaşık)",la:"Latin okunuşu",ld:"Yükleniyor…",err:"Yüklenemedi. İnternetinizi kontrol edip tekrar deneyin.",play:"▶ Sureyi dinle",stop:"⏸ Durdur",ay:"ayet",mk:"Mekkî",md:"Medenî",
+ hl:"📚 Hadis kütüphanesi",hls:"Kütüb-i Sitte ve diğerleri — bölüm bölüm, Arapça metin ve tercümeyle",col:"Eser",sec:"Bölüm",q:"Bu bölümde ara…",gr:"Derece",no:"Hadis",more:"Daha fazla",tl:"Tercüme dili",
+ aiN:"🤖 Cevapları ücretsiz yapay zekâ (Pollinations) yazar. Hata yapabilir — önemli konularda imama danışın.",aiBusy:"Yapay zekâ meşgul — 15 saniye sonra tekrar deneyin."},
+ar:{fq:"📖 القرآن الكريم كاملًا — ١١٤ سورة",fqs:"النص العربي والترجمة والقراءة والتلاوة",sel:"اختر السورة",tr:"الترجمة",cy:"القراءة بالسيريلية (تقريبية)",la:"القراءة باللاتينية",ld:"جارٍ التحميل…",err:"تعذّر التحميل. تحقق من الإنترنت وحاول مجددًا.",play:"▶ استمع إلى السورة",stop:"⏸ إيقاف",ay:"آية",mk:"مكية",md:"مدنية",
+ hl:"📚 مكتبة الحديث",hls:"الكتب الستة وغيرها — بابًا بابًا، بالنص العربي والترجمة",col:"الكتاب",sec:"الباب",q:"ابحث في هذا الباب…",gr:"الدرجة",no:"حديث",more:"عرض المزيد",tl:"لغة الترجمة",
+ aiN:"🤖 يكتب الإجابات ذكاء اصطناعي مجاني (Pollinations). قد يخطئ — اسأل إمامًا في المسائل المهمة.",aiBusy:"الذكاء الاصطناعي مشغول — حاول بعد ١٥ ثانية."}};
+const QTR={uz:[["uz.sodik","Muhammad Sodiq Muhammad Yusuf (o'zbekcha)"],["ru.kuliev","Kuliyev (ruscha)"],["tr.diyanet","Diyanet (turkcha)"],["en.sahih","Sahih International (inglizcha)"]],
+ ru:[["ru.kuliev","Кулиев"],["ru.osmanov","Османов"],["uz.sodik","Мухаммад Содик (узб.)"],["en.sahih","Sahih International (англ.)"]],
+ tr:[["tr.diyanet","Diyanet İşleri"],["tr.yazir","Elmalılı Hamdi Yazır"],["uz.sodik","Muhammad Sodik (Özbekçe)"],["en.sahih","Sahih International (İngilizce)"]],
+ ar:[["ar.muyassar","التفسير الميسر"],["ar.jalalayn","تفسير الجلالين"],["en.sahih","Sahih International"],["ru.kuliev","Кулиев"]]};
+const FQ={sura:1,list:null,data:null,tr:null,showCy:true,showLa:false,aud:new Audio(),q:[],qi:0,play:false};
+const AQAPI="https://api.alquran.cloud/v1/";
+async function fj(u,ms){const c=new AbortController(),t=setTimeout(()=>c.abort(),ms||15000);try{const r=await fetch(u,{signal:c.signal});if(!r.ok)throw new Error(r.status);return await r.json()}finally{clearTimeout(t)}}
+function lat2cyr(s){s=s.replace(/<[^>]+>/g,"").toLowerCase();const R=[["ʿ","ъ"],["'","ъ"],["`","ъ"],["sh","ш"],["kh","х"],["th","с"],["dh","з"],["gh","ғ"],["ch","ч"],["ee","ий"],["ii","ий"],["oo","у"],["uu","у"],["aa","а"],["ya","я"],["yu","ю"],["a","а"],["b","б"],["t","т"],["j","ж"],["h","ҳ"],["d","д"],["r","р"],["z","з"],["s","с"],["f","ф"],["q","қ"],["k","к"],["l","л"],["m","м"],["n","н"],["w","в"],["y","й"],["i","и"],["u","у"],["o","о"],["e","е"],["g","г"],["p","п"],["v","в"],["c","к"],["x","кс"]];
+ let o="",i=0;while(i<s.length){let hit=false;for(const[a,b]of R){if(s.startsWith(a,i)){o+=b;i+=a.length;hit=true;break}}if(!hit){o+=s[i];i++}}return o.replace(/(^|[.!?]\s+)([а-яёўқғҳ])/g,(m,p,c)=>p+c.toUpperCase())}
+async function fqInit(){const T=FT[LANG];$("fqT").textContent=T.fq;$("fqS").textContent=T.fqs;$("fqCyL").textContent=T.cy;$("fqLaL").textContent=T.la;$("fqTrL").textContent=T.tr;
+ const ts=$("fqTr");const cur=FQ.tr;ts.innerHTML="";QTR[LANG].forEach(([v,n])=>{const o=document.createElement("option");o.value=v;o.textContent=n;ts.appendChild(o)});if(cur&&[...ts.options].some(o=>o.value===cur))ts.value=cur;FQ.tr=ts.value;
+ $("fqPlay").textContent=FQ.play?T.stop:T.play;$("fq").dir=LANG==="ar"?"rtl":"ltr";
+ if(!FQ.list){try{const j=await fj(AQAPI+"surah");FQ.list=j.data}catch(e){$("fqBody").textContent=T.err;return}}
+ const ss=$("fqSel");ss.innerHTML="";FQ.list.forEach(s=>{const o=document.createElement("option");o.value=s.number;o.textContent=s.number+". "+s.englishName+" — "+s.name+" ("+s.numberOfAyahs+")";ss.appendChild(o)});ss.value=FQ.sura;fqLoad()}
+async function fqLoad(){const T=FT[LANG],n=+$("fqSel").value||1;FQ.sura=n;fqStop();const b=$("fqBody");b.innerHTML='<p class="sub">'+T.ld+"</p>";
+ try{const [ar,tr,tl]=await Promise.all([fj(AQAPI+"surah/"+n+"/quran-uthmani"),fj(AQAPI+"surah/"+n+"/"+FQ.tr).catch(()=>null),fj(AQAPI+"surah/"+n+"/en.transliteration").catch(()=>null)]);
+  FQ.data={ar:ar.data,tr:tr&&tr.data,tl:tl&&tl.data};fqRender()}catch(e){b.textContent=T.err}}
+function fqRender(){const T=FT[LANG],d=FQ.data;if(!d)return;const b=$("fqBody");b.innerHTML="";const s=d.ar;
+ const h=document.createElement("div");h.className="sura-h";h.innerHTML='<div class="an"></div><b></b><p></p>';h.querySelector(".an").textContent=s.name;h.querySelector("b").textContent=s.number+". "+s.englishName+" · "+s.englishNameTranslation;h.querySelector("p").textContent=(s.revelationType==="Meccan"?T.mk:T.md)+" · "+s.numberOfAyahs+" "+T.ay;b.appendChild(h);
+ s.ayahs.forEach((a,i)=>{let txt=a.text;if(s.number!==1&&s.number!==9&&i===0)txt=txt.replace(/^﻿?بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ\s*/,"");
+  const e=document.createElement("div");e.className="ayah";e.dataset.i=i;e.innerHTML='<button class="ap" type="button">▶</button><div class="a"></div><div class="c fcy"></div><div class="fla"></div><div class="u ftr"></div>';
+  e.querySelector(".a").innerHTML=esc(txt)+' <span class="n">'+AN(a.numberInSurah)+"</span>";
+  const tl=d.tl&&d.tl.ayahs[i]?d.tl.ayahs[i].text:"";e.querySelector(".fcy").textContent=tl?lat2cyr(tl):"";e.querySelector(".fla").textContent=tl.replace(/<[^>]+>/g,"");
+  e.querySelector(".ftr").textContent=d.tr&&d.tr.ayahs[i]?a.numberInSurah+". "+d.tr.ayahs[i].text:"";
+  e.querySelector(".ap").onclick=()=>{if(FQ.play&&FQ.q[FQ.qi]===i){fqStop();return}FQ.q=[i];fqPlayAt(0)};b.appendChild(e)});
+ fqVis()}
+function fqVis(){document.querySelectorAll("#fqBody .fcy").forEach(e=>e.style.display=$("fqCy").checked&&e.textContent?"":"none");document.querySelectorAll("#fqBody .fla").forEach(e=>e.style.display=$("fqLa").checked&&e.textContent?"":"none");document.querySelectorAll("#fqBody .ftr").forEach(e=>e.style.display=$("fqTrOn").checked&&e.textContent?"":"none")}
+function fqUrl(i){return "https://everyayah.com/data/"+$("pRec").value+"/"+pad(FQ.sura)+pad(i+1)+".mp3"}
+function fqPlayAt(k){FQ.qi=k;const i=FQ.q[k];if(i==null){fqStop();return}if(typeof stopA==="function"&&playing)stopA();FQ.play=true;FQ.aud.src=fqUrl(i);FQ.aud.playbackRate=spd;FQ.aud.play().catch(()=>{});fqMark()}
+function fqStop(){FQ.play=false;FQ.aud.pause();fqMark()}
+function fqMark(){document.querySelectorAll("#fqBody .ayah").forEach(e=>{const on=FQ.play&&+e.dataset.i===FQ.q[FQ.qi];e.classList.toggle("playing",on);e.querySelector(".ap").textContent=on?"❚❚":"▶";if(on)e.scrollIntoView({behavior:"smooth",block:"center"})});$("fqPlay").textContent=FQ.play?FT[LANG].stop:FT[LANG].play}
+FQ.aud.onended=()=>{if(FQ.qi+1<FQ.q.length)fqPlayAt(FQ.qi+1);else if(rep)fqPlayAt(0);else fqStop()};
+$("fqPlay").onclick=()=>{if(FQ.play){fqStop();return}if(!FQ.data)return;FQ.q=FQ.data.ar.ayahs.map((_,i)=>i);fqPlayAt(0)};
+$("fqSel").onchange=fqLoad;$("fqTr").onchange=()=>{FQ.tr=$("fqTr").value;fqLoad()};["fqCy","fqLa","fqTrOn"].forEach(id=>$(id).onchange=fqVis);
+$("fqPrev").onclick=()=>{if(FQ.sura>1){$("fqSel").value=FQ.sura-1;fqLoad();$("fq").scrollIntoView({behavior:"smooth"})}};$("fqNext").onclick=()=>{if(FQ.sura<114){$("fqSel").value=FQ.sura+1;fqLoad();$("fq").scrollIntoView({behavior:"smooth"})}};
+
+// ---- Hadis kutubxonasi ----
+const HAPI="https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/";
+const HCOL=[["bukhari",["Sahih al-Buxoriy","Сахих аль-Бухари","Sahîh-i Buhârî","صحيح البخاري"]],["muslim",["Sahih Muslim","Сахих Муслим","Sahîh-i Müslim","صحيح مسلم"]],["abudawud",["Sunan Abu Dovud","Сунан Абу Дауда","Sünen-i Ebû Dâvûd","سنن أبي داود"]],["tirmidhi",["Jome' at-Termiziy","Джами ат-Тирмизи","Sünen-i Tirmizî","جامع الترمذي"]],["nasai",["Sunan an-Nasoiy","Сунан ан-Насаи","Sünen-i Nesâî","سنن النسائي"]],["ibnmajah",["Sunan Ibn Moja","Сунан Ибн Маджа","Sünen-i İbn Mâce","سنن ابن ماجه"]],["malik",["Muvatto Imom Molik","Муватта Малика","Muvatta","موطأ مالك"]],["nawawi",["40 hadis (Navaviy)","40 хадисов ан-Навави","Kırk Hadis (Nevevî)","الأربعون النووية"]],["qudsi",["40 qudsiy hadis","40 хадисов кудси","Kırk Kudsî Hadis","الأربعون القدسية"]]];
+const HLANG={uz:["uzb","rus","tur","eng"],ru:["rus","eng"],tr:["tur","eng"],ar:["ara"]};
+const HL={eds:null,info:null,col:"bukhari",sec:1,ed:null,list:[],shown:0,trl:null};
+function edFor(col){const c=HL.eds&&HL.eds[col];if(!c)return null;const names=c.collection.map(e=>e.name);const pref=HL.trl?[HL.trl]:HLANG[LANG];for(const p of pref){const n=p+"-"+col;if(names.includes(n))return n;const alt=names.find(x=>x.startsWith(p+"-"+col));if(alt)return alt}return names.find(x=>x.startsWith("eng-"))||null}
+async function hlInit(){const T=FT[LANG];$("hlT").textContent=T.hl;$("hlS").textContent=T.hls;$("hlQ").placeholder=T.q;$("hlMore").textContent=T.more;$("hlLib").dir=LANG==="ar"?"rtl":"ltr";
+ const cs=$("hlCol");cs.innerHTML="";HCOL.forEach(([k,n])=>{const o=document.createElement("option");o.value=k;o.textContent=n[LI[LANG]];cs.appendChild(o)});cs.value=HL.col;
+ try{if(!HL.eds)HL.eds=await fj(HAPI+"editions.min.json",20000);if(!HL.info)HL.info=await fj(HAPI+"info.min.json",30000)}catch(e){$("hlList").textContent=T.err;return}
+ const tl=$("hlTl");tl.innerHTML="";const langs=[...new Set(HL.eds[HL.col].collection.map(e=>e.name.split("-")[0]))].filter(x=>x!=="ara");
+ const LN={eng:"English",rus:"Русский",tur:"Türkçe",uzb:"O'zbekcha",urd:"اردو",ind:"Indonesia",ben:"বাংলা",fra:"Français",tam:"தமிழ்"};
+ langs.forEach(l=>{const o=document.createElement("option");o.value=l;o.textContent=(LN[l]||l);tl.appendChild(o)});const def=(edFor(HL.col)||"eng").split("-")[0];tl.value=def;HL.trl=null;
+ hlSections()}
+function hlSections(){const ss=$("hlSec"),meta=HL.info[HL.col]&&HL.info[HL.col].metadata;ss.innerHTML="";if(!meta)return;
+ Object.entries(meta.sections).forEach(([k,v])=>{if(!v||k==="0")return;const o=document.createElement("option");o.value=k;o.textContent=k+". "+v;ss.appendChild(o)});
+ if(![...ss.options].some(o=>+o.value===HL.sec))HL.sec=+(ss.options[0]&&ss.options[0].value||1);ss.value=HL.sec;hlLoad()}
+async function hlLoad(){const T=FT[LANG];const L=$("hlList");L.innerHTML='<p class="sub">'+T.ld+"</p>";HL.ed=HL.trl?HL.trl+"-"+HL.col:edFor(HL.col);
+ try{const [ar,tr]=await Promise.all([fj(HAPI+"editions/ara-"+HL.col+"/sections/"+HL.sec+".min.json",20000),HL.ed?fj(HAPI+"editions/"+HL.ed+"/sections/"+HL.sec+".min.json",20000).catch(()=>null):null]);
+  const tm={};if(tr)tr.hadiths.forEach(h=>tm[h.hadithnumber]=h);
+  HL.list=ar.hadiths.filter(h=>h.text&&h.text.trim()).map(h=>({n:h.hadithnumber,ar:h.text,tr:tm[h.hadithnumber]?tm[h.hadithnumber].text:"",g:(h.grades&&h.grades[0])||(tm[h.hadithnumber]&&tm[h.hadithnumber].grades&&tm[h.hadithnumber].grades[0])||null}));
+  HL.shown=0;L.innerHTML="";hlMore()}catch(e){L.textContent=T.err}}
+function hlMore(){const T=FT[LANG],q=norm($("hlQ").value.trim()),L=$("hlList");const src=q?HL.list.filter(h=>norm(h.tr+" "+h.ar).includes(q)):HL.list;
+ if(q){L.innerHTML="";HL.shown=0}
+ src.slice(HL.shown,HL.shown+20).forEach(h=>{const d=document.createElement("div");d.className="had";d.innerHTML='<div class="ha"></div>'+(h.tr&&LANG!=="ar"?'<div class="ht"></div>':"")+'<div class="hs"><span></span><b></b></div>';
+  d.querySelector(".ha").textContent=h.ar;if(h.tr&&LANG!=="ar")d.querySelector(".ht").textContent=h.tr;
+  d.querySelector(".hs span").textContent=h.g?T.gr+": "+h.g.grade+" ("+h.g.name+")":"";d.querySelector(".hs b").textContent="📚 "+HCOL.find(c=>c[0]===HL.col)[1][LI[LANG]]+", "+h.n;L.appendChild(d)});
+ HL.shown+=20;$("hlMore").style.display=HL.shown<src.length?"":"none"}
+$("hlCol").onchange=()=>{HL.col=$("hlCol").value;HL.sec=1;HL.trl=null;hlInit()};$("hlSec").onchange=()=>{HL.sec=+$("hlSec").value;hlLoad()};$("hlTl").onchange=()=>{HL.trl=$("hlTl").value;hlLoad()};
+$("hlMore").onclick=hlMore;let hlT=null;$("hlQ").oninput=()=>{clearTimeout(hlT);hlT=setTimeout(()=>{$("hlList").innerHTML="";HL.shown=0;hlMore()},250)};
+
+// ---- bepul AI (Pollinations) ----
+const AI_SYS=l=>"You are a careful, respectful Islamic knowledge assistant on a Qur'an learning website. Always answer in "+({uz:"Uzbek (Latin script)",ru:"Russian",tr:"Turkish",ar:"Arabic"})[l]+". Base answers on the Qur'an and authentic hadith and give references (surah name and ayah number, or hadith collection and number). Only cite references you are sure of; never invent ayahs, hadith or numbers — if unsure, say so. Visitors are mostly Hanafi (Uzbekistan, Turkey, Russia): give the Hanafi view and briefly note differences. For personal rulings (divorce, inheritance shares, debts, medical, business) give the general principle and advise asking a local imam or the official muftiate. Be kind, avoid politics, never insult anyone. If the question is not about Islam or Muslim life, say in one sentence that you only help with these topics. Keep the answer under 200 words; use **bold** for references.";
+async function freeAI(q){const body={model:"openai",messages:[{role:"system",content:AI_SYS(LANG)},{role:"user",content:q}],temperature:0.3,private:true,referrer:"muzacom-quron"};
+ const tries=[async()=>{const r=await fetch("https://text.pollinations.ai/openai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});if(r.status===429)throw new Error("busy");if(!r.ok)throw 0;const j=await r.json();return j.choices[0].message.content},
+  async()=>{const r=await fetch("https://gen.pollinations.ai/v1/chat/completions",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});if(r.status===429)throw new Error("busy");if(!r.ok)throw 0;const j=await r.json();return j.choices[0].message.content},
+  async()=>{const r=await fetch("https://text.pollinations.ai/"+encodeURIComponent(q)+"?model=openai&private=true&system="+encodeURIComponent(AI_SYS(LANG)));if(!r.ok)throw 0;return await r.text()}];
+ let busy=false;for(const t of tries){try{const a=await t();if(a&&a.trim())return a.trim()}catch(e){if(e&&e.message==="busy")busy=true}}throw new Error(busy?"busy":"fail")}
+askAI=async function(q,wrap){const A=AIS[LANG];const c=document.createElement("div");c.className="ai";c.innerHTML='<div class="ai-h"></div><div class="ai-b"><span class="dots"><span></span><span></span><span></span></span> <span class="wt"></span></div><div class="ai-f"></div>';
+ c.querySelector(".ai-h").textContent=A.h;c.querySelector(".wt").textContent=A.w;c.querySelector(".ai-f").textContent=FT[LANG].aiN;wrap.prepend(c);
+ try{let a;if(AI_URL){const r=await fetch(AI_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({q,lang:LANG})});const j=await r.json();a=j.answer;if(!a)throw 0}else a=await freeAI(q);
+  c.querySelector(".ai-b").innerHTML=md(a);c.querySelector(".ai-b").dir="auto"}
+ catch(e){c.querySelector(".ai-b").textContent=e&&e.message==="busy"?FT[LANG].aiBusy:A.e}};
+// ask() AI ni har doim chaqiradi
+const _askOld=ask;ask=function(q){q=q.trim();if(!q)return;_askOld(q);if(!AI_URL){const w=document.querySelector("#qaLog .bot:last-child");if(w)askAI(q,w)}};
+
+const _alFull=applyLang;applyLang=function(){_alFull();fqInit();hlInit()};
+fqInit();hlInit();
 </script>
 </body>
 </html>
