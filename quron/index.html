@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b4a38">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" href="icon-192.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Qur'on Viktorinasi">
@@ -305,6 +308,18 @@ body.inpage .sky{height:110px}
 .bnav button.on{background:var(--gold);color:var(--g0)}
 body{padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
 .backbar .pgs{display:none!important}
+
+/* eslatmalar */
+.rmbox{padding:16px;border-radius:20px;background:#fff;border:1.5px solid #e2d4a8;margin-bottom:18px}
+.sw{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--g1);cursor:pointer}
+.sw input{position:absolute;opacity:0;pointer-events:none}
+.sw .tr{width:52px;height:30px;border-radius:99px;background:#d9d2bd;position:relative;flex:none;transition:.2s}
+.sw .tr:after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25);transition:.2s}
+.sw input:checked+.tr{background:var(--g2)}.sw input:checked+.tr:after{left:25px}
+.rmbanner{position:fixed;top:calc(10px + env(safe-area-inset-top));left:50%;transform:translate(-50%,-150%);z-index:60;width:min(600px,calc(100% - 20px));padding:14px 16px;border-radius:18px;
+ background:linear-gradient(160deg,#c9a13b,#8a6512);color:#1a1200;box-shadow:0 14px 34px rgba(0,0,0,.45);transition:transform .35s;display:flex;flex-direction:column;gap:2px;cursor:pointer}
+.rmbanner.show{transform:translate(-50%,0)}
+.rmbanner b{font-size:17px}
 </style>
 </head>
 <body>
@@ -331,6 +346,7 @@ body{padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
 <div class="lbar"><button data-lang="uz">🇺🇿 O'zbek</button><button data-lang="tr">🇹🇷 Türkçe</button><button data-lang="ar">🇸🇦 العربية</button><button data-lang="ru">🇷🇺 Русский</button></div>
 <nav class="tabs"><button data-t="namoz" class="on">🕌 Namoz</button><button data-t="quiz">۞ Viktorina</button><button data-t="quran">📖 Qur'on</button><button data-t="qa">🤲 Savol bering</button><button data-t="hadis">✦ Hadislar</button></nav>
 <button class="fab" id="fab" aria-label="Menu">☰</button>
+<div class="rmbanner" id="rmBanner"></div>
 <nav class="bnav" id="bnav"></nav>
 <div class="backbar" id="backbar"><button type="button" id="backBtn"></button><div class="pgs" id="pgs"></div></div>
 <div class="wrap">
@@ -348,6 +364,16 @@ body{padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
     <div class="nz-row"><select id="nzCity"></select><button class="tg2" id="nzLoc"></button></div></div>
   <div class="nz-grid" id="nzGrid"></div>
   <p class="nz-src" id="nzSrc"></p>
+  <div class="rmbox" id="rmBox">
+    <h3 class="nz-h" id="rmH" style="margin-top:0"></h3>
+    <label class="sw"><input type="checkbox" id="rmOn"><span class="tr"></span><span id="rmOnL"></span></label>
+    <p class="qsm" id="rmMsg"></p>
+    <div class="nz-row" style="align-items:center;margin:6px 0"><span id="rmPreL" style="font-weight:700;font-size:14px;flex:1"></span><select id="rmPre" style="flex:1"></select></div>
+    <div class="lang" style="justify-content:flex-start;margin:8px 0"><label><input type="checkbox" id="rmSnd"> <span id="rmSndL"></span></label><label><input type="checkbox" id="rmVib"> <span id="rmVibL"></span></label><button class="tg2" id="rmTest" type="button"></button></div>
+    <button class="btn" id="rmIcs" type="button" style="width:100%;margin-top:6px"></button>
+    <p class="qsm" id="rmIcsH" style="text-align:center"></p>
+    <p class="qsm" id="rmNote" style="margin-top:8px"></p>
+  </div>
   <div class="qibla" id="qibla">
     <div class="qdial-wrap"><div class="qdial" id="qDial">
       <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="94" fill="#fffcf3" stroke="#c9a13b" stroke-width="3"/><circle cx="100" cy="100" r="80" fill="none" stroke="#e2d4a8" stroke-dasharray="2 6"/>
@@ -1209,6 +1235,45 @@ const _routeOld=route;route=function(){_routeOld();bnRender()};
 window.removeEventListener("hashchange",_routeOld);window.addEventListener("hashchange",route);
 const _alBn=applyLang;applyLang=function(){_alBn();bnRender()};
 bnRender();
+</script>
+<script>
+// ================= NAMOZ ESLATMALARI (xabar + signal + kalendar) =================
+const RM={uz:{h:"🔔 Namoz eslatmalari",on:"Namoz vaqti kirganda xabar berish",pre:"Oldindan ogohlantirish",min:"daqiqa oldin",zero:"Aynan vaqtida",snd:"Ovozli signal",vib:"Tebranish",test:"🔊 Sinab ko'rish",ics:"📅 30 kunlik vaqtni telefon kalendariga qo'shish",icsH:"Kalendar sayt yopiq bo'lsa ham eslatadi — eng ishonchli usul.",deny:"Xabarlarga ruxsat berilmadi. Brauzer sozlamalaridan ushbu saytga «Bildirishnomalar»ni yoqing.",nos:"Bu brauzer xabarlarni qo'llamaydi — ovozli signal va kalendardan foydalaning.",note:"Sayt (yoki uning varag'i) ochiq turganda xabar va signal ishlaydi. iPhone'da xabarlar uchun saytni «Bosh ekranga qo'shish» kerak. Sayt yopiq bo'lsa ham eslatma kelishi uchun kalendar tugmasidan foydalaning.",title:"🕌 {p} vaqti kirdi",body:"{c} · {t}. Namozga shoshiling!",tpre:"⏰ {p}ga {m} daqiqa qoldi",bpre:"{c} · {t}",ok:"Eslatmalar yoqildi ✓"},
+ru:{h:"🔔 Напоминания о намазе",on:"Уведомлять о наступлении времени намаза",pre:"Предупредить заранее",min:"мин. до",zero:"Точно в срок",snd:"Звуковой сигнал",vib:"Вибрация",test:"🔊 Проверить",ics:"📅 Добавить время на 30 дней в календарь телефона",icsH:"Календарь напомнит, даже если сайт закрыт, — самый надёжный способ.",deny:"Уведомления запрещены. Разрешите их для этого сайта в настройках браузера.",nos:"Этот браузер не поддерживает уведомления — используйте звук и календарь.",note:"Уведомления и звук работают, пока сайт (вкладка) открыт. На iPhone для уведомлений добавьте сайт «На экран Домой». Чтобы напоминания приходили при закрытом сайте, используйте кнопку календаря.",title:"🕌 Наступило время: {p}",body:"{c} · {t}. Спешите на намаз!",tpre:"⏰ До намаза {p} осталось {m} мин.",bpre:"{c} · {t}",ok:"Напоминания включены ✓"},
+tr:{h:"🔔 Namaz hatırlatıcıları",on:"Namaz vakti girince bildir",pre:"Önceden uyar",min:"dk önce",zero:"Tam vaktinde",snd:"Sesli uyarı",vib:"Titreşim",test:"🔊 Dene",ics:"📅 30 günlük vakitleri telefon takvimine ekle",icsH:"Takvim, site kapalıyken de hatırlatır — en güvenilir yol.",deny:"Bildirim izni verilmedi. Tarayıcı ayarlarından bu site için bildirimleri açın.",nos:"Bu tarayıcı bildirimleri desteklemiyor — sesli uyarı ve takvimi kullanın.",note:"Bildirim ve ses, site (sekmesi) açıkken çalışır. iPhone'da bildirim için siteyi «Ana Ekrana Ekle» yapın. Site kapalıyken hatırlatma için takvim düğmesini kullanın.",title:"🕌 {p} vakti girdi",body:"{c} · {t}. Haydi namaza!",tpre:"⏰ {p} vaktine {m} dk kaldı",bpre:"{c} · {t}",ok:"Hatırlatıcılar açık ✓"},
+ar:{h:"🔔 تنبيهات الصلاة",on:"التنبيه عند دخول وقت الصلاة",pre:"تنبيه مسبق",min:"دقيقة قبل",zero:"في الوقت تمامًا",snd:"تنبيه صوتي",vib:"اهتزاز",test:"🔊 تجربة",ics:"📅 أضف مواقيت ٣٠ يومًا إلى تقويم الهاتف",icsH:"يذكّرك التقويم حتى لو كان الموقع مغلقًا — أوثق طريقة.",deny:"لم يُسمح بالإشعارات. فعّلها لهذا الموقع من إعدادات المتصفح.",nos:"هذا المتصفح لا يدعم الإشعارات — استخدم الصوت والتقويم.",note:"تعمل الإشعارات والصوت ما دام الموقع مفتوحًا. على iPhone أضف الموقع إلى الشاشة الرئيسية لتصلك الإشعارات. لتصلك التذكيرات والموقع مغلق استخدم زر التقويم.",title:"🕌 حان وقت {p}",body:"{c} · {t}. حيّ على الصلاة!",tpre:"⏰ بقي {m} دقيقة على {p}",bpre:"{c} · {t}",ok:"تم تفعيل التنبيهات ✓"}};
+const RS=Object.assign({on:false,pre:10,snd:true,vib:true},(()=>{try{return JSON.parse(localStorage.getItem("qv_rm")||"{}")}catch(e){return{}}})());
+const rmSave=()=>{try{localStorage.setItem("qv_rm",JSON.stringify(RS))}catch(e){}};
+let SWR=null;try{if("serviceWorker"in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("sw.js").then(r=>SWR=r).catch(()=>{})}catch(e){}
+let actx=null;function chime(){try{actx=actx||new(window.AudioContext||window.webkitAudioContext)();const t0=actx.currentTime;[[659.25,0],[783.99,.35],[987.77,.7],[783.99,1.25],[987.77,1.6],[1318.5,1.95]].forEach(([f,d])=>{const o=actx.createOscillator(),g=actx.createGain();o.type="sine";o.frequency.value=f;g.gain.setValueAtTime(0,t0+d);g.gain.linearRampToValueAtTime(.35,t0+d+.03);g.gain.exponentialRampToValueAtTime(.001,t0+d+1.1);o.connect(g).connect(actx.destination);o.start(t0+d);o.stop(t0+d+1.2)})}catch(e){}}
+async function notify(title,body){if(RS.snd)chime();if(RS.vib&&navigator.vibrate)try{navigator.vibrate([300,150,300,150,600])}catch(e){}
+ const bn=$("rmBanner");bn.innerHTML="<b></b><span></span>";bn.querySelector("b").textContent=title;bn.querySelector("span").textContent=body;bn.classList.add("show");clearTimeout(bn._t);bn._t=setTimeout(()=>bn.classList.remove("show"),20000);
+ if(!("Notification"in window)||Notification.permission!=="granted")return;const opt={body,icon:"icon-192.png",badge:"icon-192.png",tag:"namoz-"+title,renotify:true,vibrate:[300,150,300]};
+ try{const r=SWR||(navigator.serviceWorker&&await navigator.serviceWorker.getRegistration());if(r){r.showNotification(title,opt);return}}catch(e){}try{new Notification(title,opt)}catch(e){}}
+const fmtS=(s,o)=>s.replace(/\{(\w)\}/g,(m,k)=>o[k]);
+let FIRED={};try{FIRED=JSON.parse(localStorage.getItem("qv_fired")||"{}")}catch(e){}
+function rmTick(){if(!RS.on||!NTimes)return;const P=curPlace(),n=tzNowParts(P.tz),now=n.h*60+n.mi,day=n.y+"-"+n.m+"-"+n.d,L=NZ[LANG],R=RM[LANG];
+ [0,2,3,4,5].forEach(i=>{const t=NTimes[i];const keys=[[t,"at"],...(RS.pre>0?[[t-RS.pre,"pre"]]:[])];keys.forEach(([at,kind])=>{const k=day+"|"+P.lat+"|"+i+"|"+kind;if(FIRED[k])return;
+  if(now>=at&&now<at+3){FIRED[k]=1;try{localStorage.setItem("qv_fired",JSON.stringify(FIRED))}catch(e){}
+   const o={p:L.p[i],c:P.name,t:fm(t),m:RS.pre};kind==="at"?notify(fmtS(R.title,o),fmtS(R.body,o)):notify(fmtS(R.tpre,o),fmtS(R.bpre,o))}})});
+ const keys=Object.keys(FIRED);if(keys.length>200){FIRED={};}}
+setInterval(rmTick,10000);
+function rmUI(){const R=RM[LANG];$("rmH").textContent=R.h;$("rmOnL").textContent=R.on;$("rmPreL").textContent=R.pre;$("rmSndL").textContent=R.snd;$("rmVibL").textContent=R.vib;$("rmTest").textContent=R.test;$("rmIcs").textContent=R.ics;$("rmIcsH").textContent=R.icsH;$("rmNote").textContent=R.note;
+ $("rmOn").checked=RS.on;$("rmSnd").checked=RS.snd;$("rmVib").checked=RS.vib;const ps=$("rmPre");ps.innerHTML="";[0,5,10,15,30].forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v?v+" "+R.min:R.zero;ps.appendChild(o)});ps.value=RS.pre;$("rmBox").dir=LANG==="ar"?"rtl":"ltr"}
+$("rmOn").onchange=async()=>{const R=RM[LANG];if($("rmOn").checked){if(!("Notification"in window)){$("rmMsg").textContent=R.nos}else{let p=Notification.permission;if(p==="default"){try{p=await Notification.requestPermission()}catch(e){}}$("rmMsg").textContent=p==="granted"?R.ok:R.deny}
+  try{actx=actx||new(window.AudioContext||window.webkitAudioContext)();actx.resume()}catch(e){}RS.on=true}else{RS.on=false;$("rmMsg").textContent=""}rmSave()};
+$("rmPre").onchange=()=>{RS.pre=+$("rmPre").value;rmSave()};$("rmSnd").onchange=()=>{RS.snd=$("rmSnd").checked;rmSave()};$("rmVib").onchange=()=>{RS.vib=$("rmVib").checked;rmSave()};
+$("rmTest").onclick=async()=>{try{actx=actx||new(window.AudioContext||window.webkitAudioContext)();await actx.resume()}catch(e){}if("Notification"in window&&Notification.permission==="default"){try{await Notification.requestPermission()}catch(e){}}
+ const P=curPlace(),R=RM[LANG],L=NZ[LANG];notify(fmtS(R.title,{p:L.p[2]}),fmtS(R.body,{c:P.name,t:NTimes?fm(NTimes[2]):""}))};
+$("rmBanner").onclick=()=>$("rmBanner").classList.remove("show");
+// .ics kalendar (30 kun, har bir namozga eslatma bilan)
+$("rmIcs").onclick=()=>{const P=curPlace(),M=MTH[NC],L=NZ[LANG],pre=RS.pre;const n=tzNowParts(P.tz);const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//muzacom//quron//UZ","CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:"+L.t+" — "+P.name];
+ const pad2=x=>String(x).padStart(2,"0");const stamp=new Date().toISOString().replace(/[-:]/g,"").slice(0,15)+"Z";
+ for(let k=0;k<30;k++){const dt=new Date(Date.UTC(n.y,n.m-1,n.d+k,12));const y=dt.getUTCFullYear(),m=dt.getUTCMonth()+1,d=dt.getUTCDate();const T=calcTimes(y,m,d,P.lat,P.lng,P.tz,M),off=tzOffset(P.tz,y,m,d);
+  [0,2,3,4,5].forEach(i=>{const utcMin=T[i]-off*60;const st=new Date(Date.UTC(y,m-1,d,0,0)+utcMin*60000);const en=new Date(st.getTime()+15*60000);const f=x=>x.getUTCFullYear()+pad2(x.getUTCMonth()+1)+pad2(x.getUTCDate())+"T"+pad2(x.getUTCHours())+pad2(x.getUTCMinutes())+"00Z";
+   lines.push("BEGIN:VEVENT","UID:"+y+pad2(m)+pad2(d)+"-"+i+"-"+P.lat+"@muzacom-quron","DTSTAMP:"+stamp,"DTSTART:"+f(st),"DTEND:"+f(en),"SUMMARY:🕌 "+L.p[i]+" — "+P.name,"DESCRIPTION:"+M.src[LI[LANG]],"BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+L.p[i],"TRIGGER:-PT"+(pre||0)+"M","END:VALARM","END:VEVENT")})}
+ lines.push("END:VCALENDAR");const blob=new Blob([lines.join("\r\n")],{type:"text/calendar;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="namoz-vaqtlari-"+(P.name||"").replace(/[^\wА-яЁё'-]+/g,"_")+".ics";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000)};
+const _alRm=applyLang;applyLang=function(){_alRm();rmUI()};rmUI();
 </script>
 </body>
 </html>
