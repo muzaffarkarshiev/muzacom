@@ -742,7 +742,7 @@ const PL={uz:{all:"Surani tinglash",ay:"oyat",bis:"Bismilloh",rep:"Takrorlash",e
 ru:{all:"Слушать суру",ay:"аят",bis:"Бисмиллях",rep:"Повтор",err:"Аудио не загрузилось. Проверьте интернет.",ld:"Загрузка…"},
 tr:{all:"Sureyi dinle",ay:"ayet",bis:"Besmele",rep:"Tekrar",err:"Ses yüklenemedi. İnternetinizi kontrol edin.",ld:"Yükleniyor…"},
 ar:{all:"استمع إلى السورة",ay:"آية",bis:"البسملة",rep:"تكرار",err:"تعذر تحميل الصوت. تحقق من الإنترنت.",ld:"جارٍ التحميل…"}};
-const aud=new Audio();aud.preload="auto";let AQ=[],AI=0,curSura=0,rep=false,spd=1,playing=false;
+const aud=new Audio();aud.preload="auto";let AQ=[],AI=0,curSura=(()=>{try{return +localStorage.getItem("qv_cs")||0}catch(e){return 0}})(),rep=false,spd=1,playing=false;
 try{const r=localStorage.getItem("qv_rec");if(r)$("pRec").value=r}catch(e){}
 const pad=n=>String(n).padStart(3,"0");
 function suraNo(x){return Math.floor(x[0])}
@@ -768,7 +768,7 @@ $("pSpd").onclick=()=>{spd=spd===1?0.75:spd===0.75?0.5:1;$("pSpd").textContent=s
 $("pRec").onchange=()=>{try{localStorage.setItem("qv_rec",$("pRec").value)}catch(e){}if(playing){const it=AQ[AI];AQ=AQ.full?buildQueue(curSura):buildQueue(curSura,it.j);AQ.full=!!AQ.full;playAt(AI)}};
 function addAyahButtons(){document.querySelectorAll("#sura .ayah").forEach((e,i)=>{const b=document.createElement("button");b.className="ap";b.textContent="▶";b.setAttribute("aria-label","Play");
  b.onclick=()=>{if(playing&&AQ[AI]&&AQ[AI].j===i){stopA();return}AQ=buildQueue(curSura,i);AQ.full=false;playAt(0)};e.prepend(b)})}
-let _first=true;const _openSura=openSura;openSura=function(k){if(playing)stopA();AQ=[];curSura=k;_openSura(k);addAyahButtons();const x=S[k];$("pTitle").textContent=x[2]+" · "+x[1];mark();if(!_first)$("player").scrollIntoView({behavior:"smooth",block:"start"});_first=false};
+let _first=true;const _openSura=openSura;openSura=function(k){if(playing)stopA();AQ=[];curSura=k;try{localStorage.setItem("qv_cs",k)}catch(e){}_openSura(k);addAyahButtons();const x=S[k];$("pTitle").textContent=x[2]+" · "+x[1];mark();if(!_first)$("player").scrollIntoView({behavior:"smooth",block:"start"});_first=false};
 openSura(curSura);
 
 // ================= HADISLAR =================
@@ -1095,7 +1095,7 @@ const QTR={uz:[["uz.sodik","Muhammad Sodiq Muhammad Yusuf (o'zbekcha)"],["ru.kul
  ru:[["ru.kuliev","Кулиев"],["ru.osmanov","Османов"],["uz.sodik","Мухаммад Содик (узб.)"],["en.sahih","Sahih International (англ.)"]],
  tr:[["tr.diyanet","Diyanet İşleri"],["tr.yazir","Elmalılı Hamdi Yazır"],["uz.sodik","Muhammad Sodik (Özbekçe)"],["en.sahih","Sahih International (İngilizce)"]],
  ar:[["ar.muyassar","التفسير الميسر"],["ar.jalalayn","تفسير الجلالين"],["en.sahih","Sahih International"],["ru.kuliev","Кулиев"]]};
-const FQ={sura:1,list:null,data:null,tr:null,showCy:true,showLa:false,aud:new Audio(),q:[],qi:0,play:false};
+const FQ={sura:(()=>{try{return +localStorage.getItem("qv_fq")||1}catch(e){return 1}})(),list:null,data:null,tr:null,showCy:true,showLa:false,aud:new Audio(),q:[],qi:0,play:false};
 const AQAPI="https://api.alquran.cloud/v1/";
 async function fj(u,ms){const c=new AbortController(),t=setTimeout(()=>c.abort(),ms||15000);try{const r=await fetch(u,{signal:c.signal});if(!r.ok)throw new Error(r.status);return await r.json()}finally{clearTimeout(t)}}
 function lat2cyr(s){s=s.replace(/<[^>]+>/g,"").toLowerCase();const R=[["ʿ","ъ"],["'","ъ"],["`","ъ"],["sh","ш"],["kh","х"],["th","с"],["dh","з"],["gh","ғ"],["ch","ч"],["ee","ий"],["ii","ий"],["oo","у"],["uu","у"],["aa","а"],["ya","я"],["yu","ю"],["a","а"],["b","б"],["t","т"],["j","ж"],["h","ҳ"],["d","д"],["r","р"],["z","з"],["s","с"],["f","ф"],["q","қ"],["k","к"],["l","л"],["m","м"],["n","н"],["w","в"],["y","й"],["i","и"],["u","у"],["o","о"],["e","е"],["g","г"],["p","п"],["v","в"],["c","к"],["x","кс"]];
@@ -1105,7 +1105,7 @@ async function fqInit(){const T=FT[LANG];$("fqT").textContent=T.fq;$("fqS").text
  $("fqPlay").textContent=FQ.play?T.stop:T.play;$("fq").dir=LANG==="ar"?"rtl":"ltr";
  if(!FQ.list){try{const j=await fj(AQAPI+"surah");FQ.list=j.data}catch(e){$("fqBody").textContent=T.err;return}}
  const ss=$("fqSel");ss.innerHTML="";FQ.list.forEach(s=>{const o=document.createElement("option");o.value=s.number;o.textContent=s.number+". "+s.englishName+" — "+s.name+" ("+s.numberOfAyahs+")";ss.appendChild(o)});ss.value=FQ.sura;fqLoad()}
-async function fqLoad(){const T=FT[LANG],n=+$("fqSel").value||1;FQ.sura=n;fqStop();const b=$("fqBody");b.innerHTML='<p class="sub">'+T.ld+"</p>";
+async function fqLoad(){const T=FT[LANG],n=+$("fqSel").value||1;FQ.sura=n;try{localStorage.setItem("qv_fq",n)}catch(e){}fqStop();const b=$("fqBody");b.innerHTML='<p class="sub">'+T.ld+"</p>";
  try{const [ar,tr,tl]=await Promise.all([fj(AQAPI+"surah/"+n+"/quran-uthmani"),fj(AQAPI+"surah/"+n+"/"+FQ.tr).catch(()=>null),fj(AQAPI+"surah/"+n+"/en.transliteration").catch(()=>null)]);
   FQ.data={ar:ar.data,tr:tr&&tr.data,tl:tl&&tl.data};fqRender()}catch(e){b.textContent=T.err}}
 function fqRender(){const T=FT[LANG],d=FQ.data;if(!d)return;const b=$("fqBody");b.innerHTML="";const s=d.ar;
@@ -1131,7 +1131,7 @@ $("fqPrev").onclick=()=>{if(FQ.sura>1){$("fqSel").value=FQ.sura-1;fqLoad();$("fq
 const HAPI="https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/";
 const HCOL=[["bukhari",["Sahih al-Buxoriy","Сахих аль-Бухари","Sahîh-i Buhârî","صحيح البخاري"]],["muslim",["Sahih Muslim","Сахих Муслим","Sahîh-i Müslim","صحيح مسلم"]],["abudawud",["Sunan Abu Dovud","Сунан Абу Дауда","Sünen-i Ebû Dâvûd","سنن أبي داود"]],["tirmidhi",["Jome' at-Termiziy","Джами ат-Тирмизи","Sünen-i Tirmizî","جامع الترمذي"]],["nasai",["Sunan an-Nasoiy","Сунан ан-Насаи","Sünen-i Nesâî","سنن النسائي"]],["ibnmajah",["Sunan Ibn Moja","Сунан Ибн Маджа","Sünen-i İbn Mâce","سنن ابن ماجه"]],["malik",["Muvatto Imom Molik","Муватта Малика","Muvatta","موطأ مالك"]],["nawawi",["40 hadis (Navaviy)","40 хадисов ан-Навави","Kırk Hadis (Nevevî)","الأربعون النووية"]],["qudsi",["40 qudsiy hadis","40 хадисов кудси","Kırk Kudsî Hadis","الأربعون القدسية"]]];
 const HLANG={uz:["uzb","rus","tur","eng"],ru:["rus","eng"],tr:["tur","eng"],ar:["ara"]};
-const HL={eds:null,info:null,col:"bukhari",sec:1,ed:null,list:[],shown:0,trl:null};
+const HL=Object.assign({eds:null,info:null,col:"bukhari",sec:1},(()=>{try{return JSON.parse(localStorage.getItem("qv_hl")||"{}")}catch(e){return{}}})(),{ed:null,list:[],shown:0,trl:null});
 function edFor(col){const c=HL.eds&&HL.eds[col];if(!c)return null;const names=c.collection.map(e=>e.name);const pref=HL.trl?[HL.trl]:HLANG[LANG];for(const p of pref){const n=p+"-"+col;if(names.includes(n))return n;const alt=names.find(x=>x.startsWith(p+"-"+col));if(alt)return alt}return names.find(x=>x.startsWith("eng-"))||null}
 async function hlInit(){const T=FT[LANG];$("hlT").textContent=T.hl;$("hlS").textContent=T.hls;$("hlQ").placeholder=T.q;$("hlMore").textContent=T.more;$("hlLib").dir=LANG==="ar"?"rtl":"ltr";
  const cs=$("hlCol");cs.innerHTML="";HCOL.forEach(([k,n])=>{const o=document.createElement("option");o.value=k;o.textContent=n[LI[LANG]];cs.appendChild(o)});cs.value=HL.col;
@@ -1143,7 +1143,7 @@ async function hlInit(){const T=FT[LANG];$("hlT").textContent=T.hl;$("hlS").text
 function hlSections(){const ss=$("hlSec"),meta=HL.info[HL.col]&&HL.info[HL.col].metadata;ss.innerHTML="";if(!meta)return;
  Object.entries(meta.sections).forEach(([k,v])=>{if(!v||k==="0")return;const o=document.createElement("option");o.value=k;o.textContent=k+". "+v;ss.appendChild(o)});
  if(![...ss.options].some(o=>+o.value===HL.sec))HL.sec=+(ss.options[0]&&ss.options[0].value||1);ss.value=HL.sec;hlLoad()}
-async function hlLoad(){const T=FT[LANG];const L=$("hlList");L.innerHTML='<p class="sub">'+T.ld+"</p>";HL.ed=HL.trl?HL.trl+"-"+HL.col:edFor(HL.col);
+async function hlLoad(){const T=FT[LANG];try{localStorage.setItem("qv_hl",JSON.stringify({col:HL.col,sec:HL.sec}))}catch(e){}const L=$("hlList");L.innerHTML='<p class="sub">'+T.ld+"</p>";HL.ed=HL.trl?HL.trl+"-"+HL.col:edFor(HL.col);
  try{const [ar,tr]=await Promise.all([fj(HAPI+"editions/ara-"+HL.col+"/sections/"+HL.sec+".min.json",20000),HL.ed?fj(HAPI+"editions/"+HL.ed+"/sections/"+HL.sec+".min.json",20000).catch(()=>null):null]);
   const tm={};if(tr)tr.hadiths.forEach(h=>tm[h.hadithnumber]=h);
   HL.list=ar.hadiths.filter(h=>h.text&&h.text.trim()).map(h=>({n:h.hadithnumber,ar:h.text,tr:tm[h.hadithnumber]?tm[h.hadithnumber].text:"",g:(h.grades&&h.grades[0])||(tm[h.hadithnumber]&&tm[h.hadithnumber].grades&&tm[h.hadithnumber].grades[0])||null}));
@@ -1179,12 +1179,16 @@ fqInit();hlInit();
 // ================= SAHIFALARGA AJRATISH (#hash) =================
 const PAGES=["namoz","quiz","quran","qa","hadis"],PICON={namoz:"🕌",quiz:"۞",quran:"📖",qa:"🤲",hadis:"✦"};
 const BACK={uz:"← Bosh sahifa",ru:"← Главная",tr:"← Ana sayfa",ar:"→ الرئيسية"};
-function route(){const h=location.hash.replace("#","");const pg=PAGES.includes(h)?h:"";
+let PG_CUR=null;const POS=(()=>{try{return JSON.parse(localStorage.getItem("qv_pos")||"{}")}catch(e){return{}}})();
+function posSave(){if(PG_CUR==null)return;POS[PG_CUR||"home"]=Math.round(window.scrollY);try{localStorage.setItem("qv_pos",JSON.stringify(POS))}catch(e){}}
+function posRestore(pg){const y=POS[pg||"home"]||0;let n=0;const tryIt=()=>{window.scrollTo(0,y);n++;if(Math.abs(window.scrollY-y)>5&&n<12)setTimeout(tryIt,250)};requestAnimationFrame(tryIt)}
+let posT=null;window.addEventListener("scroll",()=>{clearTimeout(posT);posT=setTimeout(posSave,300)},{passive:true});
+function route(){posSave();const h=location.hash.replace("#","");const pg=PAGES.includes(h)?h:"";
  document.body.classList.toggle("inpage",!!pg);document.querySelectorAll(".sec").forEach(x=>x.classList.toggle("act",x.id==="s-"+pg));
  document.querySelectorAll("#pgs button").forEach(b=>b.classList.toggle("on",b.dataset.p===pg));
  $("fab").classList.toggle("show",!!pg);
  if(pg!=="quran"){try{if(playing)stopA()}catch(e){}try{if(FQ.play)fqStop()}catch(e){}}
- window.scrollTo(0,0);try{document.title=pg?(document.querySelector(".tabs button[data-t='"+pg+"'] .mt b")||{}).textContent+" · Qur'on Viktorinasi":"Qur'on Viktorinasi"}catch(e){}}
+ PG_CUR=pg;posRestore(pg);try{document.title=pg?(document.querySelector(".tabs button[data-t='"+pg+"'] .mt b")||{}).textContent+" · Qur'on Viktorinasi":"Qur'on Viktorinasi"}catch(e){}}
 document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{location.hash=b.dataset.t});
 $("backBtn").onclick=()=>{if(history.length>1&&document.referrer===""&&location.hash){history.pushState("",document.title,location.pathname+location.search);route()}else{history.pushState("",document.title,location.pathname+location.search);route()}};
 $("fab").onclick=()=>$("backBtn").click();
