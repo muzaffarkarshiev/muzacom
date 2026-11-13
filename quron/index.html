@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b4a38">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Qur'on Viktorinasi">
+<link rel="canonical" href="https://muzaffarkarshiev.github.io/muzacom/quron/">
+<meta property="og:title" content="Qur'on Viktorinasi">
+<meta property="og:image" content="https://muzaffarkarshiev.github.io/muzacom/og.jpg">
+<meta name="description" content="Qur'on bo'yicha savol-javob o'yini, suralar arabcha, kirillcha o'qilishi va tarjimasi bilan, hadislar to'plami">
+<title>Qur'on Viktorinasi</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Reem+Kufi:wght@500;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--g0:#062b21;--g1:#0b4a38;--g2:#13684f;--gold:#c9a13b;--gold2:#f3dc95;--cream:#fbf6e8;--card:#fffcf3;--txt:#1d2a25;--muted:#6d776f;--ok:#2e9e5b;--bad:#c8463a}
+*{box-sizing:border-box}
+button{touch-action:manipulation}
+@media(max-width:420px){.card{padding:24px 16px 20px}.tabs button{font-size:13px;padding:10px 4px}.sky{height:120px}.q{font-size:18px}.opt{font-size:16px;min-height:64px}h1{font-size:28px}}
+html,body{margin:0}
+body{font-family:Nunito,system-ui,sans-serif;color:var(--txt);min-height:100vh;padding:env(safe-area-inset-top) max(14px,env(safe-area-inset-right)) calc(40px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));-webkit-tap-highlight-color:transparent;
+ background-color:var(--g1);
+ background-image:
+  radial-gradient(ellipse at 50% 0%,rgba(243,220,149,.18),transparent 60%),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23c9a13b' stroke-opacity='.22' stroke-width='1.2'%3E%3Cpath d='M40 6l9.9 24.1L74 40l-24.1 9.9L40 74l-9.9-24.1L6 40l24.1-9.9z'/%3E%3Crect x='22' y='22' width='36' height='36' transform='rotate(45 40 40)'/%3E%3Crect x='22' y='22' width='36' height='36'/%3E%3Ccircle cx='40' cy='40' r='7'/%3E%3Cpath d='M0 0l12 12M80 0L68 12M0 80l12-12M80 80L68 68'/%3E%3C/g%3E%3C/svg%3E");
+ background-attachment:fixed}
+.sky{position:relative;max-width:640px;margin:0 auto;height:150px;pointer-events:none}
+.sky svg.mosque{position:absolute;left:0;right:0;bottom:-2px;width:100%;height:auto}
+.lantern{position:absolute;top:0;width:30px;height:90px;z-index:2;animation:sway 4s ease-in-out infinite;transform-origin:top center}
+.lantern.l1{left:6%}.lantern.l2{right:6%;animation-delay:-2s}
+@keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.glow{animation:glow 2.5s ease-in-out infinite}@keyframes glow{50%{opacity:.55}}
+.wrap{width:100%;max-width:640px;margin:0 auto}
+.card{background:var(--card);border-radius:0 0 22px 22px;padding:30px 26px 26px;box-shadow:0 24px 60px rgba(0,0,0,.45);position:relative;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 4l7.4 18.6L56 30l-18.6 7.4L30 56l-7.4-18.6L4 30l18.6-7.4z' fill='none' stroke='%23c9a13b' stroke-opacity='.07'/%3E%3C/svg%3E")}
+.frame{position:absolute;inset:9px;border:1.5px solid var(--gold);border-top:none;border-radius:0 0 16px 16px;pointer-events:none;opacity:.6}
+.frame:after{content:"";position:absolute;inset:4px;border:1px dashed var(--gold);border-top:none;border-radius:0 0 13px 13px;opacity:.6}
+.corner{position:absolute;width:34px;height:34px;bottom:4px;pointer-events:none}
+.corner.cl{left:4px}.corner.cr{right:4px;transform:scaleX(-1)}
+.ar{font-family:Amiri,serif;font-size:32px;color:var(--g1);text-align:center;margin:0 0 6px;direction:rtl;line-height:1.6}
+h1{font-family:"Reem Kufi",Nunito,sans-serif;text-align:center;margin:0;font-size:34px;color:var(--g1);letter-spacing:.5px}
+.divider{display:flex;align-items:center;justify-content:center;gap:10px;margin:10px 0 8px;color:var(--gold)}
+.divider:before,.divider:after{content:"";height:1.5px;width:80px;background:linear-gradient(90deg,transparent,var(--gold))}
+.divider:after{transform:scaleX(-1)}
+.sub{text-align:center;color:var(--muted);margin:0 0 22px}
+.levels{display:grid;gap:12px}
+.lvl{border:1.5px solid #e2d4a8;background:#fff;border-radius:16px 16px 16px 16px;padding:14px 16px;cursor:pointer;text-align:left;font:inherit;display:flex;align-items:center;gap:14px;transition:.18s;position:relative;overflow:hidden}
+.lvl:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 8px 20px rgba(201,161,59,.25)}
+.badge{width:50px;height:50px;flex:none;display:grid;place-items:center;position:relative}
+.badge svg{position:absolute;inset:0}
+.badge b{position:relative;color:var(--gold2);font-family:"Reem Kufi";font-size:15px}
+.lvl strong{display:block;font-size:17px;color:var(--g1)}.lvl span{color:var(--muted);font-size:14px}
+.count{display:flex;justify-content:center;gap:8px;margin:18px 0 0;align-items:center;color:var(--muted);font-size:14px}
+.count button{font:inherit;font-weight:800;border:1.5px solid #e2d4a8;background:#fff;border-radius:10px;padding:6px 12px;cursor:pointer;color:var(--g1)}
+.count button.on{background:var(--g1);color:var(--gold2);border-color:var(--g1)}
+.best{text-align:center;margin-top:14px;color:var(--muted);font-size:14px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-weight:800;font-size:15px}
+.pill{background:var(--g1);color:var(--gold2);padding:6px 14px;border-radius:99px;font-family:"Reem Kufi"}
+.bar{height:8px;background:#efe5c6;border-radius:99px;overflow:hidden;margin-bottom:8px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));width:0;transition:width .3s}
+.timer{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.timer .tb{flex:1;height:6px;background:#efe5c6;border-radius:99px;overflow:hidden}
+.timer i{display:block;height:100%;background:var(--g2);width:100%}
+.timer span{font-weight:800;font-size:14px;width:34px;text-align:right;color:var(--g1)}
+.tag{display:inline-block;font-size:12px;font-weight:800;color:var(--g2);background:#e8f3ee;border-radius:6px;padding:3px 9px;margin-bottom:10px}
+.q{font-size:20px;font-weight:800;line-height:1.45;margin:0 0 18px;min-height:58px}
+button{color:var(--txt)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.opts{grid-template-columns:1fr}}
+.opt{font:inherit;font-size:17px;font-weight:800;line-height:1.35;text-align:left;padding:16px 14px;min-height:76px;border-radius:18px 18px 18px 18px;border:2px solid var(--gold);cursor:pointer;display:flex;gap:12px;align-items:center;transition:.15s;color:#fff !important;position:relative;overflow:hidden;box-shadow:0 5px 0 rgba(0,0,0,.25)}
+.opt:before{content:"";position:absolute;inset:0;opacity:.18;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M20 2l5 13 13 5-13 5-5 13-5-13-13-5 13-5z' fill='none' stroke='%23fff'/%3E%3C/svg%3E")}
+.opt>*{position:relative}
+.opt.c0{background:linear-gradient(160deg,#17845f,#0b4a38)}
+.opt.c1{background:linear-gradient(160deg,#1f7f9a,#0f4a5e)}
+.opt.c2{background:linear-gradient(160deg,#b38422,#7a5510)}
+.opt.c3{background:linear-gradient(160deg,#8a3b5a,#56203a)}
+.opt:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 8px 0 rgba(0,0,0,.25),0 0 0 3px var(--gold2)}
+.opt .l{width:38px;height:38px;flex:none;display:grid;place-items:center;font-weight:800;color:#0b4a38;font-family:"Reem Kufi";font-size:17px;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Cpath d='M17 1l4.7 4.7h6.6v6.6L33 17l-4.7 4.7v6.6h-6.6L17 33l-4.7-4.7H5.7v-6.6L1 17l4.7-4.7V5.7h6.6z' fill='%23f3dc95' stroke='%23fff' stroke-width='1.3'/%3E%3C/svg%3E") center/contain no-repeat}
+.opt.ok{background:linear-gradient(160deg,#2fb36a,#1b7a44);border-color:#b9f5cf;box-shadow:0 0 0 4px #7ee0a5,0 5px 0 rgba(0,0,0,.25)}
+.opt.ok:after{content:"✔";position:absolute;right:14px;font-size:24px}
+.opt.bad{background:linear-gradient(160deg,#d65446,#9b2a20);border-color:#ffc9c2}
+.opt.bad:after{content:"✖";position:absolute;right:14px;font-size:22px}
+.opt.dim{opacity:.55;filter:saturate(.6)}
+.opt.hide{opacity:0;pointer-events:none}
+.opt:disabled{cursor:default}
+/* tabs */
+.tabs{display:flex;gap:6px;max-width:640px;margin:0 auto;background:var(--g0);padding:6px;border-radius:16px 16px 0 0;border:1.5px solid var(--gold);border-bottom:none}
+.tabs button{flex:1;font:inherit;font-weight:800;font-size:15px;padding:11px 6px;border:0;border-radius:11px;background:transparent;color:var(--gold2);cursor:pointer}
+.tabs button.on{background:var(--gold);color:var(--g0)}
+.card{border-radius:0 0 22px 22px}
+/* qur'on */
+.lang{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0 16px}
+.lang label{display:flex;gap:6px;align-items:center;background:#fff;border:1.5px solid #e2d4a8;border-radius:99px;padding:6px 12px;font-weight:700;font-size:14px;cursor:pointer}
+.slist{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:16px}
+.slist button{font:inherit;font-weight:700;font-size:14px;padding:10px 8px;border-radius:12px;border:1.5px solid #e2d4a8;background:#fff;cursor:pointer;line-height:1.3}
+.slist button small{display:block;font-family:Amiri;font-size:17px;color:var(--g2)}
+.slist button.on{background:var(--g1);color:var(--gold2);border-color:var(--g1)}.slist button.on small{color:var(--gold2)}
+.sura-h{text-align:center;padding:14px;border-radius:16px;background:linear-gradient(160deg,var(--g2),var(--g1));color:var(--gold2);margin-bottom:12px;border:2px solid var(--gold)}
+.sura-h .an{font-family:Amiri;font-size:30px}
+.sura-h p{margin:4px 0 0;font-size:14px;color:#e9f3ee}
+.ayah{padding:14px 4px;border-bottom:1px dashed #e2d4a8}
+.ayah .a{font-family:Amiri,serif;font-size:27px;line-height:2;direction:rtl;text-align:right;color:#10352a}
+.ayah .n{display:inline-grid;place-items:center;width:34px;height:34px;font-size:15px;font-family:Amiri;color:var(--g1);margin:0 6px;vertical-align:middle;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Cpath d='M17 1l4.7 4.7h6.6v6.6L33 17l-4.7 4.7v6.6h-6.6L17 33l-4.7-4.7H5.7v-6.6L1 17l4.7-4.7V5.7h6.6z' fill='none' stroke='%23c9a13b' stroke-width='1.5'/%3E%3C/svg%3E") center/contain no-repeat}
+.ayah .u,.ayah .r{font-size:16px;line-height:1.55;margin-top:6px}
+.ayah .u:before{content:"UZ ";font-size:11px;font-weight:800;color:var(--gold)}
+.ayah .r:before{content:"RU ";font-size:11px;font-weight:800;color:var(--gold)}
+.ayah .r{color:#3d4a44}
+.note{font-size:13px;color:var(--muted);background:#fbf3dc;border-radius:12px;padding:10px 12px;margin-top:14px;line-height:1.5}
+.note a{color:var(--g2);font-weight:800}
+.pair{display:grid;gap:8px}
+@media(min-width:600px){.pair{grid-template-columns:1fr 1fr;align-items:center}.pair .c{order:-1}}
+.ayah .c{font-size:17px;line-height:1.6;font-weight:700;color:#0b4a38;background:#eef7f2;border:1px solid #cfe6da;border-radius:12px;padding:10px 12px}
+.ayah .c:before{content:"Ўқилиши: ";font-size:11px;font-weight:800;color:var(--gold);display:block}
+/* hadis */
+.hsearch{width:100%;font:inherit;padding:11px 14px;border-radius:12px;border:1.5px solid #e2d4a8;margin-bottom:10px;background:#fff}
+.hcats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.hcats button{font:inherit;font-size:13px;font-weight:800;padding:6px 12px;border-radius:99px;border:1.5px solid #e2d4a8;background:#fff;cursor:pointer}
+.hcats button.on{background:var(--g1);color:var(--gold2);border-color:var(--g1)}
+.had{border:1.5px solid #e2d4a8;border-radius:16px;padding:14px 16px;margin-bottom:12px;background:#fff;position:relative}
+.had:before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:4px;background:var(--gold)}
+.had .ha{font-family:Amiri;font-size:23px;direction:rtl;text-align:right;color:var(--g1);line-height:1.8}
+.had .ht{font-size:16px;line-height:1.55;font-weight:600}
+.had .hs{font-size:13px;color:var(--muted);margin-top:8px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.had .hs b{color:var(--g2)}
+.exp{margin-top:16px;padding:14px 16px;border-radius:14px;background:#fbf3dc;border:1px solid #ecdcae;border-left:4px solid var(--gold);font-size:15px;line-height:1.5;display:none}
+.row{display:flex;gap:10px;margin-top:18px}
+.btn{font:inherit;font-weight:800;font-size:16px;padding:13px 18px;border-radius:14px;border:0;cursor:pointer;background:linear-gradient(180deg,var(--g2),var(--g1));color:var(--gold2);flex:1;box-shadow:0 4px 0 var(--g0)}
+.btn:active:not(:disabled){transform:translateY(2px);box-shadow:0 2px 0 var(--g0)}
+.btn.alt{background:var(--cream);color:var(--g1);flex:none;box-shadow:0 4px 0 #e2d4a8;border:1.5px solid #e2d4a8}
+.btn:disabled{opacity:.4;cursor:default}
+.medal{width:120px;height:120px;margin:4px auto 6px;position:relative;display:grid;place-items:center}
+.medal svg{position:absolute;inset:0;animation:spin 30s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.medal b{position:relative;font-family:"Reem Kufi";font-size:30px;color:var(--gold2)}
+.msg{text-align:center;font-size:18px;margin:0 0 18px;font-weight:600}
+.review{max-height:280px;overflow:auto;border-top:1px solid #eadfbf;padding-top:6px;font-size:14px}
+.review div{padding:8px 2px;border-bottom:1px dashed #e8dcb8}
+.review small{color:var(--muted)}
+.hidden{display:none}
+.combo{color:var(--gold);font-weight:800}
+.foot{text-align:center;color:rgba(243,220,149,.6);font-size:12px;margin-top:16px}
+</style>
+</head>
+<body>
+
+<div class="sky">
+  <svg class="lantern l1" viewBox="0 0 30 90"><line x1="15" y1="0" x2="15" y2="30" stroke="#c9a13b" stroke-width="1.5"/><path d="M8 30h14l3 8v28l-5 8H10l-5-8V38z" fill="#0b4a38" stroke="#c9a13b" stroke-width="1.5"/><path d="M10 40h10v24H10z" fill="#f3dc95" class="glow"/><path d="M12 74h6l-3 8z" fill="#c9a13b"/></svg>
+  <svg class="lantern l2" viewBox="0 0 30 90"><line x1="15" y1="0" x2="15" y2="22" stroke="#c9a13b" stroke-width="1.5"/><path d="M8 22h14l3 8v28l-5 8H10l-5-8V30z" fill="#0b4a38" stroke="#c9a13b" stroke-width="1.5"/><path d="M10 32h10v24H10z" fill="#f3dc95" class="glow"/><path d="M12 66h6l-3 8z" fill="#c9a13b"/></svg>
+  <svg class="mosque" viewBox="0 0 640 150" preserveAspectRatio="xMidYMax meet">
+    <g fill="#f3dc95"><path d="M548 22a16 16 0 1 0 12 28 13 13 0 1 1-12-28z"/><circle cx="90" cy="30" r="1.6"/><circle cx="150" cy="58" r="1.2"/><circle cx="470" cy="40" r="1.4"/><circle cx="600" cy="80" r="1.2"/><circle cx="40" cy="80" r="1.3"/></g>
+    <path d="M574 30l2 4 4 .6-3 3 .7 4.4-3.7-2-3.7 2 .7-4.4-3-3 4-.6z" fill="#f3dc95"/>
+    <g fill="#fffcf3" stroke="#c9a13b" stroke-width="2">
+      <rect x="120" y="48" width="18" height="102"/><path d="M116 48h26l-13-22z"/><circle cx="129" cy="22" r="3" fill="#c9a13b" stroke="none"/>
+      <rect x="502" y="48" width="18" height="102"/><path d="M498 48h26l-13-22z"/><circle cx="511" cy="22" r="3" fill="#c9a13b" stroke="none"/>
+      <path d="M220 150V100h200v50"/>
+      <path d="M240 100c0-48 160-48 160 0z"/>
+      <path d="M180 150v-30c0-20 40-20 40 0v30M420 150v-30c0-20 40-20 40 0v30"/>
+    </g>
+    <path d="M320 34v-14" stroke="#c9a13b" stroke-width="2"/><path d="M320 12a6 6 0 1 0 4 10 5 5 0 1 1-4-10z" fill="#c9a13b"/>
+    <g fill="none" stroke="#c9a13b" stroke-width="1.5"><path d="M296 150v-26c0-16 48-16 48 0v26"/><path d="M252 132v-14c0-9 20-9 20 0v14M368 132v-14c0-9 20-9 20 0v14"/></g>
+    <rect x="0" y="148" width="640" height="2" fill="#c9a13b"/>
+  </svg>
+</div>
+
+<nav class="tabs"><button data-t="quiz" class="on">۞ Viktorina</button><button data-t="quran">📖 Qur'on</button><button data-t="hadis">✦ Hadislar</button></nav>
+<div class="wrap">
+
+<div class="card hidden" id="quran">
+  <div class="frame"></div>
+  <p class="ar">ٱلْقُرْآنُ ٱلْكَرِيمُ</p>
+  <h1>Qur'oni Karim</h1>
+  <div class="divider">✦ ۞ ✦</div>
+  <p class="sub">Arabcha asl matn · kirillcha o'qilishi · o'zbekcha va ruscha ma'no tarjimasi</p>
+  <div class="lang">
+    <label><input type="checkbox" id="lA" checked> العربية</label>
+    <label><input type="checkbox" id="lC" checked> Кирилл ўқилиши</label>
+    <label><input type="checkbox" id="lU" checked> O'zbekcha</label>
+    <label><input type="checkbox" id="lR" checked> Русский</label>
+  </div>
+  <div class="slist" id="slist"></div>
+  <div id="sura"></div>
+  <div class="note"><b>Kirill o'qilishi</b> arab yozuvini bilmaganlar uchun taxminiy talaffuzdir: arabchadagi ayrim tovushlarni (ع, ح, ق, ص, ض, ط, ظ) kirill harflari to'liq bera olmaydi. To'g'ri talaffuzni qori yoki ustoz tilovatini tinglab o'rganing. Belgilar: <b>ъ</b> — ع (ayn), <b>ҳ</b> — ح/ه, <b>қ</b> — ق, <b>ғ</b> — غ, <b>х</b> — خ.<br><br>Tarjimalar — oyatlarning ma'nosini tushunish uchun berilgan qisqa izohli tarjima; Qur'onning o'rnini bosmaydi. Bu yerda namozda ko'p o'qiladigan suralar jamlangan. Qur'onning <b>to'liq</b> matnini o'zbek, rus va boshqa tillardagi tarjimasi hamda qorilar tilovati bilan <a href="https://quran.com" target="_blank" rel="noopener">quran.com</a> saytida o'qishingiz mumkin.</div>
+</div>
+
+<div class="card hidden" id="hadis">
+  <div class="frame"></div>
+  <p class="ar">قَالَ رَسُولُ اللَّهِ ﷺ</p>
+  <h1>Hadislar to'plami</h1>
+  <div class="divider">✦ ۞ ✦</div>
+  <p class="sub">Payg'ambarimiz ﷺ ning sahih hadislaridan ma'no tarjimalari, manbasi bilan</p>
+  <input class="hsearch" id="hq" placeholder="🔍 Hadislardan qidirish... (masalan: ilm, ro'za, axloq)">
+  <div class="hcats" id="hcats"></div>
+  <div id="hlist"></div>
+  <div class="note">Hadis raqamlari keng tarqalgan nashrlar bo'yicha berilgan. Hadislarning to'liq arabcha matni va sharhlarini <a href="https://sunnah.com" target="_blank" rel="noopener">sunnah.com</a> saytida tekshirishingiz mumkin.</div>
+</div>
+
+<div class="card" id="home">
+  <div class="frame"></div>
+  <p class="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+  <h1>Qur'on Viktorinasi</h1>
+  <div class="divider">✦ ۞ ✦</div>
+  <p class="sub">Qur'oni Karim, suralar va payg'ambarlar qissalari bo'yicha bilimingizni sinab ko'ring</p>
+  <div class="levels">
+    <button class="lvl" data-l="1"><div class="badge"><svg viewBox="0 0 50 50"><path d="M25 2l6.5 6.5h9v9L47 25l-6.5 6.5v9h-9L25 48l-6.5-7.5h-9v-9L3 25l6.5-7.5v-9h9z" fill="#13684f" stroke="#c9a13b" stroke-width="1.5"/></svg><b>١</b></div><div><strong>Oson</strong><span>Asosiy ma'lumotlar · 25 soniya</span></div></button>
+    <button class="lvl" data-l="2"><div class="badge"><svg viewBox="0 0 50 50"><path d="M25 2l6.5 6.5h9v9L47 25l-6.5 6.5v9h-9L25 48l-6.5-7.5h-9v-9L3 25l6.5-7.5v-9h9z" fill="#0b4a38" stroke="#c9a13b" stroke-width="1.5"/></svg><b>٢</b></div><div><strong>O'rta</strong><span>Suralar va payg'ambarlar · 20 soniya</span></div></button>
+    <button class="lvl" data-l="3"><div class="badge"><svg viewBox="0 0 50 50"><path d="M25 2l6.5 6.5h9v9L47 25l-6.5 6.5v9h-9L25 48l-6.5-7.5h-9v-9L3 25l6.5-7.5v-9h9z" fill="#062b21" stroke="#c9a13b" stroke-width="1.5"/></svg><b>٣</b></div><div><strong>Qiyin</strong><span>Chuqur bilim talab qiladi · 15 soniya</span></div></button>
+    <button class="lvl" data-l="0"><div class="badge"><svg viewBox="0 0 50 50"><path d="M25 2l6.5 6.5h9v9L47 25l-6.5 6.5v9h-9L25 48l-6.5-7.5h-9v-9L3 25l6.5-7.5v-9h9z" fill="#c9a13b" stroke="#0b4a38" stroke-width="1.5"/></svg><b style="color:#062b21">۞</b></div><div><strong>Aralash</strong><span>Barcha darajalardan · 20 soniya</span></div></button>
+  </div>
+  <div class="count">Savollar soni: <button data-n="10" class="on">10</button><button data-n="20">20</button><button data-n="30">30</button></div>
+  <p class="best" id="best"></p>
+</div>
+
+<div class="card hidden" id="game">
+  <div class="frame"></div>
+  <div class="top"><span class="pill" id="num">1/10</span><span class="combo" id="combo"></span><span class="pill">✦ <span id="score">0</span></span></div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="timer"><div class="tb"><i id="tbar"></i></div><span id="tsec"></span></div>
+  <span class="tag" id="tag"></span>
+  <p class="q" id="q"></p>
+  <div class="opts" id="opts"></div>
+  <div class="exp" id="exp"></div>
+  <div class="row">
+    <button class="btn alt" id="fifty">½ 50/50</button>
+    <button class="btn" id="next" disabled>Keyingisi →</button>
+  </div>
+</div>
+
+<div class="card hidden" id="end">
+  <div class="frame"></div>
+  <p class="ar" id="endAr">مَا شَاءَ اللَّهُ</p>
+  <div class="medal"><svg viewBox="0 0 120 120"><path d="M60 4l12 17 20-6 2 21 20 6-9 19 9 19-20 6-2 21-20-6-12 17-12-17-20 6-2-21-20-6 9-19-9-19 20-6 2-21 20 6z" fill="#0b4a38" stroke="#c9a13b" stroke-width="2.5"/><circle cx="60" cy="60" r="34" fill="none" stroke="#c9a13b" stroke-dasharray="3 4"/></svg><b id="final"></b></div>
+  <p class="msg" id="msg"></p>
+  <div class="review" id="review"></div>
+  <div class="row"><button class="btn alt" id="home2">Bosh sahifa</button><button class="btn" id="again">Yana o'ynash</button></div>
+</div>
+<p class="foot"><a href="../bio/" style="color:#f3dc95;font-weight:800">← Muzaffar · @i0zbek</a><br>﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾ — «Robbim, ilmimni ziyoda qil» (Toha, 114)</p>
+</div>
+
+<script>
+// [daraja, mavzu, savol, [4 variant], to'g'ri javob indeksi, izoh]
+const Q=[
+// ===== OSON =====
+[1,"Qur'on tuzilishi","Qur'oni Karim nechta suradan iborat?",["99 ta sura","114 ta sura","120 ta sura","110 ta sura"],1,"Qur'oni Karim 114 suradan iborat: Fotiha surasi bilan boshlanib, Nas surasi bilan tugaydi."],
+[1,"Qur'on tuzilishi","Mushafdagi birinchi sura qaysi?",["Baqara surasi","Ixlos surasi","Fotiha surasi","Alaq surasi"],2,"Mushaf «Fotiha» (Ochuvchi) surasi bilan ochiladi. U 7 oyatdan iborat va har rakat namozda o'qiladi."],
+[1,"Qur'on tuzilishi","Mushafdagi oxirgi (114-) sura qaysi?",["Nas surasi","Falaq surasi","Ixlos surasi","Kavsar surasi"],0,"114-sura — Nas (Odamlar) surasi. Unda vasvasachi shaytondan Allohga panoh so'raladi."],
+[1,"Qur'on tuzilishi","Qur'on necha poraga (juzga) bo'lingan?",["20 pora","40 pora","30 pora","60 pora"],2,"Qur'on teng 30 poraga bo'lingan, shu sababli Ramazonda har kecha bir pora o'qib xatm qilish odat bo'lgan."],
+[1,"Qur'on tuzilishi","Fotiha surasi nechta oyatdan iborat?",["5 oyat","6 oyat","7 oyat","9 oyat"],2,"Fotiha 7 oyatdan iborat. Hijr surasi 87-oyatida «takrorlanuvchi yettilik» (as-sab'ul-masoniy) deb ishora qilingan."],
+[1,"Qur'on tuzilishi","Ixlos surasi nechta oyatdan iborat?",["3 oyat","4 oyat","5 oyat","6 oyat"],1,"Ixlos surasi 4 oyat: «Qul huvallohu ahad...» — Allohning yagonaligini bayon qiladi."],
+[1,"Nozil bo'lishi","Qur'on qaysi tilda nozil qilingan?",["Fors tilida","Suryoniy tilida","Ibroniy tilida","Arab tilida"],3,"«Albatta, Biz uni arabiy Qur'on qilib nozil qildik» (Yusuf, 2)."],
+[1,"Nozil bo'lishi","Qur'on kimga nozil qilingan?",["Iso alayhissalomga","Muhammad ﷺ ga","Muso alayhissalomga","Ibrohim alayhissalomga"],1,"Qur'on oxirgi payg'ambar Muhammad sollallohu alayhi vasallamga nozil qilingan."],
+[1,"Nozil bo'lishi","Vahiyni Payg'ambarimizga ﷺ yetkazgan farishta kim?",["Mikoil alayhissalom","Jabroil alayhissalom","Isrofil alayhissalom","Azroil alayhissalom"],1,"Vahiy farishtasi — Jabroil alayhissalom. Qur'onda u «Ruhul Amin» (ishonchli ruh) deb ham atalgan (Shuaro, 193)."],
+[1,"Nozil bo'lishi","Qur'on nozil bo'la boshlagan oy qaysi?",["Rajab oyi","Sha'bon oyi","Ramazon oyi","Muharram oyi"],2,"«Ramazon oyi — unda odamlarga hidoyat bo'lgan Qur'on nozil qilingan» (Baqara, 185)."],
+[1,"Nozil bo'lishi","Qur'on qaysi kechada nozil qilingan?",["Me'roj kechasi","Baroat kechasi","Qadr kechasi","Arafa kechasi"],2,"«Albatta, Biz uni Qadr kechasida nozil qildik» (Qadr, 1)."],
+[1,"Nozil bo'lishi","Qadr kechasi necha oydan yaxshiroq deyilgan?",["Yuz oydan","Ming oydan","O'n ming oydan","Yetmish oydan"],1,"«Qadr kechasi ming oydan yaxshiroqdir» (Qadr, 3)."],
+[1,"Suralar","Qur'onning eng uzun surasi qaysi?",["Oli Imron surasi","Niso surasi","Baqara surasi","A'rof surasi"],2,"Baqara surasi 286 oyatdan iborat va Qur'ondagi eng uzun suradir."],
+[1,"Suralar","Oyatul Kursiy qaysi surada joylashgan?",["Baqara surasida","Yasin surasida","Mulk surasida","Kahf surasida"],0,"Oyatul Kursiy — Baqara surasining 255-oyati. Hadisda u Qur'ondagi eng ulug' oyat deyilgan."],
+[1,"Suralar","«Baqara» so'zining ma'nosi nima?",["Ari","Sigir","Tuya","Ot"],1,"Baqara — «sigir». Surada Bani Isroilga sigir so'yish buyurilgani qissasi bor (67–73-oyatlar)."],
+[1,"Suralar","Alaq surasidagi birinchi nozil bo'lgan so'z «Iqra'» nimani anglatadi?",["Yoz!","Eshit!","O'qi!","Sajda qil!"],2,"«Iqra'» — «O'qi!». «O'qi, yaratgan Robbing nomi bilan» (Alaq, 1)."],
+[1,"Payg'ambarlar","Qaysi payg'ambarni katta baliq yutib yuborgan?",["Nuh alayhissalom","Yunus alayhissalom","Muso alayhissalom","Ayyub alayhissalom"],1,"Yunus alayhissalom baliq qornida «La ilaha illa anta subhanaka inni kuntu minaz-zolimin» deb duo qilgan (Anbiyo, 87)."],
+[1,"Payg'ambarlar","Qaysi payg'ambar Alloh amri bilan katta kema qurgan?",["Nuh alayhissalom","Hud alayhissalom","Lut alayhissalom","Idris alayhissalom"],0,"Nuh alayhissalom kema qurib, mo'minlarni va har bir hayvondan bir juftini to'fondan qutqargan (Hud, 37–40)."],
+[1,"Payg'ambarlar","Birinchi inson va birinchi payg'ambar kim?",["Nuh alayhissalom","Shis alayhissalom","Odam alayhissalom","Idris alayhissalom"],2,"Odam alayhissalom — Alloh yaratgan birinchi inson va birinchi payg'ambar (Baqara, 30–37)."],
+[1,"Payg'ambarlar","Muso alayhissalomning akasi va yordamchisi kim edi?",["Horun alayhissalom","Yusha' alayhissalom","Shuayb alayhissalom","Ilyos alayhissalom"],0,"Muso a.s. «Akam Horunni menga vazir qil» deb duo qilgan (Toha, 29–32)."],
+[1,"Payg'ambarlar","Yusuf alayhissalomning otasi kim?",["Ishoq alayhissalom","Ya'qub alayhissalom","Ibrohim alayhissalom","Ismoil alayhissalom"],1,"Yusuf a.s. — Ya'qub a.s.ning o'g'li. Yusuf surasi to'liq ularning qissasiga bag'ishlangan."],
+[1,"Kitoblar","Muso alayhissalomga nozil qilingan kitob qaysi?",["Zabur","Injil","Tavrot","Suhuf"],2,"Tavrot Muso alayhissalomga nozil qilingan (Moida, 44)."],
+[1,"Kitoblar","Iso alayhissalomga nozil qilingan kitob qaysi?",["Injil","Zabur","Tavrot","Qur'on"],0,"«Unga (Isoga) ichida hidoyat va nur bo'lgan Injilni berdik» (Moida, 46)."],
+[1,"Payg'ambarlar","Ka'bani poydevoridan ko'targan ota-bola payg'ambarlar kimlar?",["Dovud va Sulaymon","Ibrohim va Ismoil","Ya'qub va Yusuf","Zakariyo va Yahyo"],1,"«Ibrohim va Ismoil Baytning poydevorini ko'tarayotganlarida...» (Baqara, 127)."],
+[1,"Ilmlar","Qur'onni to'liq yod olgan kishi nima deb ataladi?",["Qori","Mufassir","Hofiz","Muazzin"],2,"Qur'onni yoddan biladigan kishi «hofiz» deyiladi. Qori — Qur'onni chiroyli qiroat qiluvchi."],
+[1,"Ilmlar","Qur'onni to'g'ri va chiroyli o'qish qoidalari ilmi nima deyiladi?",["Tafsir","Tajvid","Fiqh","Aqida"],1,"Tajvid — harflarni maxrajidan to'g'ri chiqarish, madd, g'unna kabi qiroat qoidalari ilmi."],
+[1,"Ilmlar","Qur'on oyatlarining ma'nosini sharhlash ilmi nima deyiladi?",["Tajvid","Tafsir","Hadis","Sarf"],1,"Tafsir — Qur'on oyatlarining ma'nolarini tushuntirish ilmi. Bu ilm egasi «mufassir» deyiladi."],
+
+// ===== O'RTA =====
+[2,"Suralar","Qur'onning eng qisqa surasi qaysi?",["Ixlos surasi","Asr surasi","Kavsar surasi","Nasr surasi"],2,"Kavsar surasi 3 ta qisqa oyatdan iborat va so'zlar soni bo'yicha eng qisqa suradir."],
+[2,"Nozil bo'lishi","Birinchi nozil bo'lgan oyatlar qaysi suradan?",["Fotiha surasi","Alaq surasi","Muddassir surasi","Qalam surasi"],1,"Hiro g'orida nozil bo'lgan ilk oyatlar: «O'qi, yaratgan Robbing nomi bilan...» — Alaq surasi 1–5-oyatlar."],
+[2,"Suralar","Qaysi sura «Bismillah» bilan boshlanmaydi?",["Anfol surasi","Tavba surasi","Yunus surasi","Hud surasi"],1,"Tavba (Baro'at) surasi boshida basmala yozilmagan — u yagona shunday suradir."],
+[2,"Suralar","Qaysi surada «Bismillah» ikki marta keladi?",["Naml surasi","Baqara surasi","Fotiha surasi","Yasin surasi"],0,"Naml surasi boshida va 30-oyatda — Sulaymon a.s.ning Sabo malikasiga yozgan maktubida."],
+[2,"Shaxslar","Qur'onda nomi aniq zikr qilingan yagona ayol kim?",["Xadicha onamiz","Osiyo","Maryam onamiz","Hojar onamiz"],2,"Maryam — Iso a.s.ning onasi. Qur'onda uning nomi bilan atalgan 19-sura ham bor."],
+[2,"Qissalar","Alloh qaysi qissani «eng go'zal qissa» deb atagan?",["Muso qissasi","Yusuf qissasi","Nuh qissasi","Ashobul Kahf qissasi"],1,"«Biz senga eng go'zal qissani so'zlab beramiz» (Yusuf, 3)."],
+[2,"Suralar","«Ummul Kitob» (Kitobning onasi) deb qaysi sura ataladi?",["Ixlos surasi","Yasin surasi","Fotiha surasi","Baqara surasi"],2,"Fotiha surasi Qur'onning asosiy ma'nolarini jamlagani uchun «Ummul Kitob» deb ataladi."],
+[2,"Fazilatlar","Ixlos surasini o'qish Qur'onning qanchasiga teng deyilgan?",["Yarmiga","Uchdan biriga","To'rtdan biriga","O'ndan biriga"],1,"Sahih hadisga ko'ra, Ixlos surasi Qur'onning uchdan biriga teng (Buxoriy)."],
+[2,"Nozil bo'lishi","Qur'on taxminan necha yil davomida nozil bo'lgan?",["10 yil","40 yil","23 yil","13 yil"],2,"Qur'on taxminan 23 yil davomida: 13 yil Makkada, 10 yil Madinada bo'lib-bo'lib nozil qilingan."],
+[2,"Suralar","«Taboraka» surasining asosiy nomi nima?",["Mulk surasi","Qalam surasi","Haqqa surasi","Naba surasi"],0,"«Taboraka» — 67-sura Mulk surasi. Hadisda u o'quvchisini qabr azobidan himoya qiluvchi deyilgan."],
+[2,"Payg'ambarlar","Qaysi payg'ambarga qushlar tili o'rgatilgan?",["Dovud alayhissalom","Sulaymon alayhissalom","Idris alayhissalom","Hud alayhissalom"],1,"«Ey odamlar, bizga qushlar tili o'rgatildi» (Naml, 16)."],
+[2,"Suralar","Qaysi sura Payg'ambarimiz ﷺ ismi bilan atalgan?",["Ahzob surasi","Fath surasi","Muhammad surasi","Hujurot surasi"],2,"47-sura — Muhammad surasi."],
+[2,"Suralar","Falaq va Nas suralari birgalikda qanday ataladi?",["Zahravayn","Muavvizatayn","Musabbihot","Havomim"],1,"Muavvizatayn — «panoh so'ratuvchi ikki sura». Ikkalasi ham «Qul a'uzu...» bilan boshlanadi."],
+[2,"Qissalar","Abraha qo'shinining Ka'baga yurishi qaysi surada bayon qilingan?",["Quraysh surasi","Fil surasi","Mo'un surasi","Humaza surasi"],1,"Fil surasi — Alloh fil egalariga «abobil» qushlarini yuborib, ularni halok qilgani haqida."],
+[2,"Suralar","Quyidagilardan qaysi biri hayvon nomi bilan atalgan sura EMAS?",["Nahl surasi","Ankabut surasi","Fil surasi","Qamar surasi"],3,"Qamar — «oy». Nahl — asalari, Ankabut — o'rgimchak, Fil — fil."],
+[2,"Tarix","Mushafni yagona nusxada ko'chirib, viloyatlarga tarqatgan xalifa kim?",["Abu Bakr roziyallohu anhu","Umar roziyallohu anhu","Usmon roziyallohu anhu","Ali roziyallohu anhu"],2,"Usmon r.a. davrida Zayd ibn Sobit boshchiligida mushaf nusxalari ko'chirilib, yirik shaharlarga yuborilgan."],
+[2,"Tarix","Qur'onni birinchi bo'lib bir mushafga jamlashni buyurgan xalifa kim?",["Abu Bakr roziyallohu anhu","Umar roziyallohu anhu","Usmon roziyallohu anhu","Ali roziyallohu anhu"],0,"Yamoma jangida ko'p qorilar shahid bo'lgach, Umar r.a. maslahati bilan Abu Bakr r.a. Qur'onni jamlatgan."],
+[2,"Suralar","Yasin surasi Qur'onda nechanchi sura?",["36-sura","18-sura","55-sura","67-sura"],0,"Yasin — 36-sura. Hadislarda «Qur'onning qalbi» deb ham ta'riflangan."],
+[2,"Fazilatlar","Juma kuni o'qish tavsiya etilgan sura qaysi?",["Kahf surasi","Mulk surasi","Vaqi'a surasi","Rahmon surasi"],0,"Hadisga ko'ra, juma kuni Kahf surasini o'qigan kishi uchun ikki juma oralig'i nur bilan yoritiladi."],
+[2,"Payg'ambarlar","Qur'onda nechta payg'ambarning nomi zikr qilingan?",["25 ta","40 ta","12 ta","124 ming"],0,"Qur'onda 25 nafar payg'ambarning nomi zikr qilingan."],
+[2,"Payg'ambarlar","Qaysi payg'ambar beshikda turib gapirgan?",["Yahyo alayhissalom","Iso alayhissalom","Muso alayhissalom","Yusuf alayhissalom"],1,"Iso a.s. beshikda: «Men Allohning bandasiman, U menga Kitob berdi...» degan (Maryam, 29–30)."],
+[2,"Payg'ambarlar","Hud alayhissalom qaysi qavmga yuborilgan?",["Samud qavmi","Od qavmi","Madyan ahli","Lut qavmi"],1,"«Od qavmiga birodarlari Hudni (yubordik)» (A'rof, 65)."],
+[2,"Payg'ambarlar","Solih alayhissalomning mo'jizasi nima edi?",["Hassa","Toshdan chiqqan tuya","Kema","Temir"],1,"Samud qavmiga Allohning tuyasi mo'jiza qilib yuborilgan, ular uni so'yib, halok bo'lishgan (Hud, 64–67)."],
+[2,"Payg'ambarlar","Muso alayhissalomning hassasi yerga tashlanganda nimaga aylangan?",["Daraxtga","Ilonga","Qushga","Nurga"],1,"«Uni tashladi — birdan u yuguruvchi ilonga aylandi» (Toha, 20)."],
+[2,"Payg'ambarlar","Ayyub alayhissalom qaysi sifati bilan mashhur?",["Sabr","Saxovat","Kuch","Go'zallik"],0,"«Biz uni sabrli topdik. U qanday yaxshi banda edi!» (Sod, 44)."],
+[2,"Payg'ambarlar","Yahyo alayhissalomning otasi kim?",["Imron","Zakariyo alayhissalom","Ilyos alayhissalom","Yunus alayhissalom"],1,"Zakariyo a.s. qarigan chog'ida farzand so'rab duo qilgan va Alloh unga Yahyoni bergan (Maryam, 2–7)."],
+[2,"Qissalar","Iblis kimga sajda qilishdan bosh tortgan?",["Nuh alayhissalomga","Odam alayhissalomga","Farishtalarga","Ibrohim alayhissalomga"],1,"Alloh farishtalarga Odamga sajda qilishni buyurdi, faqat Iblis kibr qilib bosh tortdi (Baqara, 34)."],
+[2,"Qissalar","Ibrohim alayhissalom olovga tashlanganda olov qanday bo'lgan?",["U o'chib qolgan","Salqin va salomat bo'lgan","Yomg'ir yog'ib o'chirgan","Uni farishtalar ko'targan"],1,"«Ey olov, Ibrohimga salqin va salomat bo'l!» (Anbiyo, 69)."],
+[2,"Ahkom","Ro'za farzligi haqidagi oyat qaysi surada?",["Baqara surasi","Moida surasi","Niso surasi","Hajj surasi"],0,"«Ey iymon keltirganlar, sizlarga ro'za farz qilindi...» (Baqara, 183)."],
+[2,"Ahkom","«Dinda majburlash yo'q» oyati qaysi surada?",["Baqara surasi","Kofirun surasi","Yunus surasi","Oli Imron surasi"],0,"«La ikroha fid-din» — Baqara surasi, 256-oyat (Oyatul Kursiydan keyingi oyat)."],
+[2,"Ahkom","Meros taqsimoti batafsil bayon qilingan sura qaysi?",["Baqara surasi","Niso surasi","Talaq surasi","Nur surasi"],1,"Meros ulushlari Niso surasining 11, 12 va 176-oyatlarida batafsil bayon qilingan."],
+[2,"Suralar","Asr surasi nechta oyatdan iborat?",["3 oyat","5 oyat","4 oyat","7 oyat"],0,"Asr surasi 3 oyat. Imom Shofe'iy: «Odamlar faqat shu surani tafakkur qilsalar ham, ularga kifoya qilardi», degan."],
+[2,"Suralar","Makkada nozil bo'lgan suralar qanday ataladi?",["Madaniy suralar","Makkiy suralar","Hijriy suralar","Arabiy suralar"],1,"Hijratdan oldin nozil bo'lgan suralar — Makkiy, hijratdan keyingilari — Madaniy suralar deyiladi."],
+
+// ===== QIYIN =====
+[3,"Qissalar","Ashobul Kahf g'orda necha yil uxlagan?",["300 yil","309 yil","100 yil","40 yil"],1,"«Ular g'orlarida uch yuz yil turdilar va yana to'qqiz yil qo'shdilar» (Kahf, 25)."],
+[3,"Payg'ambarlar","Nuh alayhissalom qavmi orasida necha yil da'vat qilgan?",["900 yil","1000 yil","950 yil","500 yil"],2,"«Ular orasida ming yildan ellik yil kam turdi» (Ankabut, 14) — ya'ni 950 yil."],
+[3,"Shaxslar","Qur'onda nomi zikr qilingan yagona sahobiy kim?",["Abu Bakr r.a.","Zayd ibn Horisa r.a.","Bilol r.a.","Ali r.a."],1,"Zayd ibn Horisa — Ahzob surasi, 37-oyat."],
+[3,"Oyatlar","Qur'ondagi eng uzun oyat qaysi?",["Oyatul Kursiy (Baqara 255)","Qarz oyati (Baqara 282)","Meros oyati (Niso 11)","Nur oyati (Nur 35)"],1,"Baqara 282 — qarz va savdo muomalalarini yozib qo'yish haqidagi oyat, Qur'ondagi eng uzun oyat."],
+[3,"Oyatlar","Rahmon surasida «Fabi ayyi aalaai Robbikumaa tukazzibaan» oyati necha marta takrorlanadi?",["21 marta","31 marta","41 marta","30 marta"],1,"Bu oyat Rahmon surasida 31 marta keladi: «Robbingizning qaysi ne'matlarini yolg'on dersizlar?»"],
+[3,"Shaxslar","«Muhammad» ismi Qur'onda necha marta zikr qilingan?",["4 marta","7 marta","2 marta","10 marta"],0,"Oli Imron 144, Ahzob 40, Muhammad 2, Fath 29. Saff surasi 6-oyatda esa «Ahmad» ismi keladi."],
+[3,"Suralar","Nechta sura «Alif Lam Mim» bilan boshlanadi?",["4 ta","6 ta","8 ta","3 ta"],1,"Baqara, Oli Imron, Ankabut, Rum, Luqmon va Sajda — jami 6 ta sura."],
+[3,"Payg'ambarlar","Qur'onda qaysi payg'ambarning nomi eng ko'p zikr qilingan?",["Ibrohim alayhissalom","Iso alayhissalom","Nuh alayhissalom","Muso alayhissalom"],3,"Muso alayhissalomning nomi Qur'onda 130 martadan ortiq keladi."],
+[3,"Suralar","Maryam surasi Qur'onda nechanchi sura?",["3-sura","19-sura","20-sura","66-sura"],1,"Maryam — 19-sura. Undan oldin Kahf (18), keyin Toha (20) keladi."],
+[3,"Suralar","«Bani Isroil» deb ham ataladigan sura qaysi?",["Isro surasi","A'rof surasi","Toha surasi","Shuaro surasi"],0,"17-sura Isro surasi «Bani Isroil» nomi bilan ham mashhur."],
+[3,"Kitoblar","Dovud alayhissalomga berilgan kitob qaysi?",["Tavrot","Injil","Zabur","Suhuf"],2,"«Dovudga Zaburni berdik» (Niso, 163)."],
+[3,"Qissalar","Luqmonning o'g'liga qilgan nasihatlari qaysi surada?",["Luqmon surasi","Yusuf surasi","Hud surasi","Sabo surasi"],0,"Luqmon surasi 13–19-oyatlar: shirk keltirmaslik, ota-onaga yaxshilik, namoz, kibrdan saqlanish."],
+[3,"Suralar","Har bir oyatida «Alloh» lafzi kelgan sura qaysi?",["Mujodala surasi","Ixlos surasi","Hashr surasi","Talaq surasi"],0,"58-sura Mujodala surasining 22 oyatining har birida «Alloh» lafzi kelgan."],
+[3,"Qissalar","Zulqarnayn qissasi qaysi surada keltirilgan?",["Kahf surasi","Anfol surasi","Qasas surasi","Hijr surasi"],0,"Zulqarnayn va Yo'juj-Ma'juj to'sig'i qissasi — Kahf surasi, 83–98-oyatlar."],
+[3,"Qissalar","Muso alayhissalom va solih banda (Xizr) uchrashuvi qaysi surada?",["Toha surasi","Kahf surasi","Qasas surasi","Shuaro surasi"],1,"Kahf surasi 60–82-oyatlar: kema teshilishi, bolaning o'ldirilishi va devorni tiklash qissasi."],
+[3,"Qissalar","Jolutni (Goliat) kim o'ldirgan?",["Tolut","Dovud alayhissalom","Sulaymon alayhissalom","Yusha' alayhissalom"],1,"«Dovud Jolutni o'ldirdi va Alloh unga podshohlik va hikmat berdi» (Baqara, 251)."],
+[3,"Shaxslar","Qorun kimning qavmidan bo'lgan?",["Fir'avn qavmidan","Muso alayhissalom qavmidan","Od qavmidan","Samud qavmidan"],1,"«Albatta, Qorun Muso qavmidan edi, ammo ularga zulm qildi» (Qasas, 76)."],
+[3,"Payg'ambarlar","Qaysi payg'ambarga temir yumshoq qilib berilgan?",["Sulaymon alayhissalom","Dovud alayhissalom","Zulqarnayn","Nuh alayhissalom"],1,"«Va Biz unga (Dovudga) temirni yumshoq qildik» (Sabo, 10). U sovut yasagan."],
+[3,"Payg'ambarlar","Qaysi payg'ambarga shamol bo'ysundirilgan?",["Sulaymon alayhissalom","Dovud alayhissalom","Hud alayhissalom","Ilyos alayhissalom"],0,"«Sulaymonga shamolni (bo'ysundirdik): uning ertalabki yurishi bir oylik...» (Sabo, 12)."],
+[3,"Qissalar","«Ashobul Uxdud» (xandaq egalari) qissasi qaysi surada?",["Buruj surasi","Fajr surasi","Fil surasi","Tin surasi"],0,"Buruj surasi 4–8-oyatlar: mo'minlarni olovli xandaqqa tashlagan zolimlar haqida."],
+[3,"Shaxslar","Qaysi sura Payg'ambarimizning ﷺ amakisi va uning xotini haqida nozil bo'lgan?",["Masad surasi","Humaza surasi","Kofirun surasi","Mo'un surasi"],0,"Masad (Lahab) surasi — Abu Lahab va uning xotini haqida."],
+[3,"Shaxslar","Qur'onda Ibrohim alayhissalomning otasi qanday nom bilan zikr qilingan?",["Ozar","Taroh","Nohur","Imron"],0,"«Ibrohim otasi Ozarga: «Butlarni ilohlar qilib olasanmi?» dedi» (An'om, 74)."],
+[3,"Qissalar","Isro kechasi Payg'ambarimiz ﷺ Masjidul Haromdan qayerga olib borilgan?",["Madinaga","Masjidul Aqsoga","Toif shahriga","Sinoy tog'iga"],1,"«Bandasini kechasi Masjidul Haromdan Masjidul Aqsoga sayr qildirgan Zot pokdir» (Isro, 1)."],
+[3,"Payg'ambarlar","Qaysi payg'ambar «Xalilulloh» (Allohning do'sti) deb ataladi?",["Muso alayhissalom","Ibrohim alayhissalom","Iso alayhissalom","Nuh alayhissalom"],1,"«Alloh Ibrohimni do'st (xalil) qilib oldi» (Niso, 125)."],
+[3,"Payg'ambarlar","«Kalimulloh» (Alloh u bilan so'zlashgan) laqabli payg'ambar kim?",["Muso alayhissalom","Ibrohim alayhissalom","Odam alayhissalom","Idris alayhissalom"],0,"«Alloh Muso bilan haqiqatan so'zlashdi» (Niso, 164)."],
+[3,"Qissalar","Sabo malikasi qaysi payg'ambar huzuriga kelgan?",["Dovud alayhissalom","Sulaymon alayhissalom","Yusuf alayhissalom","Muso alayhissalom"],1,"Hudhud qushi xabar keltirgach, Sabo malikasi Sulaymon a.s. huzuriga kelib, iymon keltirgan (Naml, 20–44)."],
+[3,"Suralar","«Furqon» so'zi nimani anglatadi?",["Nur","Haq bilan botilni ajratuvchi","Hidoyat","Shifo"],1,"Furqon — haq va botilni ajratuvchi. Qur'onning nomlaridan biri va 25-suraning nomi."],
+[3,"Payg'ambarlar","Shuayb alayhissalom qaysi qavmga yuborilgan?",["Madyan ahli","Od qavmi","Samud qavmi","Bobil ahli"],0,"«Madyanga birodarlari Shuaybni (yubordik)» (A'rof, 85). Ular o'lchov va tarozida aldashgan."],
+[3,"Oyatlar","Nur oyati («Alloh osmonlar va yerning nuridir») qaysi surada?",["Nur surasi","Ahzob surasi","Hadid surasi","Zumar surasi"],0,"Nur surasi, 35-oyat — chiroq, shisha va muborak zaytun daraxti misoli."]
+];
+const T={1:25,2:20,3:15,0:20},L="ABCD",LN={1:"Oson",2:"O'rta",3:"Qiyin",0:"Aralash"};
+let set=[],i=0,score=0,correct=0,combo=0,used=false,timer=null,left=0,lvl=1,log=[],N=10;
+const $=id=>document.getElementById(id);
+function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+function show(id){["home","game","end","quran","hadis"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo(0,0)}
+function shuffle(a){a=a.slice();for(let j=a.length-1;j>0;j--){const k=Math.random()*(j+1)|0;[a[j],a[k]]=[a[k],a[j]]}return a}
+function bestText(){const b=store("qv_best")||{};const s=Object.keys(LN).filter(k=>b[k]).map(k=>LN[k]+": "+b[k]).join(" · ");$("best").textContent=s?"🏆 Eng yaxshi natijalar — "+s:"Jami savollar bazasi: "+Q.length+" ta"}
+document.querySelectorAll(".count button").forEach(b=>b.onclick=()=>{N=+b.dataset.n;document.querySelectorAll(".count button").forEach(x=>x.classList.toggle("on",x===b))});
+function start(l){lvl=l;const pool=Q.filter(q=>l===0||q[0]===l);
+ set=shuffle(pool).slice(0,N).map(q=>{const idx=shuffle([0,1,2,3]);return{d:q[0],t:q[1],q:q[2],o:idx.map(x=>q[3][x]),a:idx.indexOf(q[4]),e:q[5]}});
+ i=0;score=0;correct=0;combo=0;used=false;log=[];show("game");render()}
+function render(){const s=set[i];$("num").textContent=(i+1)+"/"+set.length;$("score").textContent=score;
+ $("prog").style.width=(i/set.length*100)+"%";$("tag").textContent="۞ "+s.t+" · "+LN[s.d];$("q").textContent=s.q;$("exp").style.display="none";$("next").disabled=true;
+ $("combo").textContent=combo>=2?"🔥 x"+combo:"";
+ $("opts").innerHTML="";s.o.forEach((t,k)=>{const b=document.createElement("button");b.className="opt c"+k;b.innerHTML='<span class="l">'+L[k]+'</span><span></span>';b.lastChild.textContent=t;b.onclick=()=>answer(k);$("opts").appendChild(b)});
+ $("fifty").disabled=used;left=T[lvl];tick();clearInterval(timer);timer=setInterval(()=>{left-=.1;tick();if(left<=0)answer(-1)},100)}
+function tick(){$("tbar").style.width=Math.max(0,left/T[lvl]*100)+"%";$("tbar").style.background=left<5?"var(--bad)":"var(--g2)";$("tsec").textContent=Math.max(0,Math.ceil(left))+"s"}
+function answer(k){clearInterval(timer);const s=set[i],bs=[...$("opts").children];if(bs[0].disabled)return;
+ bs.forEach((b,j)=>{b.disabled=true;if(j===s.a)b.classList.add("ok");else if(j===k)b.classList.add("bad");else b.classList.add("dim")});
+ const ok=k===s.a;if(ok){combo++;correct++;score+=10*s.d+Math.round(left)+(combo>=3?5:0)}else combo=0;
+ log.push({q:s.q,ok,a:s.o[s.a]});$("score").textContent=score;$("combo").textContent=combo>=2?"🔥 x"+combo:"";
+ $("exp").innerHTML=(ok?"✅ <b>To'g'ri! Barakalloh.</b><br>":k===-1?"⏰ <b>Vaqt tugadi.</b> To'g'ri javob: <b></b><br>":"❌ <b>Noto'g'ri.</b> To'g'ri javob: <b></b><br>");
+ const bb=$("exp").querySelectorAll("b")[1];if(bb)bb.textContent=s.o[s.a];$("exp").append(s.e);$("exp").style.display="block";
+ $("fifty").disabled=true;$("next").disabled=false;$("next").textContent=i===set.length-1?"Natija →":"Keyingisi →";$("next").focus()}
+$("fifty").onclick=()=>{if(used)return;used=true;$("fifty").disabled=true;const s=set[i];shuffle([0,1,2,3].filter(x=>x!==s.a)).slice(0,2).forEach(x=>$("opts").children[x].classList.add("hide"))};
+$("next").onclick=()=>{i++;if(i<set.length)render();else finish()};
+function finish(){const b=store("qv_best")||{};if(!b[lvl]||score>b[lvl]){b[lvl]=score;store("qv_best",b)}
+ $("final").textContent=correct+"/"+set.length;
+ const r=correct/set.length;
+ $("endAr").textContent=r>=.7?"مَا شَاءَ اللَّهُ":r>=.4?"بَارَكَ اللَّهُ فِيكَ":"إِنْ شَاءَ اللَّهُ";
+ $("msg").innerHTML=(r===1?"Mukammal natija! Alloh ilmingizni ziyoda qilsin 🌟":r>=.7?"Juda yaxshi! Ilmingiz ziyoda bo'lsin 📖":r>=.4?"Yomon emas — yana takrorlang, inshaAlloh 🌱":"Harakatdan to'xtamang — ilm o'rganish ham ibodat 🤲")+"<br><small>To'plangan ball: "+score+"</small>";
+ $("review").innerHTML="";log.forEach((l,n)=>{const d=document.createElement("div");d.textContent=(l.ok?"✅ ":"❌ ")+(n+1)+". "+l.q;const sm=document.createElement("small");sm.textContent=" — Javob: "+l.a;d.appendChild(document.createElement("br"));d.appendChild(sm);$("review").appendChild(d)});show("end")}
+document.querySelectorAll(".lvl").forEach(b=>b.onclick=()=>start(+b.dataset.l));
+$("again").onclick=()=>start(lvl);$("home2").onclick=()=>{bestText();show("home")};
+document.addEventListener("keydown",e=>{if($("game").classList.contains("hidden"))return;const k="abcd1234".indexOf(e.key.toLowerCase());const j=k<0?-1:k%4;if(j>=0&&!$("opts").children[0].disabled&&!$("opts").children[j].classList.contains("hide"))answer(j);else if(e.key==="Enter"&&!$("next").disabled)$("next").click()});
+bestText();
+
+// ================= QUR'ON =================
+// [raqam, nomi, arabcha nomi, ma'lumot, [[arabcha, o'zbekcha, ruscha], ...]]
+const S=[
+[1,"Fotiha","الفاتحة","Makkiy · 7 oyat · Qur'onning ochuvchisi, har rakat namozda o'qiladi",[
+["بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ","Mehribon va rahmli Alloh nomi bilan.","Во имя Аллаха, Милостивого, Милосердного."],
+["الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ","Barcha hamd olamlarning Robbi Allohgadir.","Хвала Аллаху, Господу миров,"],
+["الرَّحْمَٰنِ الرَّحِيمِ","U Mehribon va Rahmlidir.","Милостивому, Милосердному,"],
+["مَالِكِ يَوْمِ الدِّينِ","Jazo kunining Egasidir.","Властелину Дня воздаяния!"],
+["إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ","Faqat Senga ibodat qilamiz va faqat Sendan yordam so'raymiz.","Тебе одному мы поклоняемся и Тебя одного молим о помощи."],
+["اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ","Bizni to'g'ri yo'lga hidoyat qil.","Веди нас прямым путём,"],
+["صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ","O'zing ne'mat bergan zotlarning yo'liga; G'azabga uchraganlar va adashganlarning yo'liga emas.","путём тех, кого Ты облагодетельствовал, не тех, на кого пал гнев, и не заблудших."]]],
+[2.255,"Oyatul Kursiy","آية الكرسي","Baqara surasi, 255-oyat · Qur'ondagi eng ulug' oyat",[
+["اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ",
+"Alloh — Undan o'zga iloh yo'q. U Tirik va hamma narsani tutib turuvchidir. Uni mudroq ham, uyqu ham tutmaydi. Osmonlardagi va yerdagi narsalar Unikidir. Uning iznisiz kim ham Uning huzurida shafoat qila olardi?! U ularning oldidagi va ortidagi narsalarni biladi. Ular Uning ilmidan faqat U xohlagan narsanigina bila oladilar. Uning Kursiysi osmonlar va yerni qamrab olgan. Ularni saqlash Uni charchatmaydi. U Oliy va Buyukdir.",
+"Аллах — нет божества, кроме Него, Живого, Поддерживающего жизнь. Им не овладевает ни дремота, ни сон. Ему принадлежит то, что на небесах, и то, что на земле. Кто станет заступаться перед Ним без Его дозволения? Он знает то, что было до них, и то, что будет после них, а они постигают из Его знания лишь то, что Он пожелает. Его Престол объемлет небеса и землю, и не тяготит Его оберегание их. Он — Возвышенный, Великий."]]],
+[97,"Qadr","القدر","Makkiy · 5 oyat · Qadr kechasining fazilati haqida",[
+["إِنَّا أَنْزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ","Albatta, Biz uni (Qur'onni) Qadr kechasida nozil qildik.","Воистину, Мы ниспослали его в Ночь предопределения."],
+["وَمَا أَدْرَاكَ مَا لَيْلَةُ الْقَدْرِ","Qadr kechasi nima ekanini senga nima bildirdi?","Откуда тебе знать, что такое Ночь предопределения?"],
+["لَيْلَةُ الْقَدْرِ خَيْرٌ مِنْ أَلْفِ شَهْرٍ","Qadr kechasi ming oydan yaxshiroqdir.","Ночь предопределения лучше тысячи месяцев."],
+["تَنَزَّلُ الْمَلَائِكَةُ وَالرُّوحُ فِيهَا بِإِذْنِ رَبِّهِمْ مِنْ كُلِّ أَمْرٍ","Unda farishtalar va Ruh (Jabroil) Robbilarining izni bilan har bir ish uchun tushadilar.","В эту ночь нисходят ангелы и Дух с дозволения их Господа по всем повелениям."],
+["سَلَامٌ هِيَ حَتَّىٰ مَطْلَعِ الْفَجْرِ","U tong otguncha tinchlik-salomatlikdir.","Она — мир до наступления зари."]]],
+[103,"Asr","العصر","Makkiy · 3 oyat · Inson zarardan qanday qutuladi",[
+["وَالْعَصْرِ","Asr (zamon) bilan qasam.","Клянусь предвечерним временем!"],
+["إِنَّ الْإِنْسَانَ لَفِي خُسْرٍ","Albatta, inson ziyondadir.","Воистину, человек в убытке,"],
+["إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ","Magar iymon keltirgan, solih amallar qilgan, bir-birlariga haqni va sabrni tavsiya qilganlar (ziyonda emas).","кроме тех, которые уверовали, совершали праведные дела, заповедали друг другу истину и заповедали друг другу терпение."]]],
+[105,"Fil","الفيل","Makkiy · 5 oyat · Fil egalari qissasi",[
+["أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ","Robbing fil egalarini nima qilganini ko'rmadingmi?","Разве ты не видел, как поступил твой Господь с владельцами слона?"],
+["أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ","Ularning makrini behuda qilmadimi?","Разве Он не обратил их козни в заблуждение?"],
+["وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ","Ularning ustiga to'p-to'p qushlarni yubordi.","И послал на них стаи птиц,"],
+["تَرْمِيهِمْ بِحِجَارَةٍ مِنْ سِجِّيلٍ","Ular ularga sopol toshlarni otardi.","которые бросали в них камни из обожжённой глины."],
+["فَجَعَلَهُمْ كَعَصْفٍ مَأْكُولٍ","Bas, ularni yeb tashlangan ekin bargidek qilib qo'ydi.","И Он сделал их подобными изъеденным листьям."]]],
+[106,"Quraysh","قريش","Makkiy · 4 oyat · Quraysh qabilasiga berilgan ne'matlar",[
+["لِإِيلَافِ قُرَيْشٍ","Qurayshning odatlanib qolgani uchun,","Ради единения курайшитов,"],
+["إِيلَافِهِمْ رِحْلَةَ الشِّتَاءِ وَالصَّيْفِ","Ularning qishki va yozgi safarga odatlangani uchun,","единения их во время зимних и летних поездок,"],
+["فَلْيَعْبُدُوا رَبَّ هَٰذَا الْبَيْتِ","Bas, ular shu Uyning (Ka'baning) Robbiga ibodat qilsinlar.","пусть они поклоняются Господу этого Дома,"],
+["الَّذِي أَطْعَمَهُمْ مِنْ جُوعٍ وَآمَنَهُمْ مِنْ خَوْفٍ","U ularni ochlikdan to'ydirdi va qo'rquvdan omon qildi.","Который накормил их после голода и избавил от страха."]]],
+[107,"Mo'un","الماعون","Makkiy · 7 oyat · Dinni yolg'onga chiqaruvchining sifatlari",[
+["أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ","Dinni (jazo kunini) yolg'on deydigan kimsani ko'rdingmi?","Видел ли ты того, кто считает ложью воздаяние?"],
+["فَذَٰلِكَ الَّذِي يَدُعُّ الْيَتِيمَ","U yetimni qo'pollik bilan haydaydigan kimsadir.","Это тот, кто отталкивает сироту"],
+["وَلَا يَحُضُّ عَلَىٰ طَعَامِ الْمِسْكِينِ","Va miskinni ovqatlantirishga undamaydi.","и не побуждает накормить бедняка."],
+["فَوَيْلٌ لِلْمُصَلِّينَ","Bas, holiga voy bo'lsin shunday namozxonlarning,","Горе же молящимся,"],
+["الَّذِينَ هُمْ عَنْ صَلَاتِهِمْ سَاهُونَ","Ular namozlaridan g'ofildirlar,","которые небрежны к своим молитвам,"],
+["الَّذِينَ هُمْ يُرَاءُونَ","Ular riyo qiladilar,","которые совершают их напоказ"],
+["وَيَمْنَعُونَ الْمَاعُونَ","Va (arzimas) yordamni ham man qiladilar.","и отказывают даже в мелкой утвари."]]],
+[108,"Kavsar","الكوثر","Makkiy · 3 oyat · Qur'ondagi eng qisqa sura",[
+["إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ","Albatta, Biz senga Kavsarni (ko'p yaxshilikni) berdik.","Воистину, Мы даровали тебе аль-Каусар (изобилие)."],
+["فَصَلِّ لِرَبِّكَ وَانْحَرْ","Bas, Robbing uchun namoz o'qi va qurbonlik qil.","Посему молись ради своего Господа и закалывай жертву."],
+["إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ","Albatta, seni yomon ko'ruvchining o'zi (zurriyotdan) kesilgandir.","Воистину, твой ненавистник сам окажется бездетным."]]],
+[109,"Kofirun","الكافرون","Makkiy · 6 oyat · Ibodatda yagonalik",[
+["قُلْ يَا أَيُّهَا الْكَافِرُونَ","Ayting: «Ey kofirlar!","Скажи: «О неверующие!"],
+["لَا أَعْبُدُ مَا تَعْبُدُونَ","Men sizlar ibodat qilayotgan narsaga ibodat qilmayman.","Я не поклоняюсь тому, чему поклоняетесь вы,"],
+["وَلَا أَنْتُمْ عَابِدُونَ مَا أَعْبُدُ","Sizlar ham men ibodat qiladigan Zotga ibodat qiluvchi emassizlar.","а вы не поклоняетесь Тому, Кому поклоняюсь я."],
+["وَلَا أَنَا عَابِدٌ مَا عَبَدْتُمْ","Men sizlar ibodat qilgan narsaga ibodat qiluvchi emasman.","Я не поклоняюсь тому, чему поклоняетесь вы,"],
+["وَلَا أَنْتُمْ عَابِدُونَ مَا أَعْبُدُ","Sizlar ham men ibodat qiladigan Zotga ibodat qiluvchi emassizlar.","а вы не поклоняетесь Тому, Кому поклоняюсь я."],
+["لَكُمْ دِينُكُمْ وَلِيَ دِينِ","Sizlarga o'z dinlaringiz, menga o'z dinim».","У вас — ваша религия, а у меня — моя!»"]]],
+[110,"Nasr","النصر","Madaniy · 3 oyat · G'alaba va istig'for",[
+["إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ","Allohning yordami va g'alaba kelganda,","Когда придёт помощь Аллаха и победа,"],
+["وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا","Va odamlarning Allohning diniga to'da-to'da kirayotganini ko'rganingda,","и ты увидишь, как люди толпами обращаются в религию Аллаха,"],
+["فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ ۚ إِنَّهُ كَانَ تَوَّابًا","Robbingga hamd bilan tasbeh ayt va Undan mag'firat so'ra. Albatta, U tavbalarni ko'p qabul qiluvchidir.","то прославляй хвалой своего Господа и проси у Него прощения. Воистину, Он — Принимающий покаяние."]]],
+[111,"Masad","المسد","Makkiy · 5 oyat · Abu Lahab haqida",[
+["تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ","Abu Lahabning ikki qo'li qurisin, o'zi ham halok bo'ldi.","Да пропадут пропадом руки Абу Лахаба, и сам он пропал!"],
+["مَا أَغْنَىٰ عَنْهُ مَالُهُ وَمَا كَسَبَ","Unga moli ham, topgan narsalari ham foyda bermadi.","Не помогло ему его богатство и то, что он приобрёл."],
+["سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ","U alangali olovga kiradi.","Он попадёт в пламенный Огонь,"],
+["وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ","Xotini ham — o'tin ko'taruvchi bo'lib,","а также его жена — разносчица дров,"],
+["فِي جِيدِهَا حَبْلٌ مِنْ مَسَدٍ","Bo'ynida pishiq eshilgan arqon bo'lgan holda.","на шее у которой будет верёвка из пальмовых волокон."]]],
+[112,"Ixlos","الإخلاص","Makkiy · 4 oyat · Qur'onning uchdan biriga teng",[
+["قُلْ هُوَ اللَّهُ أَحَدٌ","Ayting: «U — Alloh yagonadir.","Скажи: «Он — Аллах Единый,"],
+["اللَّهُ الصَّمَدُ","Alloh behojat (hamma Unga muhtoj) Zotdir.","Аллах Самодостаточный (в Ком нуждаются все)."],
+["لَمْ يَلِدْ وَلَمْ يُولَدْ","U tug'magan va tug'ilmagan.","Он не родил и не был рождён,"],
+["وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ","Va hech kim Unga teng bo'lmagan».","и нет никого, равного Ему»."]]],
+[113,"Falaq","الفلق","Makkiy · 5 oyat · Muavvizatayndan biri",[
+["قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ","Ayting: «Tong Robbidan panoh so'rayman,","Скажи: «Прибегаю к защите Господа рассвета"],
+["مِنْ شَرِّ مَا خَلَقَ","U yaratgan narsalarning yomonligidan,","от зла того, что Он сотворил,"],
+["وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ","Zulmatga cho'mgan kechaning yomonligidan,","от зла мрака, когда он наступает,"],
+["وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ","Tugunlarga dam soluvchi (sehrgar)larning yomonligidan,","от зла колдуний, дующих на узлы,"],
+["وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ","Va hasad qilgan paytdagi hasadchining yomonligidan».","от зла завистника, когда он завидует»."]]],
+[114,"Nas","الناس","Makkiy · 6 oyat · Vasvasadan panoh so'rash",[
+["قُلْ أَعُوذُ بِرَبِّ النَّاسِ","Ayting: «Odamlarning Robbidan panoh so'rayman,","Скажи: «Прибегаю к защите Господа людей,"],
+["مَلِكِ النَّاسِ","Odamlarning Podshohidan,","Царя людей,"],
+["إِلَٰهِ النَّاسِ","Odamlarning Ilohidan,","Бога людей,"],
+["مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ","Yashirinib oluvchi vasvasachining yomonligidan,","от зла искусителя, отступающего (при упоминании Аллаха),"],
+["الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ","U odamlarning ko'ksiga vasvasa soladi,","который нашёптывает в груди людей,"],
+["مِنَ الْجِنَّةِ وَالنَّاسِ","Jinlardan ham, odamlardan ham».","из джиннов и людей»."]]]
+];
+
+// Kirill talaffuz (o'qilishi) — S massividagi tartibda
+const CY=[
+["Бисмиллаҳир роҳманир роҳийм.","Алҳамду лиллаҳи роббил ъаламийн.","Ар-роҳманир роҳийм.","Малики явмид-дийн.","Иййака наъбуду ва иййака настаъийн.","Иҳдинас-сиротол мустақийм.","Сиротоллазийна анъамта ъалайҳим, ғойрил мағзуби ъалайҳим валаз-зооллийн."],
+["Аллоҳу ла илаҳа илла ҳувал ҳаййул қойюм. Ла таъхузуҳу синатув-ва ла навм. Лаҳу ма фис-самавати ва ма фил арз. Ман заллазий яшфаъу ъиндаҳу илла би изниҳ. Яъламу ма байна айдийҳим ва ма холфаҳум. Ва ла юҳийтуна би шайим-мин ъилмиҳий илла бима шаа. Васиъа курсийюҳус-самавати вал арз. Ва ла яудуҳу ҳифзуҳума. Ва ҳувал ъалийюл ъазийм."],
+["Инна анзалнаҳу фий лайлатил қодр.","Ва ма адрока ма лайлатул қодр.","Лайлатул қодри хойрум-мин алфи шаҳр.","Таназзалул малаикату вар-руҳу фийҳа би изни роббиҳим мин кулли амр.","Саламун ҳийя ҳатта маталиъил фажр."],
+["Вал ъаср.","Иннал инсана лафий хуср.","Иллаллазийна аману ва ъамилус-солиҳати ва тавасов бил ҳаққи ва тавасов бис-собр."],
+["Алам таро кайфа фаъала роббука би асҳабил фийл.","Алам яжъал кайдаҳум фий тазлийл.","Ва арсала ъалайҳим тойрон абабийл.","Тармийҳим би ҳижаротим-мин сижжийл.","Фажаъалаҳум ка ъасфим-маъкул."],
+["Ли ийлафи қурайш.","Ийлафиҳим риҳлаташ-шитаи вас-сойф.","Фал яъбуду робба ҳазал байт.","Аллазий атъамаҳум мин жуъив-ва аманаҳум мин хоуф."],
+["Аро айталлазий юказзибу бид-дийн.","Фазаликаллазий ядуъъул ятийм.","Ва ла яҳуззу ъала тоъамил мискийн.","Фа вайлул лил мусоллийн.","Аллазийна ҳум ъан солатиҳим саҳун.","Аллазийна ҳум юроун.","Ва ямнаъунал маъун."],
+["Инна аътойнакал кавсар.","Фасолли ли роббика ванҳар.","Инна шаниака ҳувал абтар."],
+["Қул я айюҳал кафирун.","Ла аъбуду ма таъбудун.","Ва ла антум ъабидуна ма аъбуд.","Ва ла ана ъабидум-ма ъабадтум.","Ва ла антум ъабидуна ма аъбуд.","Лакум дийнукум ва лия дийн."],
+["Иза жаа насруллоҳи вал фатҳ.","Ва роайтан-наса ядхулуна фий дийниллаҳи афважа.","Фасаббиҳ би ҳамди роббика вастағфирҳ. Иннаҳу кана таввааба."],
+["Таббат яда абий лаҳабив-ва табб.","Ма ағна ъанҳу малуҳу ва ма касаб.","Саясла наран зата лаҳаб.","Вамроатуҳу ҳаммалатал ҳатоб.","Фий жийдиҳа ҳаблум-мим масад."],
+["Қул ҳуваллоҳу аҳад.","Аллоҳус-сомад.","Лам ялид ва лам юлад.","Ва лам якул-лаҳу куфуван аҳад."],
+["Қул аъузу би роббил фалақ.","Мин шарри ма холақ.","Ва мин шарри ғосиқин иза вақоб.","Ва мин шаррин-наффасати фил ъуқод.","Ва мин шарри ҳасидин иза ҳасад."],
+["Қул аъузу би роббин-нас.","Маликин-нас.","Илаҳин-нас.","Мин шаррил васвасил ханнас.","Аллазий ювасвису фий судурин-нас.","Минал жиннати ван-нас."]
+];
+const AN=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+function renderSlist(cur){$("slist").innerHTML="";S.forEach((x,k)=>{const b=document.createElement("button");b.className=k===cur?"on":"";b.innerHTML="<small>"+x[2]+"</small>";b.append((Number.isInteger(x[0])?x[0]+". ":"")+x[1]);b.onclick=()=>openSura(k);$("slist").appendChild(b)})}
+function openSura(k){renderSlist(k);const x=S[k];const box=$("sura");box.innerHTML="";
+ const h=document.createElement("div");h.className="sura-h";h.innerHTML='<div class="an">'+(Number.isInteger(x[0])?"سُورَةُ ":"")+x[2]+'</div><b></b><p></p>';h.querySelector("b").textContent=(Number.isInteger(x[0])?x[0]+"-sura · ":"")+x[1];h.querySelector("p").textContent=x[3];box.appendChild(h);
+ const start=(x[0]===1)?1:(Number.isInteger(x[0])?1:255);
+ x[4].forEach((v,j)=>{const d=document.createElement("div");d.className="ayah";const no=Number.isInteger(x[0])?j+1:255;
+  d.innerHTML='<div class="pair"><div class="a"></div><div class="c"></div></div><div class="u"></div><div class="r"></div>';d.querySelector(".a").innerHTML=v[0]+' <span class="n">'+AN(no)+'</span>';d.querySelector(".c").textContent=CY[k][j];
+  d.querySelector(".u").append(no+". "+v[1]);d.querySelector(".r").append(no+". "+v[2]);box.appendChild(d)});
+ langApply()}
+function langApply(){document.querySelectorAll(".ayah .a").forEach(e=>e.style.display=$("lA").checked?"":"none");document.querySelectorAll(".ayah .u").forEach(e=>e.style.display=$("lU").checked?"":"none");document.querySelectorAll(".ayah .r").forEach(e=>e.style.display=$("lR").checked?"":"none");document.querySelectorAll(".ayah .c").forEach(e=>e.style.display=$("lC").checked?"":"none")}
+["lA","lC","lU","lR"].forEach(id=>$(id).onchange=langApply);
+openSura(0);
+
+// ================= HADISLAR =================
+// [mavzu, arabcha (bo'lsa), o'zbekcha ma'no, roviy, manba]
+const H=[
+["Iymon va Islom","إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ","Amallar faqat niyatlarga ko'radir va har bir kishiga niyat qilgan narsasi bo'ladi.","Umar ibn Xattob r.a.","Buxoriy 1, Muslim 1907"],
+["Iymon va Islom","","Islom besh narsa ustiga qurilgan: Allohdan o'zga iloh yo'q va Muhammad Allohning Rasuli ekaniga guvohlik berish, namozni qoim qilish, zakot berish, haj qilish va Ramazon ro'zasini tutish.","Ibn Umar r.a.","Buxoriy 8, Muslim 16"],
+["Iymon va Islom","الطُّهُورُ شَطْرُ الْإِيمَانِ","Poklik iymonning yarmidir.","Abu Molik Ash'ariy r.a.","Muslim 223"],
+["Iymon va Islom","","Sizlardan biringiz o'zi uchun yaxshi ko'rgan narsani birodari uchun ham yaxshi ko'rmaguncha (komil) mo'min bo'lmaydi.","Anas r.a.","Buxoriy 13, Muslim 45"],
+["Iymon va Islom","","Musulmon — musulmonlar uning tili va qo'lidan salomat bo'lgan kishidir.","Abdulloh ibn Amr r.a.","Buxoriy 10, Muslim 40"],
+["Qur'on","خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ","Sizlarning eng yaxshingiz Qur'onni o'rgangan va uni o'rgatganingizdir.","Usmon ibn Affon r.a.","Buxoriy 5027"],
+["Qur'on","","Qur'on o'qinglar, chunki u qiyomat kuni o'z ahliga shafoatchi bo'lib keladi.","Abu Umoma r.a.","Muslim 804"],
+["Qur'on","","Kim Alloh Kitobidan bir harf o'qisa, unga bir hasana yoziladi, hasana esa o'n barobarigacha ko'paytiriladi.","Ibn Mas'ud r.a.","Termiziy 2910"],
+["Qur'on","","Qur'onni mohirlik bilan o'qiydigan kishi ulug' va itoatli farishtalar bilan birgadir. Qiynalib, duduqlanib o'qiydigan kishiga esa ikki ajr bor.","Oisha r.a.","Buxoriy 4937, Muslim 798"],
+["Ilm","","Kim ilm talab qilib yo'lga chiqsa, Alloh unga jannatga boradigan yo'lni oson qilib qo'yadi.","Abu Hurayra r.a.","Muslim 2699"],
+["Ilm","","Ilm talab qilish har bir musulmonga farzdir.","Anas r.a.","Ibn Moja 224"],
+["Ilm","","Odam vafot etsa, amali to'xtaydi, faqat uch narsadan tashqari: davomli sadaqa, foydali ilm va uning haqqiga duo qiladigan solih farzand.","Abu Hurayra r.a.","Muslim 1631"],
+["Axloq","","Sizlarning eng yaxshilaringiz axloqi eng go'zal bo'lganlaringizdir.","Abdulloh ibn Amr r.a.","Buxoriy 3559"],
+["Axloq","لَا تَغْضَبْ","Bir kishi: «Menga nasihat qiling», dedi. Payg'ambar ﷺ: «G'azablanma», dedilar va buni bir necha bor takrorladilar.","Abu Hurayra r.a.","Buxoriy 6116"],
+["Axloq","","Kuchli kishi kurashda yiqituvchi emas, balki g'azab paytida o'zini tuta oladigan kishidir.","Abu Hurayra r.a.","Buxoriy 6114, Muslim 2609"],
+["Axloq","","Kim Allohga va oxirat kuniga iymon keltirsa, yaxshi gapirsin yoki jim tursin.","Abu Hurayra r.a.","Buxoriy 6018, Muslim 47"],
+["Axloq","","Kishining o'ziga aloqasi bo'lmagan narsani tark etishi uning Islomi go'zalligidandir.","Abu Hurayra r.a.","Termiziy 2317"],
+["Axloq","","Birodaringning yuziga tabassum qilishing sen uchun sadaqadir.","Abu Zarr r.a.","Termiziy 1956"],
+["Axloq","","Odamlarga rahm qilmagan kishiga Alloh rahm qilmaydi.","Jarir ibn Abdulloh r.a.","Buxoriy 7376, Muslim 2319"],
+["Ibodat","","Kim Ramazon ro'zasini iymon bilan va savob umidida tutsa, uning o'tgan gunohlari kechiriladi.","Abu Hurayra r.a.","Buxoriy 38, Muslim 760"],
+["Ibodat","","Besh vaqt namoz, bir jumadan keyingi jumagacha va bir Ramazondan keyingi Ramazongacha — katta gunohlardan saqlanilsa — ular orasidagi gunohlarga kafforatdir.","Abu Hurayra r.a.","Muslim 233"],
+["Zikr va duo","","Ikki kalima borki, tilga yengil, tarozida og'ir, Rahmonga sevimli: «Subhanallohi va bihamdihi, subhanallohil-azim».","Abu Hurayra r.a.","Buxoriy 6406, Muslim 2694"],
+["Zikr va duo","","Bandaning Robbiga eng yaqin bo'ladigan holati — sajda holatidir. Bas, (sajdada) duoni ko'paytiringlar.","Abu Hurayra r.a.","Muslim 482"],
+["Oila","","Bir kishi: «Ey Allohning Rasuli, yaxshi muomalamga eng haqli kim?» dedi. «Onang», dedilar. «Keyin kim?» — «Onang». «Keyin kim?» — «Onang». «Keyin kim?» — «Keyin otang».","Abu Hurayra r.a.","Buxoriy 5971, Muslim 2548"],
+["Oila","","Sizlarning eng yaxshingiz o'z ahli-oilasiga eng yaxshi bo'lganingizdir. Men esa ahlimga eng yaxshi bo'lganingizman.","Oisha r.a.","Termiziy 3895"],
+["Jamiyat","","Mo'minlar bir-birlarini yaxshi ko'rish, rahm qilish va mehr ko'rsatishda bir jasad kabidir: bir a'zosi og'risa, butun jasad bedorlik va isitma bilan unga hamdard bo'ladi.","Nu'mon ibn Bashir r.a.","Buxoriy 6011, Muslim 2586"],
+["Jamiyat","","Kim Allohga va oxirat kuniga iymon keltirsa, qo'shnisiga yaxshilik qilsin; kim Allohga va oxirat kuniga iymon keltirsa, mehmonini hurmat qilsin.","Abu Hurayra r.a.","Buxoriy 6018, Muslim 47"]
+];
+let hcat="Barchasi";
+function renderH(){const q=$("hq").value.toLowerCase().trim();$("hlist").innerHTML="";
+ const list=H.filter(h=>(hcat==="Barchasi"||h[0]===hcat)&&(!q||(h[2]+h[3]+h[4]+h[0]).toLowerCase().includes(q)));
+ if(!list.length){$("hlist").innerHTML='<p class="sub">Hech narsa topilmadi.</p>';return}
+ list.forEach(h=>{const d=document.createElement("div");d.className="had";d.innerHTML=(h[1]?'<div class="ha"></div>':'')+'<div class="ht"></div><div class="hs"><span></span><b></b></div>';
+  if(h[1])d.querySelector(".ha").textContent=h[1];d.querySelector(".ht").textContent="«"+h[2]+"»";d.querySelector(".hs span").textContent="Roviy: "+h[3];d.querySelector(".hs b").textContent="📚 "+h[4];$("hlist").appendChild(d)})}
+function renderCats(){$("hcats").innerHTML="";["Barchasi",...new Set(H.map(h=>h[0]))].forEach(c=>{const b=document.createElement("button");b.textContent=c;b.className=c===hcat?"on":"";b.onclick=()=>{hcat=c;renderCats();renderH()};$("hcats").appendChild(b)})}
+$("hq").oninput=renderH;renderCats();renderH();
+
+// ================= TABLAR =================
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{clearInterval(timer);document.querySelectorAll(".tabs button").forEach(x=>x.classList.toggle("on",x===b));
+ const t=b.dataset.t;if(t==="quiz"){bestText();show("home")}else show(t)});
+</script>
+</body>
+</html>
