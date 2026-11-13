@@ -369,6 +369,8 @@ body{padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
     <label class="sw"><input type="checkbox" id="rmOn"><span class="tr"></span><span id="rmOnL"></span></label>
     <p class="qsm" id="rmMsg"></p>
     <div class="nz-row" style="align-items:center;margin:6px 0"><span id="rmPreL" style="font-weight:700;font-size:14px;flex:1"></span><select id="rmPre" style="flex:1"></select></div>
+    <div class="nz-row" style="align-items:center;margin:6px 0"><span id="azL" style="font-weight:700;font-size:14px;flex:1"></span><select id="azType" style="flex:1"></select></div>
+    <div id="azFileRow" class="nz-row" style="align-items:center;margin:6px 0;flex-wrap:wrap"><label class="tg2" style="cursor:pointer"><input type="file" id="azFile" accept="audio/*" style="display:none"><span id="azPick"></span></label><span class="qsm" id="azName" style="flex:1"></span></div>
     <div class="lang" style="justify-content:flex-start;margin:8px 0"><label><input type="checkbox" id="rmSnd"> <span id="rmSndL"></span></label><label><input type="checkbox" id="rmVib"> <span id="rmVibL"></span></label><button class="tg2" id="rmTest" type="button"></button></div>
     <button class="btn" id="rmIcs" type="button" style="width:100%;margin-top:6px"></button>
     <p class="qsm" id="rmIcsH" style="text-align:center"></p>
@@ -1274,6 +1276,26 @@ $("rmIcs").onclick=()=>{const P=curPlace(),M=MTH[NC],L=NZ[LANG],pre=RS.pre;const
    lines.push("BEGIN:VEVENT","UID:"+y+pad2(m)+pad2(d)+"-"+i+"-"+P.lat+"@muzacom-quron","DTSTAMP:"+stamp,"DTSTART:"+f(st),"DTEND:"+f(en),"SUMMARY:🕌 "+L.p[i]+" — "+P.name,"DESCRIPTION:"+M.src[LI[LANG]],"BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+L.p[i],"TRIGGER:-PT"+(pre||0)+"M","END:VALARM","END:VEVENT")})}
  lines.push("END:VCALENDAR");const blob=new Blob([lines.join("\r\n")],{type:"text/calendar;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="namoz-vaqtlari-"+(P.name||"").replace(/[^\wА-яЁё'-]+/g,"_")+".ics";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000)};
 const _alRm=applyLang;applyLang=function(){_alRm();rmUI()};rmUI();
+</script>
+<script>
+// ================= AZON OVOZI (foydalanuvchining o'z fayli, IndexedDB'da saqlanadi) =================
+const AZT={uz:{l:"Signal turi",t:["🔔 Qo'ng'iroq ovozi","🕌 Azon (o'z faylim)"],pick:"📂 Azon faylini tanlash",none:"Fayl tanlanmagan",hint:"Telefoningizdagi azon (mp3) faylini tanlang — u faqat shu qurilmada saqlanadi.",stop:"Bosing — azonni to'xtatish"},
+ru:{l:"Тип сигнала",t:["🔔 Звонок","🕌 Азан (мой файл)"],pick:"📂 Выбрать файл азана",none:"Файл не выбран",hint:"Выберите файл азана (mp3) на телефоне — он хранится только на этом устройстве.",stop:"Нажмите — остановить азан"},
+tr:{l:"Uyarı türü",t:["🔔 Zil sesi","🕌 Ezan (kendi dosyam)"],pick:"📂 Ezan dosyası seç",none:"Dosya seçilmedi",hint:"Telefonunuzdaki ezan (mp3) dosyasını seçin — yalnızca bu cihazda saklanır.",stop:"Dokunun — ezanı durdur"},
+ar:{l:"نوع التنبيه",t:["🔔 جرس","🕌 الأذان (ملفي)"],pick:"📂 اختر ملف الأذان",none:"لم يُختر ملف",hint:"اختر ملف الأذان (mp3) من هاتفك — يُحفظ على هذا الجهاز فقط.",stop:"اضغط لإيقاف الأذان"}};
+const azAudio=new Audio();let azURL=null;RS.az=RS.az||0;
+function idb(){return new Promise((res,rej)=>{try{const r=indexedDB.open("qv_db",1);r.onupgradeneeded=()=>r.result.createObjectStore("f");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
+async function azPut(blob,name){const db=await idb();return new Promise(r=>{const tx=db.transaction("f","readwrite");tx.objectStore("f").put({blob,name},"azan");tx.oncomplete=()=>r(true);tx.onerror=()=>r(false)})}
+async function azGet(){try{const db=await idb();return await new Promise(r=>{const q=db.transaction("f").objectStore("f").get("azan");q.onsuccess=()=>r(q.result||null);q.onerror=()=>r(null)})}catch(e){return null}}
+async function azLoad(){const v=await azGet();if(v&&v.blob){if(azURL)URL.revokeObjectURL(azURL);azURL=URL.createObjectURL(v.blob);azAudio.src=azURL;$("azName").textContent="✓ "+v.name}else $("azName").textContent=AZT[LANG].hint}
+function azUI(){const A=AZT[LANG];$("azL").textContent=A.l;$("azPick").textContent=A.pick;const t=$("azType");t.innerHTML="";A.t.forEach((x,i)=>{const o=document.createElement("option");o.value=i;o.textContent=x;t.appendChild(o)});t.value=RS.az;$("azFileRow").style.display=RS.az==1?"":"none";if(!azURL)$("azName").textContent=A.hint}
+$("azType").onchange=()=>{RS.az=+$("azType").value;rmSave();azUI()};
+$("azFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;await azPut(f,f.name);await azLoad();try{azAudio.currentTime=0;await azAudio.play();setTimeout(()=>azAudio.pause(),4000)}catch(e){}};
+const _chime=chime;chime=function(){if(RS.az==1&&azURL){try{azAudio.currentTime=0;azAudio.play().catch(()=>_chime())}catch(e){_chime()}}else _chime()};
+$("rmBanner").addEventListener("click",()=>{try{azAudio.pause()}catch(e){}});
+const _notify=notify;notify=async function(t,b){await _notify(t,b);if(RS.az==1&&azURL){const bn=$("rmBanner");const sp=document.createElement("small");sp.textContent="⏹ "+AZT[LANG].stop;bn.appendChild(sp)}};
+const _alAz=applyLang;applyLang=function(){_alAz();azUI();if(azURL)azGet().then(v=>{if(v)$("azName").textContent="✓ "+v.name})};
+azUI();azLoad();
 </script>
 </body>
 </html>
