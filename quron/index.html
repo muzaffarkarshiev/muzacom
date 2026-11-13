@@ -320,6 +320,44 @@ body{padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
  background:linear-gradient(160deg,#c9a13b,#8a6512);color:#1a1200;box-shadow:0 14px 34px rgba(0,0,0,.45);transition:transform .35s;display:flex;flex-direction:column;gap:2px;cursor:pointer}
 .rmbanner.show{transform:translate(-50%,0)}
 .rmbanner b{font-size:17px}
+
+/* arab tili */
+.artabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.artabs::-webkit-scrollbar{display:none}
+.artabs button{flex:none;font:inherit;font-weight:800;font-size:14px;padding:9px 13px;border-radius:99px;border:1.5px solid #e2d4a8;background:#fff;color:var(--g1);cursor:pointer;white-space:nowrap}
+.artabs button.on{background:var(--g1);color:var(--gold2);border-color:var(--g1)}
+.argrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.argrid.g3{grid-template-columns:repeat(3,1fr)}.argrid.g2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:380px){.argrid{grid-template-columns:repeat(3,1fr)}}
+.arc{font:inherit;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 6px;border-radius:16px;border:1.5px solid #e2d4a8;background:#fff;cursor:pointer;color:var(--txt);transition:.15s}
+.arc:hover{border-color:var(--gold)}
+.arc .ab{font-family:Amiri,serif;font-size:34px;line-height:1.5;color:var(--g1)}
+.arc .as{font-size:12.5px;font-weight:800;color:var(--muted)}
+.arc .am{font-size:13.5px;font-weight:700;color:var(--g2)}
+.arc.sel{border-color:var(--g1);box-shadow:0 0 0 2px var(--g1)}
+.arc.spk{background:#fff4d6;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,161,59,.35)}
+.arc.word .ab{font-size:28px}.arc.phrase{width:100%;margin-bottom:8px;flex-direction:column}.arc.phrase .ab{font-size:28px}
+.arc.wide .ab{font-size:32px}
+.ardt{display:flex;gap:14px;align-items:flex-start;margin-top:14px;padding:14px;border-radius:18px;background:linear-gradient(160deg,#f3faf6,#fff);border:1.5px solid var(--gold)}
+.ardt .dl{font-family:Amiri,serif;font-size:72px;line-height:1.2;color:var(--g1);min-width:70px;text-align:center}
+.ardt .dr{flex:1;min-width:0}.ardt .dn{display:block;color:var(--g1);font-size:16px;margin-bottom:6px}
+.ardt .df{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.ardt .df span{display:flex;flex-direction:column;align-items:center;background:#fff;border:1px solid #e2d4a8;border-radius:10px;padding:4px 8px}
+.ardt .df i{font-style:normal;font-family:Amiri,serif;font-size:26px;color:var(--g1)}.ardt .df small{font-size:10.5px;color:var(--muted);font-weight:700}
+.ardt .dtp{font-size:14.5px;line-height:1.5;margin:4px 0 8px}
+.ardt .dx{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.hrow{display:flex;gap:12px;align-items:center;margin-bottom:10px}.hrow .arc{min-width:120px}.hrow p{margin:0;font-size:14.5px;line-height:1.5}
+.arpick{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;direction:rtl}
+.arpick button{font-family:Amiri,serif;font-size:22px;width:42px;height:42px;border-radius:12px;border:1.5px solid #e2d4a8;background:#fff;color:var(--g1);cursor:pointer}
+.arpick button.on{background:var(--g1);color:var(--gold2)}
+.arqh{text-align:center;margin:14px 0}.arqh small{font-weight:800;color:var(--muted)}
+.arqh .qb{font-family:Amiri,serif;font-size:80px;color:var(--g1);line-height:1.4}
+.arqh .qb.play{font-size:54px;cursor:pointer}
+.arc.good{background:#e6f6ec;border-color:var(--ok)}.arc.wrong{background:#fdecea;border-color:var(--bad)}
+.fbok,.fbbad{font-weight:800;text-align:center;margin:12px 0 8px}.fbok{color:var(--ok)}.fbbad{color:var(--bad)}
+#arQ .btn{width:100%;margin-top:6px}
+.arres{text-align:center;margin:20px 0}.arres b{display:block;font-family:"Reem Kufi";font-size:48px;color:var(--g1)}
+.bnav button{font-size:9.5px!important}.bnav button .bi{font-size:18px!important}
 </style>
 </head>
 <body>
@@ -488,6 +526,19 @@ body{padding-bottom:calc(96px + env(safe-area-inset-bottom))!important}
   <p class="sub" style="margin:16px 0 8px;font-weight:800" id="qaT"></p>
   <div id="qaTopics"></div>
   <div class="note" id="qaDis"></div>
+</div>
+</section>
+<section class="sec" id="s-arab">
+<div class="sec-h"><span class="sec-n">٦</span><span class="sec-t" data-sec="arab"></span><span class="sec-ar">اللغة العربية</span></div>
+<div class="card" id="ar">
+  <div class="frame"></div>
+  <h2 class="blk-h" id="arT"></h2><p class="sub" id="arS"></p>
+  <p class="sub" id="arStep" style="font-size:13px"></p>
+  <div class="note" id="arNoV" style="display:none;margin:0 0 12px"></div>
+  <div class="artabs" id="arTabs"></div>
+  <div class="nz-row" style="align-items:center;justify-content:flex-end;margin:6px 0 12px"><span id="arSpL" style="font-weight:700;font-size:13px"></span><select id="arSp" style="flex:none;width:auto"><option value="0.5">0.5×</option><option value="0.75" selected>0.75×</option><option value="1">1×</option></select></div>
+  <div id="arBody"></div>
+  <div class="note" id="arNote"></div>
 </div>
 </section>
 <section class="sec" id="s-hadis">
@@ -1008,9 +1059,9 @@ function ask(q){q=q.trim();if(!q)return;const u=UI[LANG],box=$("qaLog");
  box.appendChild(wrap);if(AI_URL)askAI(q,wrap);$("qaSug").innerHTML="";$("qaIn").value="";me.scrollIntoView({behavior:"smooth",block:"start"})}
 function topicChips(){const c=document.createElement("div");c.className="chips";TP.forEach(t=>{const b=document.createElement("button");b.textContent=t.t[LI[LANG]];b.onclick=()=>{const box=$("qaLog");const me=document.createElement("div");me.className="me";me.textContent=t.t[LI[LANG]];box.appendChild(me);const w=document.createElement("div");w.className="bot";w.appendChild(answerCard(t));box.appendChild(w);me.scrollIntoView({behavior:"smooth",block:"start"})};c.appendChild(b)});return c}
 function applyLang(){const u=UI[LANG];document.querySelectorAll(".lbar button").forEach(b=>b.classList.toggle("on",b.dataset.lang===LANG));
- const TI={quiz:0,quran:1,hadis:2,qa:3,namoz:4};const MD=MENU_D[LANG],NUM={namoz:"١",quiz:"٢",quran:"٣",qa:"٤",hadis:"٥"};
- document.querySelectorAll(".tabs button").forEach(b=>{const full=u.tabs[TI[b.dataset.t]],sp=full.indexOf(" ");b.innerHTML='<span class="mi"></span><span class="mt"><b></b><small></small></span><span class="mn">'+NUM[b.dataset.t]+'</span>';b.querySelector(".mi").textContent=full.slice(0,sp);b.querySelector(".mt b").textContent=full.slice(sp+1);b.querySelector(".mt small").textContent=MD[b.dataset.t]});
- document.querySelector(".tabs").dir=LANG==="ar"?"rtl":"ltr";document.querySelectorAll(".sec-t").forEach(b=>b.textContent=u.tabs[TI[b.dataset.sec]].replace(/^\S+\s/,""));
+ const TI={quiz:0,quran:1,hadis:2,qa:3,namoz:4,arab:5};const MD=MENU_D[LANG],NUM={namoz:"١",quiz:"٢",quran:"٣",qa:"٤",hadis:"٥",arab:"٦"};
+ document.querySelectorAll(".tabs button").forEach(b=>{const full=u.tabs[TI[b.dataset.t]]||"";if(!full)return;const sp=full.indexOf(" ");b.innerHTML='<span class="mi"></span><span class="mt"><b></b><small></small></span><span class="mn">'+NUM[b.dataset.t]+'</span>';b.querySelector(".mi").textContent=full.slice(0,sp);b.querySelector(".mt b").textContent=full.slice(sp+1);b.querySelector(".mt small").textContent=MD[b.dataset.t]});
+ document.querySelector(".tabs").dir=LANG==="ar"?"rtl":"ltr";document.querySelectorAll(".sec-t").forEach(b=>b.textContent=(u.tabs[TI[b.dataset.sec]]||"").replace(/^\S+\s/,""));
  $("qaH").textContent=u.qh;$("qaS").textContent=u.qs;$("qaIn").placeholder=u.ph;$("qaGo").textContent=u.ask;$("qaDis").textContent=u.dis;$("qaT").textContent=u.topics;
  $("qa").dir=LANG==="ar"?"rtl":"ltr";
  const ex=$("qaEx");ex.innerHTML="";u.ex.forEach(s=>{const b=document.createElement("button");b.textContent=s;b.onclick=()=>ask(s);ex.appendChild(b)});
@@ -1310,6 +1361,100 @@ let unlocked=false;document.addEventListener("pointerdown",async()=>{if(unlocked
  try{if(RS.on&&"Notification"in window&&Notification.permission==="default"&&!localStorage.getItem("qv_asked")){localStorage.setItem("qv_asked","1");Notification.requestPermission().then(p=>{$("rmMsg").textContent=p==="granted"?RM[LANG].ok:""})}}catch(e){}},{capture:true});
 const _alAz=applyLang;applyLang=function(){_alAz();azUI();if(azURL)azGet().then(v=>{if(v)$("azName").textContent="✓ "+v.name})};
 azUI();azLoad();
+</script>
+<script>
+// ================= ARAB TILI — 0 dan =================
+// [harf, arabcha nomi, nomi(uz), lotin, kirill, maslahat[uz,ru,tr], ulanadimi(chapga)]
+const ALF=[
+["ا","أَلِف","Alif","a / aa","а / аа",["O'zi tovush bermaydi: fatha bilan «a», cho'ziq «aa» bo'ladi.","Сам не звучит: с фатхой «а», долгое «а:».","Tek başına ses vermez: üstünle «a», uzun «â»."],0],
+["ب","بَاء","Bo","b","б",["O'zbekcha «b» kabi, lablar yopilib ochiladi.","Как русское «б».","Türkçe «b» gibi."],1],
+["ت","تَاء","To","t","т",["Yumshoq «t»: til uchi yuqori tishlar ildiziga tegadi.","Мягкое «т»: кончик языка у корней верхних зубов.","Yumuşak «t»: dil ucu üst dişlerin köküne."],1],
+["ث","ثَاء","So","s̱ (th)","с̱",["Til uchi tishlar orasiga chiqadi va «s» aytiladi (inglizcha think).","Межзубный «с»: язык между зубами (англ. think).","Peltek «s»: dil ucu dişler arasında (İng. think)."],1],
+["ج","جِيم","Jim","j","ж",["O'zbekcha «j» (jo'ja so'zidagi kabi).","Как «дж».","Türkçe «c» gibi."],1],
+["ح","حَاء","Ho","ḥ","ҳ",["Bo'g'izning o'rtasidan, havoni siqib chiqariladigan qattiq «h». Xirillamaydi.","Глубокое «х» из середины горла, без хрипа.","Boğazın ortasından, hırıltısız sert «h»."],1],
+["خ","خَاء","Xo","x","х",["O'zbekcha «x» (xat so'zidagi kabi), xirillab.","Как русское «х», с хрипом.","Hırıltılı «h» (Alm. Bach gibi)."],1],
+["د","دَال","Dol","d","д",["Yumshoq «d»: til uchi yuqori tishlar ildizida.","Мягкое «д».","Yumuşak «d»."],0],
+["ذ","ذَال","Zol","ẕ (dh)","з̱",["Til uchi tishlar orasida «z» (inglizcha this).","Межзубный «з» (англ. this).","Peltek «z» (İng. this)."],0],
+["ر","رَاء","Ro","r","р",["«r» — bir marta titraydi. Fatha va dammada yo'g'on, kasrada ingichka.","«р»: твёрдое с фатхой и даммой, мягкое с кясрой.","«r»: üstün ve ötrede kalın, esrede ince."],0],
+["ز","زَاي","Zay","z","з",["O'zbekcha «z».","Как «з».","Türkçe «z»."],0],
+["س","سِين","Sin","s","с",["Ingichka «s», hushtakli.","Тонкое свистящее «с».","İnce «s»."],1],
+["ش","شِين","Shin","sh","ш",["O'zbekcha «sh».","Как «ш».","Türkçe «ş»."],1],
+["ص","صَاد","Sod","ṣ","с̣",["Yo'g'on «s»: tilning orqa qismi ko'tariladi, ovoz og'izda to'lib chiqadi.","Твёрдое «с»: задняя часть языка поднята, звук «полный».","Kalın «s»: dilin arkası kalkar, ses dolgun çıkar."],1],
+["ض","ضَاد","Zod (Dod)","ḍ","д̣",["Yo'g'on «d»: tilning yon cheti yuqori oziq tishlarga tegadi. Arab tiliga xos harf.","Твёрдое «д»: боковой край языка у верхних коренных зубов.","Kalın «d»: dilin yan kenarı üst azı dişlerine değer."],1],
+["ط","طَاء","To (yo'g'on)","ṭ","т̣",["Yo'g'on, kuchli «t»: tilning orqasi ko'tariladi.","Твёрдое, сильное «т».","Kalın, güçlü «t»."],1],
+["ظ","ظَاء","Zo (yo'g'on)","ẓ","з̣",["Yo'g'on «z»: til uchi tishlar orasida, tilning orqasi ko'tariladi.","Твёрдое межзубное «з».","Kalın peltek «z»."],1],
+["ع","عَيْن","Ayn","ʿ","ъ",["Bo'g'izning o'rtasidan, tovush paychalari siqilib chiqadi. O'zbek tilida yo'q — ko'p tinglab, takrorlang.","Звук из середины горла со сжатием; в русском нет — слушайте и повторяйте.","Boğazın ortasından sıkıştırılarak çıkar; Türkçede yok — çok dinleyin."],1],
+["غ","غَيْن","G'ayn","g'","ғ",["O'zbekcha «g'» (tog' so'zidagi kabi).","Картавое «гъ» (как французское r).","Gırtlaktan «ğ» (gargara sesi)."],1],
+["ف","فَاء","Fa","f","ф",["O'zbekcha «f».","Как «ф».","Türkçe «f»."],1],
+["ق","قَاف","Qof","q","қ",["O'zbekcha «q» (qalam): til ildizi bilan, yo'g'on.","Глубокое «къ» у корня языка.","Kalın «k», dil kökünden."],1],
+["ك","كَاف","Kof","k","к",["Ingichka «k».","Мягкое «к».","İnce «k»."],1],
+["ل","لاَم","Lom","l","л",["Ingichka «l». Faqat «Alloh» so'zida (oldin fatha/damma bo'lsa) yo'g'on.","Мягкое «л»; твёрдое только в слове «Аллах».","İnce «l»; yalnız «Allah» lafzında kalın."],1],
+["م","مِيم","Mim","m","м",["O'zbekcha «m».","Как «м».","Türkçe «m»."],1],
+["ن","نُون","Nun","n","н",["O'zbekcha «n».","Как «н».","Türkçe «n»."],1],
+["ه","هَاء","Ha","h","ҳ",["Yengil «h» — ko'krakdan nafas bilan, o'zbekcha «hovli»dagi kabi.","Лёгкое «h» с выдохом.","Hafif «h», nefesle."],1],
+["و","وَاو","Vov","v / uu","в / уу",["Lablar yumaloqlanib «w» aytiladi; damma bilan cho'ziq «uu».","«w» округлёнными губами; после даммы — долгое «у:».","Yuvarlak dudakla «w»; ötreden sonra uzun «û»."],0],
+["ي","يَاء","Yo","y / ii","й / ий",["O'zbekcha «y»; kasra bilan cho'ziq «ii».","Как «й»; после кясры — долгое «и:».","Türkçe «y»; esreden sonra uzun «î»."],1]];
+const SYL={"ا":"","ب":"b","ت":"t","ث":"s","ج":"j","ح":"h","خ":"x","د":"d","ذ":"z","ر":"r","ز":"z","س":"s","ش":"sh","ص":"s","ض":"d","ط":"t","ظ":"z","ع":"'","غ":"g'","ف":"f","ق":"q","ك":"k","ل":"l","م":"m","ن":"n","ه":"h","و":"v","ي":"y"};
+const HRK=[["بَ","ba",["Fatha — harf ustidagi qiya chiziq: «a» tovushi.","Фатха — штрих над буквой: звук «а».","Üstün — harfin üstündeki çizgi: «a»."]],
+["بِ","bi",["Kasra — harf ostidagi qiya chiziq: «i» tovushi.","Кясра — штрих под буквой: звук «и».","Esre — harfin altındaki çizgi: «i»."]],
+["بُ","bu",["Damma — harf ustidagi kichik vov: «u» tovushi.","Дамма — маленький «вав» над буквой: звук «у».","Ötre — harfin üstündeki küçük vav: «u»."]],
+["أَبْ","ab",["Sukun — harf ustidagi doiracha: harf unlisiz, qisqa o'qiladi.","Сукун — кружок: буква без гласного.","Cezm — yuvarlak işaret: harf harekesiz okunur."]],
+["بً بٍ بٌ","ban · bin · bun",["Tanvin — ikki harakat: so'z oxirida «-n» qo'shiladi.","Танвин — двойная огласовка: в конце слова добавляется «-н».","Tenvin — çift hareke: kelime sonunda «-n» eklenir."]],
+["رَبَّ","rabba",["Shadda (tashdid) — «w»ga o'xshash belgi: harf ikki marta talaffuz qilinadi.","Шадда — удвоение согласного.","Şedde — harf iki kez okunur."]],
+["بَا · بِي · بُو","baa · bii · buu",["Madd — cho'ziq unli: alif, yo, vov oldingi harakatni ikki baravar cho'zadi.","Мадд — долгая гласная: алиф, йа, вав удлиняют звук вдвое.","Med — uzatma: elif, ye, vav harekeyi iki kat uzatır."]]];
+const WRD=[["اللّٰهُ","Alloh",["Alloh","Аллах","Allah"]],["كِتَابٌ","kitaabun",["kitob","книга","kitap"]],["قَلَمٌ","qalamun",["qalam","ручка","kalem"]],["بَيْتٌ","baytun",["uy","дом","ev"]],["مَسْجِدٌ","masjidun",["masjid","мечеть","cami"]],["بَابٌ","baabun",["eshik","дверь","kapı"]],["مَاءٌ","maa'un",["suv","вода","su"]],["شَمْسٌ","shamsun",["quyosh","солнце","güneş"]],["قَمَرٌ","qamarun",["oy","луна","ay"]],["سَمَاءٌ","samaa'un",["osmon","небо","gök"]],["أَرْضٌ","arḍun",["yer","земля","yer"]],["نُورٌ","nuurun",["nur","свет","nur"]],
+["أُمٌّ","ummun",["ona","мать","anne"]],["أَبٌ","abun",["ota","отец","baba"]],["أَخٌ","axun",["aka-uka","брат","erkek kardeş"]],["أُخْتٌ","uxtun",["opa-singil","сестра","kız kardeş"]],["وَلَدٌ","waladun",["o'g'il bola","мальчик","oğlan"]],["رَجُلٌ","rajulun",["erkak","мужчина","adam"]],["صَلَاةٌ","ṣalaatun",["namoz","молитва","namaz"]],["صَوْمٌ","ṣawmun",["ro'za","пост","oruç"]],["عِلْمٌ","ʿilmun",["ilm","знание","ilim"]],["يَوْمٌ","yawmun",["kun","день","gün"]],["لَيْلٌ","laylun",["tun","ночь","gece"]],["خُبْزٌ","xubzun",["non","хлеб","ekmek"]],["طَعَامٌ","ṭaʿaamun",["taom","еда","yemek"]],["جَمِيلٌ","jamiilun",["chiroyli","красивый","güzel"]],["كَبِيرٌ","kabiirun",["katta","большой","büyük"]],["صَغِيرٌ","ṣaghiirun",["kichik","маленький","küçük"]],
+["وَاحِدٌ","waaḥidun",["bir (١)","один (١)","bir (١)"]],["اِثْنَانِ","ithnaani",["ikki (٢)","два (٢)","iki (٢)"]],["ثَلَاثَةٌ","thalaathatun",["uch (٣)","три (٣)","üç (٣)"]],["أَرْبَعَةٌ","arbaʿatun",["to'rt (٤)","четыре (٤)","dört (٤)"]],["خَمْسَةٌ","xamsatun",["besh (٥)","пять (٥)","beş (٥)"]],["سِتَّةٌ","sittatun",["olti (٦)","шесть (٦)","altı (٦)"]],["سَبْعَةٌ","sabʿatun",["yetti (٧)","семь (٧)","yedi (٧)"]],["ثَمَانِيَةٌ","thamaaniyatun",["sakkiz (٨)","восемь (٨)","sekiz (٨)"]],["تِسْعَةٌ","tisʿatun",["to'qqiz (٩)","девять (٩)","dokuz (٩)"]],["عَشَرَةٌ","ʿasharatun",["o'n (١٠)","десять (١٠)","on (١٠)"]]];
+const PHR=[["بِسْمِ اللَّهِ","Bismillah",["Alloh nomi bilan (ish boshida)","Во имя Аллаха (в начале дела)","Allah'ın adıyla (işe başlarken)"]],["الْحَمْدُ لِلَّهِ","Alhamdu lillah",["Allohga hamd bo'lsin","Хвала Аллаху","Allah'a hamd olsun"]],["سُبْحَانَ اللَّهِ","Subhanallah",["Alloh pokdir","Пречист Аллах","Allah'ı tesbih ederim"]],["اللَّهُ أَكْبَرُ","Allahu akbar",["Alloh buyukdir","Аллах велик","Allah en büyüktür"]],["لَا إِلَٰهَ إِلَّا اللَّهُ","La ilaha illallah",["Allohdan o'zga iloh yo'q","Нет божества, кроме Аллаха","Allah'tan başka ilah yoktur"]],["أَسْتَغْفِرُ اللَّهَ","Astaghfirullah",["Allohdan mag'firat so'rayman","Прошу прощения у Аллаха","Allah'tan bağışlanma dilerim"]],["السَّلَامُ عَلَيْكُمْ","Assalamu alaykum",["Sizga tinchlik bo'lsin (salom)","Мир вам (приветствие)","Selam size olsun"]],["وَعَلَيْكُمُ السَّلَامُ","Wa alaykumus salam",["Sizga ham tinchlik bo'lsin (alik)","И вам мир (ответ)","Size de selam olsun"]],["إِنْ شَاءَ اللَّهُ","In sha Allah",["Alloh xohlasa","Если пожелает Аллах","Allah dilerse"]],["مَا شَاءَ اللَّهُ","Ma sha Allah",["Alloh xohlagani bo'ldi (hayrat)","Так пожелал Аллах (восхищение)","Maşallah"]],["جَزَاكَ اللَّهُ خَيْرًا","Jazakallahu khayran",["Alloh sizni yaxshilik bilan mukofotlasin (rahmat)","Да воздаст тебе Аллах благом (спасибо)","Allah seni hayırla mükafatlandırsın"]],["بَارَكَ اللَّهُ فِيكَ","Barakallahu fik",["Alloh sizga baraka bersin","Да благословит тебя Аллах","Allah seni mübarek kılsın"]]];
+const AT={uz:{t:"Arab tilini 0 dan o'rganish",s:"Tinglang, ko'ring, takrorlang — har bir harf va so'zni bosing, ovozi eshitiladi",tabs:["🔤 Alifbo","◌َ Harakatlar","🧩 Bo'g'inlar","📗 So'zlar","💬 Iboralar","🎯 Mashq"],forms:["Alohida","Boshida","O'rtada","Oxirida"],name:"Nomi",snd:"Tovushi",tip:"Talaffuz",noV:"Telefoningizda arabcha ovoz topilmadi. Sozlamalar → Til → Matnni ovozga aylantirish (TTS) bo'limidan «Arabic» ovozini yuklab oling. Shu orada matn va izohlardan foydalaning.",sp:"Tezlik",pick:"Harfni tanlang:",syl:"Har bir bo'g'inni bosib eshiting va ovoz chiqarib takrorlang.",q1:"Bu qaysi harf?",q2:"Eshiting — qaysi harf?",start:"▶ Mashqni boshlash",again:"Qayta boshlash",res:"Natija",mode:["👁 Ko'rib topish","👂 Eshitib topish"],ok:"To'g'ri!",bad:"Noto'g'ri. To'g'ri javob:",nx:"Keyingisi →",note:"Ovozni telefoningizning sun'iy ovozi o'qiydi — u harflarni to'g'ri aytadi, lekin tajvid qoidalarini to'liq bermaydi. Qur'on o'qishni to'g'ri o'rganish uchun Qur'on sahifasidagi qori tilovatini tinglab, ustoz bilan mashq qiling.",listen:"🔊",step:"Tavsiya: avval Alifbo → Harakatlar → Bo'g'inlar → So'zlar → Iboralar, so'ng Mashq."},
+ru:{t:"Арабский язык с нуля",s:"Слушайте, смотрите, повторяйте — нажмите на букву или слово, чтобы услышать",tabs:["🔤 Алфавит","◌َ Огласовки","🧩 Слоги","📗 Слова","💬 Фразы","🎯 Тренировка"],forms:["Отдельно","В начале","В середине","В конце"],name:"Название",snd:"Звук",tip:"Произношение",noV:"На телефоне нет арабского голоса. Настройки → Язык → Синтез речи (TTS) → загрузите «Arabic». Пока пользуйтесь текстом и подсказками.",sp:"Скорость",pick:"Выберите букву:",syl:"Нажимайте на слоги, слушайте и повторяйте вслух.",q1:"Какая это буква?",q2:"Послушайте — какая буква?",start:"▶ Начать тренировку",again:"Заново",res:"Результат",mode:["👁 Узнать по виду","👂 Узнать на слух"],ok:"Верно!",bad:"Неверно. Правильно:",nx:"Дальше →",note:"Звук читает синтезатор речи телефона — буквы он произносит верно, но правила таджвида передаёт не полностью. Для чтения Корана слушайте чтецов на странице «Коран» и занимайтесь с учителем.",listen:"🔊",step:"Порядок: Алфавит → Огласовки → Слоги → Слова → Фразы, затем Тренировка."},
+tr:{t:"Sıfırdan Arapça",s:"Dinleyin, görün, tekrarlayın — sesini duymak için harfe veya kelimeye dokunun",tabs:["🔤 Alfabe","◌َ Harekeler","🧩 Heceler","📗 Kelimeler","💬 İfadeler","🎯 Alıştırma"],forms:["Tek","Başta","Ortada","Sonda"],name:"Adı",snd:"Sesi",tip:"Telaffuz",noV:"Telefonunuzda Arapça ses bulunamadı. Ayarlar → Dil → Metin okuma (TTS) bölümünden «Arapça» sesini indirin. Bu arada metin ve açıklamaları kullanın.",sp:"Hız",pick:"Harf seçin:",syl:"Her heceye dokunup dinleyin ve sesli tekrarlayın.",q1:"Bu hangi harf?",q2:"Dinleyin — hangi harf?",start:"▶ Alıştırmayı başlat",again:"Yeniden",res:"Sonuç",mode:["👁 Görerek bul","👂 Dinleyerek bul"],ok:"Doğru!",bad:"Yanlış. Doğrusu:",nx:"Sonraki →",note:"Sesi telefonunuzun yapay sesi okur — harfleri doğru söyler, ancak tecvid kurallarını tam vermez. Kur'an okumayı doğru öğrenmek için Kur'an sayfasındaki kârileri dinleyin ve bir hocayla çalışın.",listen:"🔊",step:"Sıra: Alfabe → Harekeler → Heceler → Kelimeler → İfadeler, sonra Alıştırma."},
+ar:{t:"تعلّم العربية من الصفر",s:"استمع وانظر وكرّر — اضغط على الحرف أو الكلمة لتسمعها",tabs:["🔤 الحروف","◌َ الحركات","🧩 المقاطع","📗 الكلمات","💬 العبارات","🎯 تدريب"],forms:["منفصل","أول","وسط","آخر"],name:"الاسم",snd:"الصوت",tip:"النطق",noV:"لا يوجد صوت عربي في هاتفك. نزّل صوت «العربية» من إعدادات تحويل النص إلى كلام.",sp:"السرعة",pick:"اختر حرفًا:",syl:"اضغط على كل مقطع واستمع ثم كرّر بصوت عالٍ.",q1:"ما هذا الحرف؟",q2:"استمع — أي حرف؟",start:"▶ ابدأ التدريب",again:"من جديد",res:"النتيجة",mode:["👁 بالنظر","👂 بالسمع"],ok:"صحيح!",bad:"خطأ. الصواب:",nx:"التالي →",note:"يقرأ الصوتَ محرّكُ الهاتف، فينطق الحروف صحيحة لكنه لا يؤدي أحكام التجويد كاملة؛ استمع إلى القرّاء في صفحة القرآن وتعلّم مع معلّم.",listen:"🔊",step:"الترتيب: الحروف ← الحركات ← المقاطع ← الكلمات ← العبارات ← التدريب."}};
+const TLI={uz:0,ru:1,tr:2,ar:0};
+let AR={tab:0,rate:0.75,voice:null,letter:1,quiz:null};
+function pickVoice(){try{const v=speechSynthesis.getVoices().filter(x=>/^ar/i.test(x.lang));AR.voice=v.find(x=>/SA|Saudi|Maged|Majed|Laila|Hoda|Tarik/i.test(x.lang+x.name))||v[0]||null}catch(e){AR.voice=null}$("arNoV").style.display=AR.voice||!("speechSynthesis"in window)?"none":"";if(!("speechSynthesis"in window))$("arNoV").style.display=""}
+try{speechSynthesis.onvoiceschanged=pickVoice}catch(e){}
+function say(t,el){try{if(!("speechSynthesis"in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=AR.voice?AR.voice.lang:"ar-SA";if(AR.voice)u.voice=AR.voice;u.rate=AR.rate;
+ if(el){el.classList.add("spk");u.onend=u.onerror=()=>el.classList.remove("spk")}speechSynthesis.speak(u)}catch(e){}}
+const TAT="ـ";function forms(h,c){return c?[h,h+TAT,TAT+h+TAT,TAT+h]:[h,"—","—",TAT+h]}
+function arTabs(){const T=AT[LANG];const b=$("arTabs");b.innerHTML="";T.tabs.forEach((x,i)=>{const k=document.createElement("button");k.type="button";k.textContent=x;k.className=i===AR.tab?"on":"";k.onclick=()=>{AR.tab=i;arTabs();arRender()};b.appendChild(k)})}
+function card(big,small,meaning,cls,speakTxt){const d=document.createElement("button");d.type="button";d.className="arc "+(cls||"");d.innerHTML='<span class="ab"></span><span class="as"></span>'+(meaning?'<span class="am"></span>':"");d.querySelector(".ab").textContent=big;d.querySelector(".as").textContent=small;if(meaning)d.querySelector(".am").textContent=meaning;d.onclick=()=>say(speakTxt||big,d);return d}
+function arRender(){const T=AT[LANG],L=TLI[LANG],B=$("arBody");B.innerHTML="";B.dir=LANG==="ar"?"rtl":"ltr";
+ if(AR.tab===0){const g=document.createElement("div");g.className="argrid";ALF.forEach((a,i)=>{const c=card(a[0],LANG==="ar"?a[1]:a[2]+" · "+(LANG==="ru"?a[4]:a[3]),"","",a[1]);c.onclick=()=>{say(a[1],c);arDetail(i)};g.appendChild(c)});B.appendChild(g);const dt=document.createElement("div");dt.id="arDt";B.appendChild(dt);arDetail(AR.letter)}
+ else if(AR.tab===1){HRK.forEach(h=>{const r=document.createElement("div");r.className="hrow";const c=card(h[0],h[1],"","wide",h[0].replace(/·/g," "));r.appendChild(c);if(LANG!=="ar"){const p=document.createElement("p");p.textContent=h[2][L];r.appendChild(p)}B.appendChild(r)})}
+ else if(AR.tab===2){const p=document.createElement("p");p.className="sub";p.textContent=T.syl;B.appendChild(p);const sel=document.createElement("div");sel.className="arpick";ALF.forEach((a,i)=>{const k=document.createElement("button");k.type="button";k.textContent=a[0];k.className=i===AR.letter?"on":"";k.onclick=()=>{AR.letter=i;arRender()};sel.appendChild(k)});B.appendChild(sel);
+  const h=ALF[AR.letter][0]==="ا"?"أ":ALF[AR.letter][0],c=SYL[ALF[AR.letter][0]];const g=document.createElement("div");g.className="argrid g3";
+  [[h+"َ",c+"a"],[h+"ِ",c+"i"],[h+"ُ",c+"u"],[h+"َا",c+"aa"],[h+"ِي",c+"ii"],[h+"ُو",c+"uu"],[h+"ً",c+"an"],[h+"ٍ",c+"in"],[h+"ٌ",c+"un"]].forEach(([a,t])=>g.appendChild(card(a,t)));B.appendChild(g)}
+ else if(AR.tab===3){const g=document.createElement("div");g.className="argrid g2";WRD.forEach(w=>g.appendChild(card(w[0],w[1],LANG==="ar"?"":w[2][L],"word")));B.appendChild(g)}
+ else if(AR.tab===4){PHR.forEach(w=>{const c=card(w[0],w[1],LANG==="ar"?"":w[2][L],"phrase");B.appendChild(c)})}
+ else arQuizStart(B)}
+function arDetail(i){AR.letter=i;const a=ALF[i],T=AT[LANG],L=TLI[LANG],d=$("arDt");if(!d)return;d.className="ardt";
+ const f=forms(a[0],a[6]);d.innerHTML='<div class="dl"></div><div class="dr"><b class="dn"></b><div class="df"></div><p class="dtp"></p><div class="dx"></div></div>';
+ d.querySelector(".dl").textContent=a[0];d.querySelector(".dn").textContent=a[1]+" — "+a[2]+" · "+a[3];
+ const df=d.querySelector(".df");f.forEach((x,k)=>{const s=document.createElement("span");s.innerHTML="<i></i><small></small>";s.querySelector("i").textContent=x;s.querySelector("small").textContent=T.forms[k];df.appendChild(s)});
+ d.querySelector(".dtp").textContent=LANG==="ar"?"":"🗣 "+a[5][L];
+ const h=a[0]==="ا"?"أ":a[0],c=SYL[a[0]],dx=d.querySelector(".dx");[[h+"َ",c+"a"],[h+"ِ",c+"i"],[h+"ُ",c+"u"]].forEach(([x,t])=>dx.appendChild(card(x,t)));
+ document.querySelectorAll("#arBody .argrid .arc").forEach((e,k)=>e.classList.toggle("sel",k===i))}
+// mashq
+function arQuizStart(B){const T=AT[LANG];B.innerHTML="";const m=document.createElement("div");m.className="seg";T.mode.forEach((x,i)=>{const k=document.createElement("button");k.type="button";k.textContent=x;k.onclick=()=>{AR.quiz={mode:i,n:0,ok:0,cur:null};arQ()};m.appendChild(k)});B.appendChild(m);const q=document.createElement("div");q.id="arQ";B.appendChild(q);if(AR.quiz)arQ()}
+function arQ(){const T=AT[LANG],Q=AR.quiz,box=$("arQ");if(!box)return;box.innerHTML="";if(Q.n>=10){box.innerHTML='<div class="arres"><b></b><span></span></div>';box.querySelector("b").textContent=Q.ok+" / 10";box.querySelector("span").textContent=T.res;const r=document.createElement("button");r.className="btn";r.textContent=T.again;r.onclick=()=>{AR.quiz={mode:Q.mode,n:0,ok:0};arQ()};box.appendChild(r);return}
+ const idx=Math.floor(Math.random()*ALF.length);const opts=[idx];while(opts.length<4){const r=Math.floor(Math.random()*ALF.length);if(!opts.includes(r))opts.push(r)}opts.sort(()=>Math.random()-.5);Q.cur=idx;
+ const hd=document.createElement("div");hd.className="arqh";hd.innerHTML='<small></small><div class="qb"></div>';hd.querySelector("small").textContent=(Q.n+1)+"/10 · "+(Q.mode?T.q2:T.q1);
+ const qb=hd.querySelector(".qb");if(Q.mode===0){qb.textContent=ALF[idx][0]}else{qb.textContent="🔊";qb.classList.add("play");qb.onclick=()=>say(ALF[idx][1],qb);setTimeout(()=>say(ALF[idx][1],qb),300)}box.appendChild(hd);
+ const g=document.createElement("div");g.className="argrid g2";opts.forEach(o=>{const b=document.createElement("button");b.type="button";b.className="arc qo";b.innerHTML='<span class="ab"></span><span class="as"></span>';
+  if(Q.mode===0){b.querySelector(".ab").textContent=LANG==="ar"?ALF[o][1]:ALF[o][2];b.querySelector(".as").textContent=ALF[o][3];b.querySelector(".ab").style.fontSize="22px"}else{b.querySelector(".ab").textContent=ALF[o][0];b.querySelector(".as").textContent=""}
+  b.onclick=()=>{if(box.dataset.done)return;box.dataset.done=1;const ok=o===idx;if(ok)Q.ok++;b.classList.add(ok?"good":"wrong");g.querySelectorAll(".qo").forEach((x,k)=>{if(opts[k]===idx)x.classList.add("good")});say(ALF[idx][1]);
+   const f=document.createElement("p");f.className=ok?"fbok":"fbbad";f.textContent=ok?T.ok:T.bad+" "+ALF[idx][0]+" — "+ALF[idx][2]+" ("+ALF[idx][3]+")";box.appendChild(f);const n=document.createElement("button");n.className="btn";n.textContent=T.nx;n.onclick=()=>{Q.n++;delete box.dataset.done;arQ()};box.appendChild(n)};g.appendChild(b)});box.appendChild(g)}
+function arInit(){const T=AT[LANG];$("arT").textContent=T.t;$("arS").textContent=T.s;$("arNoV").textContent=T.noV;$("arNote").textContent=T.note;$("arStep").textContent=T.step;$("arSpL").textContent=T.sp;$("ar").dir=LANG==="ar"?"rtl":"ltr";arTabs();arRender();pickVoice()}
+$("arSp").onchange=()=>{AR.rate=+$("arSp").value};
+const _alAr=applyLang;applyLang=function(){_alAr();arInit()};
+// menyuga qo'shish
+(function(){const PG=["namoz","quiz","quran","qa","hadis","arab"];if(!PAGES.includes("arab"))PAGES.push("arab");PICON.arab="ع";
+ BNI.push(["arab","ع"]);BN.uz.push("Arab");BN.ru.push("Араб.");BN.tr.push("Arapça");BN.ar.push("العربية");
+ MENU_D.uz.arab="Alifbo, talaffuz, so'zlar — eshitib o'rganing";MENU_D.ru.arab="Алфавит, произношение, слова — на слух";MENU_D.tr.arab="Alfabe, telaffuz, kelimeler — dinleyerek";MENU_D.ar.arab="الحروف والنطق والكلمات — بالاستماع";
+ UI.uz.tabs.push("ع Arab tili");UI.ru.tabs.push("ع Арабский язык");UI.tr.tabs.push("ع Arapça");UI.ar.tabs.push("ع اللغة العربية");
+ const nav=document.querySelector(".tabs");const b=document.createElement("button");b.dataset.t="arab";b.onclick=()=>{location.hash="arab"};nav.appendChild(b)})();
+arInit();applyLang();route();
 </script>
 </body>
 </html>
