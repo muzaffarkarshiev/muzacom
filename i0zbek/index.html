@@ -235,5 +235,6 @@ document.getElementById('gen').onclick=()=>{const a=IDEAS[document.getElementByI
 const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1}):null;
 document.querySelectorAll('.reveal').forEach(el=>io?io.observe(el):el.classList.add('in'));
 </script>
+<script data-goatcounter="https://muzacom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
